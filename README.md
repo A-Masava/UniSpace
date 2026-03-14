@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # UniSpace - Educational Platform
 
 A comprehensive educational platform for managing classrooms, students, and teachers with real-time communication features.
@@ -270,3 +271,6 @@ For issues and questions, please create an issue in the repository.
 
 **Version**: 1.0.0  
 **Last Updated**: March 2026
+=======
+# UniSpace
+>>>>>>> c0d3afc1fb41e65fb60f09f20e36332c6285eec5
