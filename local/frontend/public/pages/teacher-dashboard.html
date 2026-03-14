@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - UniSpace</title>
+    <link rel="stylesheet" href="/assets/styles/index.css">
+    <link rel="stylesheet" href="/assets/styles/layouts/dashboard.css">
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+    <link rel="stylesheet" href="/assets/styles/components/class-card.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-avatar">👨‍🏫</div>
+                <div class="user-info">
+                    <h3 id="userNameSidebar">Teacher</h3>
+                    <small id="userEmailSidebar">teacher@email.com</small>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#dashboard" class="nav-item active" data-page="dashboard">📊 Dashboard</a></li>
+                    <li><a href="#classes" class="nav-item" data-page="classes">🏫 My Classes</a></li>
+                    <li><a href="#students" class="nav-item" data-page="students">👥 Students</a></li>
+                    <li><a href="#messages" class="nav-item" data-page="messages">💬 Messages</a></li>
+                    <li><a href="#approvals" class="nav-item" data-page="approvals">✅ Approvals</a></li>
+                    <li><a href="#resources" class="nav-item" data-page="resources">📁 Resources</a></li>
+                    <li><a href="#profile" class="nav-item" data-page="profile">⚙️ Settings</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn btn-logout" onclick="logout()">🚪 Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Top Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile-header">
+                        <span id="userNameHeader">Teacher</span>
+                        <div class="avatar-small">👨‍🏫</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-wrapper">
+                <!-- Dashboard Page -->
+                <section id="dashboardPage" class="page-content active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">🏫</div>
+                            <div class="stat-content">
+                                <h3>Total Classes</h3>
+                                <p class="stat-number" id="totalClasses">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-content">
+                                <h3>Total Students</h3>
+                                <p class="stat-number" id="totalStudents">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏳</div>
+                            <div class="stat-content">
+                                <h3>Pending Approvals</h3>
+                                <p class="stat-number alert" id="pendingApprovals">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💬</div>
+                            <div class="stat-content">
+                                <h3>Unread Messages</h3>
+                                <p class="stat-number" id="unreadCount">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="recent-section">
+                        <h2>My Classes</h2>
+                        <div class="classes-list" id="recentClasses">
+                            <!-- Classes loaded here -->
+                        </div>
+                    </section>
+                </section>
+
+                <!-- My Classes Page -->
+                <section id="classesPage" class="page-content">
+                    <div class="page-header">
+                        <h2>My Classes</h2>
+                        <button class="btn btn-primary" onclick="showCreateClassModal()">+ Create Class</button>
+                    </div>
+
+                    <div class="classes-grid" id="classesContainer">
+                        <!-- Classes loaded here -->
+                    </div>
+
+                    <div id="noClassesMessage" class="empty-state" style="display: none;">
+                        <p>📚 You haven't created any classes yet</p>
+                        <p>Create a new class to get started</p>
+                    </div>
+                </section>
+
+                <!-- Students Page -->
+                <section id="studentsPage" class="page-content">
+                    <div class="page-header">
+                        <h2>Students</h2>
+                        <div>
+                            <select id="classFilter" class="form-control">
+                                <option value="">All Classes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Student ID</th>
+                                    <th>Class</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <!-- Students loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Messages Page -->
+                <section id="messagesPage" class="page-content">
+                    <div class="page-header">
+                        <h2>Messages</h2>
+                    </div>
+
+                    <div class="messages-container">
+                        <div class="messages-list" id="messagesList">
+                            <!-- Conversations loaded here -->
+                        </div>
+                        <div class="chat-window" id="chatWindow" style="display: none;">
+                            <div class="chat-header">
+                                <h3 id="chatTitle">Select a conversation</h3>
+                            </div>
+                            <div class="messages-feed" id="messagesFeed">
+                                <!-- Messages loaded here -->
+                            </div>
+                            <div class="chat-input">
+                                <form id="messageForm" onsubmit="sendMessage(event)">
+                                    <input type="text" id="messageInput" placeholder="Type a message..." required>
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Approvals Page -->
+                <section id="approvalsPage" class="page-content">
+                    <div class="page-header">
+                        <h2>Enrollment Approvals</h2>
+                    </div>
+
+                    <div class="approvals-container" id="approvalsContainer">
+                        <!-- Pending approvals loaded here -->
+                    </div>
+
+                    <div id="noApprovalsMessage" class="empty-state" style="display: none;">
+                        <p>✅ All enrollment requests are approved</p>
+                    </div>
+                </section>
+
+                <!-- Resources Page -->
+                <section id="resourcesPage" class="page-content">
+                    <div class="page-header">
+                        <h2>Resources</h2>
+                        <button class="btn btn-primary" onclick="showUploadModal()">+ Upload Resource</button>
+                    </div>
+
+                    <div class="resources-list" id="resourcesList">
+                        <!-- Resources loaded here -->
+                    </div>
+                </section>
+
+                <!-- Settings Page -->
+                <section id="settingsPage" class="page-content">
+                    <div class="page-header">
+                        <h2>Settings</h2>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Account Settings</h3>
+                        <form id="settingsForm">
+                            <div class="form-group">
+                                <label for="settingsName">Full Name</label>
+                                <input type="text" id="settingsName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="settingsEmail">Email</label>
+                                <input type="email" id="settingsEmail" disabled>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Preferences</h3>
+                        <div class="preference-item">
+                            <label>
+                                <input type="checkbox" id="darkMode">
+                                Dark Mode
+                            </label>
+                        </div>
+                        <div class="preference-item">
+                            <label>
+                                <input type="checkbox" id="notifications" checked>
+                                Enable Notifications
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Create Class Modal -->
+    <div id="createClassModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Class</h2>
+                <button class="modal-close" onclick="closeCreateClassModal()">&times;</button>
+            </div>
+            <form id="createClassForm" class="modal-body">
+                <div class="form-group">
+                    <label for="className">Class Name</label>
+                    <input type="text" id="className" placeholder="e.g., Introduction to Programming" required>
+                </div>
+                <div class="form-group">
+                    <label for="classCode">Class Code</label>
+                    <input type="text" id="classCode" placeholder="e.g., CS-101" required>
+                </div>
+                <div class="form-group">
+                    <label for="semester">Semester</label>
+                    <input type="text" id="semester" placeholder="e.g., Fall 2024" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="minStudentId">Min Student ID</label>
+                        <input type="number" id="minStudentId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="maxStudentId">Max Student ID</label>
+                        <input type="number" id="maxStudentId" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="classDescription">Description</label>
+                    <textarea id="classDescription" rows="3" placeholder="Course description..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeCreateClassModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Class</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Upload Resource Modal -->
+    <div id="uploadModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Upload Resource</h2>
+                <button class="modal-close" onclick="closeUploadModal()">&times;</button>
+            </div>
+            <form id="uploadForm" class="modal-body" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="resourceClass">Class</label>
+                    <select id="resourceClass" required>
+                        <option value="">Select a class</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="resourceTitle">Title</label>
+                    <input type="text" id="resourceTitle" placeholder="Resource title" required>
+                </div>
+                <div class="form-group">
+                    <label for="resourceDescription">Description</label>
+                    <textarea id="resourceDescription" rows="3" placeholder="Resource description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="resourceFile">File</label>
+                    <input type="file" id="resourceFile" required accept=".pdf,.doc,.docx,.txt,.jpg,.png,.zip">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeUploadModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="/src/pages/teacher-dashboard.js"></script>
+</body>
+</html>

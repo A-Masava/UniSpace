@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - UniSpace</title>
+    <link rel="stylesheet" href="/assets/styles/index.css">
+    <link rel="stylesheet" href="/assets/styles/layouts/dashboard.css">
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+    <link rel="stylesheet" href="/assets/styles/components/class-card.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-avatar">👤</div>
+                <div class="user-info">
+                    <h3 id="userNameSidebar">Student</h3>
+                    <small id="userEmailSidebar">user@email.com</small>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#dashboard" class="nav-item active" data-page="dashboard">📊 Dashboard</a></li>
+                    <li><a href="#classes" class="nav-item" data-page="classes">🏫 My Classes</a></li>
+                    <li><a href="#messages" class="nav-item" data-page="messages">💬 Messages</a></li>
+                    <li><a href="#resources" class="nav-item" data-page="resources">📁 Resources</a></li>
+                    <li><a href="#profile" class="nav-item" data-page="profile">⚙️ Settings</a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn btn-logout" onclick="logout()">🚪 Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Top Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile-header">
+                        <span id="userNameHeader">Student</span>
+                        <div class="avatar-small">👤</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-wrapper">
+                <!-- Dashboard Page -->
+                <section id="dashboardPage" class="page-content active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">🏫</div>
+                            <div class="stat-content">
+                                <h3>Enrolled Classes</h3>
+                                <p class="stat-number" id="enrolledCount">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💬</div>
+                            <div class="stat-content">
+                                <h3>Unread Messages</h3>
+                                <p class="stat-number" id="unreadCount">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📁</div>
+                            <div class="stat-content">
+                                <h3>Resources</h3>
+                                <p class="stat-number" id="resourceCount">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⭐</div>
+                            <div class="stat-content">
+                                <h3>Learning Streak</h3>
+                                <p class="stat-number" id="streakCount">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="recent-section">
+                        <h2>Recent Classes</h2>
+                        <div class="classes-list" id="recentClasses">
+                            <!-- Classes loaded here -->
+                        </div>
+                    </section>
+                </section>
+
+                <!-- My Classes Page -->
+                <section id="classesPage" class="page-content">
+                    <div class="page-header">
+                        <h2>My Classes</h2>
+                        <button class="btn btn-secondary" onclick="showJoinClassModal()">+ Join Class</button>
+                    </div>
+
+                    <div class="classes-grid" id="classesContainer">
+                        <!-- Classes loaded here -->
+                    </div>
+
+                    <div id="noClassesMessage" class="empty-state" style="display: none;">
+                        <p>📚 You haven't joined any classes yet</p>
+                        <p>Join a class using the class code provided by your teacher</p>
+                    </div>
+                </section>
+
+                <!-- Messages Page -->
+                <section id="messagesPage" class="page-content">
+                    <div class="page-header">
+                        <h2>Messages</h2>
+                    </div>
+
+                    <div class="messages-container">
+                        <div class="messages-list" id="messagesList">
+                            <!-- Messages conversations loaded here -->
+                        </div>
+                        <div class="chat-window" id="chatWindow" style="display: none;">
+                            <div class="chat-header">
+                                <h3 id="chatTitle">Select a conversation</h3>
+                            </div>
+                            <div class="messages-feed" id="messagesFeed">
+                                <!-- Messages loaded here -->
+                            </div>
+                            <div class="chat-input">
+                                <form id="messageForm" onsubmit="sendMessage(event)">
+                                    <input type="text" id="messageInput" placeholder="Type a message..." required>
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Resources Page -->
+                <section id="resourcesPage" class="page-content">
+                    <div class="page-header">
+                        <h2>Resources</h2>
+                        <div>
+                            <input type="search" id="resourceSearch" placeholder="Search resources..." class="search-input">
+                        </div>
+                    </div>
+
+                    <div class="resources-list" id="resourcesList">
+                        <!-- Resources loaded here -->
+                    </div>
+                </section>
+
+                <!-- Settings Page -->
+                <section id="settingsPage" class="page-content">
+                    <div class="page-header">
+                        <h2>Settings</h2>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Account Settings</h3>
+                        <form id="settingsForm">
+                            <div class="form-group">
+                                <label for="settingsName">Full Name</label>
+                                <input type="text" id="settingsName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="settingsEmail">Email</label>
+                                <input type="email" id="settingsEmail" disabled>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Preferences</h3>
+                        <div class="preference-item">
+                            <label>
+                                <input type="checkbox" id="darkMode">
+                                Dark Mode
+                            </label>
+                        </div>
+                        <div class="preference-item">
+                            <label>
+                                <input type="checkbox" id="notifications" checked>
+                                Enable Notifications
+                            </label>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="joinClassModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Join a Class</h2>
+                <button class="modal-close" onclick="closeJoinClassModal()">&times;</button>
+            </div>
+            <form id="joinClassForm" class="modal-body">
+                <div class="form-group">
+                    <label for="classCode">Class Code</label>
+                    <input type="text" id="classCode" placeholder="Enter class code" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentId">Student ID</label>
+                    <input type="number" id="studentId" placeholder="Enter your student ID" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeJoinClassModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Join Class</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="/src/pages/student-dashboard.js"></script>
+</body>
+</html>

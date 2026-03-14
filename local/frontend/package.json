@@ -1,0 +1,20 @@
+{
+  "name": "@unispace/local-frontend",
+  "version": "1.0.0",
+  "description": "UniSpace Student/Teacher Application Frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx http-server public -p 3000 -g",
+    "build": "echo 'Building frontend assets...'",
+    "preview": "npx http-server public -p 3000",
+    "lint": "echo 'No linter configured'"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniSpace - Welcome</title>
+    <link rel="stylesheet" href="/assets/styles/index.css">
+    <link rel="stylesheet" href="/assets/styles/layouts/landing.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <div class="navbar-logo">
+                    <a href="/">
+                        <span class="logo-icon">📚</span>
+                        UniSpace
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#features" class="nav-link">Features</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="login.html" class="nav-link">Login</a></li>
+                    <li><a href="signup.html" class="nav-link btn-primary">Sign Up</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to UniSpace</h1>
+                <p>Your Complete Educational Platform for Smart Learning & Teaching</p>
+                <div class="hero-actions">
+                    <a href="signup.html" class="btn btn-lg btn-primary">Get Started</a>
+                    <a href="#features" class="btn btn-lg btn-outline">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="illustration">📱💻🎓</div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3>Secure Authentication</h3>
+                        <p>Student and Teacher login with password hashing and JWT tokens</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏫</div>
+                        <h3>Classroom Management</h3>
+                        <p>Create classrooms with student ID verification and auto-enrollment</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3>Real-Time Chat</h3>
+                        <p>Instant messaging for students and teachers with Socket.IO</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📁</div>
+                        <h3>Resource Sharing</h3>
+                        <p>Upload and download study materials, assignments, and notes</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Activity Monitoring</h3>
+                        <p>Teachers can track classroom activity and student participation</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Semester Management</h3>
+                        <p>Archive completed semesters and manage classrooms efficiently</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About UniSpace</h2>
+                <p>
+                    UniSpace is a comprehensive educational platform designed to bridge the gap 
+                    between students and teachers. With seamless classroom management, real-time 
+                    communication, and resource sharing, UniSpace makes education accessible and interactive.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2026 UniSpace. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
