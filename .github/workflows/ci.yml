@@ -1,0 +1,80 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo
+        options: >-
+          --health-cmd mongosh
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install admin backend dependencies
+      run: |
+        cd admin/backend
+        npm install
+
+    - name: Install local backend dependencies
+      run: |
+        cd local/backend
+        npm install
+
+    - name: Run tests
+      run: npm test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Build admin frontend
+      run: |
+        cd admin/frontend
+        npm install
+        npm run build
+
+    - name: Build local frontend
+      run: |
+        cd local/frontend
+        npm install
+        npm run build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Deploy to production
+      run: |
+        echo "Deploying to production..."
+        # Add deployment commands here

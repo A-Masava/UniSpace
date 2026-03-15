@@ -1,0 +1,17 @@
+{
+  "name": "unispace-admin-frontend",
+  "version": "1.0.0",
+  "description": "UniSpace Admin Frontend",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve -s public -l 3000",
+    "dev": "serve -s public -l 3000 --watch",
+    "build": "echo 'Build script here'"
+  },
+  "dependencies": {
+    "axios": "^1.4.0"
+  },
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
+}

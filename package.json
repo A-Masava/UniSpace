@@ -1,0 +1,33 @@
+{
+  "name": "unispace-monorepo",
+  "version": "1.0.0",
+  "description": "UniSpace - Comprehensive Educational Platform",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev:all",
+    "dev:all": "concurrently \"npm run dev:admin\" \"npm run dev:local\"",
+    "dev:admin": "concurrently \"cd admin/backend && npm run dev\" \"cd admin/frontend && npm start\"",
+    "dev:local": "concurrently \"cd local/backend && npm run dev\" \"cd local/frontend && npm start\"",
+    "test": "npm run test:admin && npm run test:local",
+    "test:admin": "cd admin/backend && npm test",
+    "test:local": "cd local/backend && npm test",
+    "build": "npm run build:admin && npm run build:local",
+    "build:admin": "cd admin/frontend && npm run build",
+    "build:local": "cd local/frontend && npm run build",
+    "start": "npm run start:all",
+    "start:all": "concurrently \"npm run start:admin\" \"npm run start:local\"",
+    "start:admin": "concurrently \"cd admin/backend && npm start\" \"cd admin/frontend && npm start\"",
+    "start:local": "concurrently \"cd local/backend && npm start\" \"cd local/frontend && npm start\""
+  },
+  "keywords": [
+    "education",
+    "classroom",
+    "learning",
+    "platform"
+  ],
+  "author": "UniSpace Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
