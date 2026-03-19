@@ -1,26 +1,466 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Student</title>
-    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unispace — Teacher Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../../assets/css/Teacher_dashboard.css"/>
 </head>
 <body>
-    <div class="dashboard">
-        <nav class="sidebar">
-            <ul>
-                <li><a href="join-class.html">Join Class</a></li>
-                <li><a href="routine.html">Routine</a></li>
-                <li><a href="resources.html">Resources</a></li>
-                <li><a href="archive.html">Archive</a></li>
-            </ul>
-        </nav>
-        <main class="content">
-            <h1>Student Dashboard</h1>
-            <div id="myClasses"></div>
-        </main>
+
+<div class="shell">
+<div class="box">
+
+  <!-- ═══════ SIDEBAR ═══════ -->
+  <aside class="sidebar">
+    <div class="sb-brand">uni<em>space</em></div>
+
+    <nav class="sb-nav">
+      <button class="sb-item active" data-page="dashboard">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="sb-item" data-page="classes">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <span>My Classes</span>
+      </button>
+      <button class="sb-item" data-page="create">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+        <span>Create Class</span>
+      </button>
+      <button class="sb-item" data-page="schedule">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <span>Schedule</span>
+      </button>
+      <button class="sb-item" data-page="classinfo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <span>Class Info</span>
+      </button>
+      <button class="sb-item" data-page="archive">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5" rx="1"/><path d="M10 12h4"/></svg>
+        <span>Archive</span>
+      </button>
+    </nav>
+
+    <div class="sb-user">
+      <div class="sb-av">T</div>
+      <div class="sb-uinfo">
+        <span class="sb-uname">Dr. Rahman</span>
+        <span class="sb-urole">Teacher</span>
+      </div>
+      <a href="../../pages/login.html" class="sb-logout" title="Logout">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+      </a>
     </div>
-    <script src="../../assets/js/student-dashboard.js"></script>
+  </aside>
+
+  <!-- ═══════ MAIN ═══════ -->
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="tb-greet">Welcome back, Dr. Rahman 👋</p>
+        <h1 class="tb-title" id="pg-title">Dashboard</h1>
+      </div>
+      <div class="tb-right">
+        <span class="tb-date" id="tb-date"></span>
+        <div class="tb-av">T</div>
+      </div>
+    </header>
+
+    <div class="main-scroll">
+
+      <!-- ── DASHBOARD ── -->
+      <div class="page active" id="pg-dashboard">
+        <div class="dash-layout">
+          <div class="dash-left">
+
+            <!-- My Classes card -->
+            <div class="card">
+              <div class="card-head">
+                <span class="card-label">My Classes</span>
+                <button class="card-link" data-goto="classes">View all</button>
+              </div>
+              <div id="d-cls-list" class="d-cls-list"></div>
+            </div>
+
+            <!-- Weekly Schedule card -->
+            <div class="card">
+              <div class="card-head">
+                <span class="card-label">Weekly Schedule</span>
+                <button class="card-link" data-goto="schedule">View all</button>
+              </div>
+              <table class="sched-table" id="d-sched-table">
+                <thead>
+                  <tr><th>#</th><th>Class</th><th>Day</th><th>Time</th><th>Room</th></tr>
+                </thead>
+                <tbody id="d-sched-body"></tbody>
+              </table>
+              <div class="empty-inline" id="d-sched-empty" style="display:none">
+                No schedule yet. <button class="link-btn" data-goto="schedule">Add slots →</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MY CLASSES ── -->
+      <div class="page" id="pg-classes">
+        <div class="pg-toolbar">
+          <p class="pg-count">Active classes: <strong id="cls-count">0</strong></p>
+          <button class="btn-primary" data-goto="create">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            New Class
+          </button>
+        </div>
+        <div class="cls-grid" id="cls-grid">
+          <div class="empty-state" id="cls-empty">
+            <div class="ei">📚</div><p>No classes yet.</p>
+            <button class="btn-outline" data-goto="create">Create your first class</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CREATE CLASS ── -->
+      <div class="page" id="pg-create">
+        <div class="form-card">
+          <h2 class="fc-title">Create New Class</h2>
+          <p  class="fc-sub">Fill in the details to set up your classroom</p>
+          <form id="create-form" onsubmit="createClass(event)">
+            <div class="frow">
+              <div class="fgrp">
+                <label>Course Name</label>
+                <div class="finput">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                  <input type="text" id="f-course" placeholder="e.g. Data Structures" required/>
+                </div>
+              </div>
+              <div class="fgrp">
+                <label>Department</label>
+                <div class="finput">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+                  <input type="text" id="f-dept" placeholder="e.g. CSE" required/>
+                </div>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fgrp">
+                <label>Batch</label>
+                <div class="finput">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                  <input type="text" id="f-batch" placeholder="e.g. 2022" required/>
+                </div>
+              </div>
+              <div class="fgrp">
+                <label>Section</label>
+                <div class="finput">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 11l3 3L22 4"/></svg>
+                  <input type="text" id="f-section" placeholder="e.g. A" required/>
+                </div>
+              </div>
+            </div>
+            <div class="fgrp">
+              <label>Student ID Range</label>
+              <div class="frow--mid">
+                <div class="finput" style="flex:1">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                  <input type="text" id="f-idfrom" placeholder="From ID" required/>
+                </div>
+                <span class="rsep">—</span>
+                <div class="finput" style="flex:1">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                  <input type="text" id="f-idto" placeholder="To ID" required/>
+                </div>
+              </div>
+            </div>
+            <div class="factions">
+              <button type="button" class="btn-ghost" data-goto="classes">Cancel</button>
+              <button type="submit" class="btn-primary">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                Create Class
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── SCHEDULE ── -->
+      <div class="page" id="pg-schedule">
+        <div class="pg-toolbar">
+          <p class="pg-count">Slots: <strong id="slot-count">0</strong></p>
+          <button class="btn-primary" id="open-sc-btn">+ Add Slot</button>
+        </div>
+        <div class="slot-list" id="slot-list">
+          <div class="empty-state" id="slot-empty">
+            <div class="ei">📅</div><p>No schedule slots yet.</p>
+            <button class="btn-outline" id="add-slot-empty">Add your first slot</button>
+          </div>
+        </div>
+        <div class="modal-bg" id="sc-modal" style="display:none">
+          <div class="modal-box">
+            <div class="modal-hd"><h3>Add Schedule Slot</h3><button class="modal-x" id="close-sc">✕</button></div>
+            <div class="fgrp"><label>Class</label><select id="sc-cls"><option value="">Select class…</option></select></div>
+            <div class="frow">
+              <div class="fgrp"><label>Day</label>
+                <select id="sc-day"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option></select>
+              </div>
+              <div class="fgrp"><label>Time</label><input type="time" id="sc-time" class="finput-bare"/></div>
+            </div>
+            <div class="fgrp"><label>Room</label><div class="finput"><input type="text" id="sc-room" placeholder="e.g. Room 301"/></div></div>
+            <div class="factions"><button class="btn-ghost" id="cancel-sc">Cancel</button><button class="btn-primary" id="save-sc">Add Slot</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CLASS INFO ── -->
+      <div class="page" id="pg-classinfo">
+        <p class="sh">Select a class to view details</p>
+        <div class="pill-row" id="info-pills"></div>
+        <div class="info-card" id="info-card" style="display:none">
+          <div class="info-banner">
+            <div class="info-bdg" id="i-bdg"></div>
+            <div><h2 id="i-course"></h2><p id="i-sub"></p></div>
+          </div>
+          <div class="info-grid">
+            <div class="ig-item"><span class="ig-l">Department</span><span class="ig-v" id="i-dept"></span></div>
+            <div class="ig-item"><span class="ig-l">Batch</span><span class="ig-v" id="i-batch"></span></div>
+            <div class="ig-item"><span class="ig-l">Section</span><span class="ig-v" id="i-section"></span></div>
+            <div class="ig-item"><span class="ig-l">Student ID Range</span><span class="ig-v" id="i-ids"></span></div>
+            <div class="ig-item"><span class="ig-l">Created</span><span class="ig-v" id="i-created"></span></div>
+            <div class="ig-item"><span class="ig-l">Status</span><span class="ig-v" id="i-status"></span></div>
+          </div>
+        </div>
+        <div class="empty-state" id="info-empty"><div class="ei">ℹ️</div><p>No classes yet. Create one first.</p></div>
+      </div>
+
+      <!-- ── ARCHIVE ── -->
+      <div class="page" id="pg-archive">
+        <div class="pg-toolbar"><p class="pg-count">Archived: <strong id="arc-count">0</strong></p></div>
+        <div class="cls-grid" id="arc-grid">
+          <div class="empty-state" id="arc-empty"><div class="ei">🗂️</div><p>No archived classes.</p></div>
+        </div>
+      </div>
+
+      <!-- ── DISMISS ── -->
+      <div class="page" id="pg-dismiss">
+        <div class="warn-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <p>Dismissing a class is <strong>permanent</strong> and cannot be undone.</p>
+        </div>
+        <div class="dis-list" id="dis-list">
+          <div class="empty-state" id="dis-empty"><div class="ei">✅</div><p>No classes to dismiss.</p></div>
+        </div>
+      </div>
+
+    </div><!-- end main-scroll -->
+  </main>
+
+</div><!-- end .box -->
+</div><!-- end .shell -->
+
+<!-- CONFIRM MODAL -->
+<div class="modal-bg" id="conf-bg" style="display:none">
+  <div class="modal-box modal-box--sm">
+    <h3 id="conf-t" style="font-family:'DM Serif Display',serif;font-size:1.2rem;color:#1e3a52;margin-bottom:10px;"></h3>
+    <p  id="conf-m" style="font-size:13px;color:#8a7868;line-height:1.6;margin-bottom:22px;"></p>
+    <div class="factions">
+      <button class="btn-ghost" id="conf-no">Cancel</button>
+      <button class="btn-danger" id="conf-yes">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var S={cls:JSON.parse(localStorage.getItem('us_cls')||'[]'),sch:JSON.parse(localStorage.getItem('us_sch')||'[]')};
+function save(){localStorage.setItem('us_cls',JSON.stringify(S.cls));localStorage.setItem('us_sch',JSON.stringify(S.sch));}
+var COLORS=['#587c8d','#2a5070','#3d7096','#1e3a52','#6e9ab0','#3db87a','#9b6ec8','#e09c3a'];
+function clr(i){return COLORS[i%COLORS.length];}
+function ini(s){return (s||'').split(' ').map(function(w){return w[0]||'';}).join('').toUpperCase().slice(0,2);}
+function act(){return S.cls.filter(function(c){return !c.archived;});}
+function arc(){return S.cls.filter(function(c){return c.archived;});}
+
+var TITLES={dashboard:'Dashboard',classes:'My Classes',create:'Create Class',schedule:'Schedule',classinfo:'Class Info',archive:'Archive',dismiss:'Dismiss Class'};
+
+document.querySelectorAll('.sb-item').forEach(function(b){b.addEventListener('click',function(){goTo(b.dataset.page,b);});});
+document.addEventListener('click',function(e){
+  var g=e.target.closest('[data-goto]');
+  if(g) goTo(g.dataset.goto);
+  var d=e.target.closest('.dot-btn');
+  if(d){e.stopPropagation();var dd=document.getElementById('dd-'+d.dataset.id);var o=dd.classList.contains('open');document.querySelectorAll('.dot-drop').forEach(function(x){x.classList.remove('open');});if(!o)dd.classList.add('open');return;}
+  var ac=e.target.closest('[data-action]');
+  if(ac){document.querySelectorAll('.dot-drop').forEach(function(x){x.classList.remove('open');});var a=ac.dataset.action,id=ac.dataset.id;if(a==='archive')archiveCls(id);if(a==='dismiss')dismissCls(id);if(a==='info')viewInfo(id);return;}
+  document.querySelectorAll('.dot-drop').forEach(function(x){x.classList.remove('open');});
+  var r=e.target.closest('[data-restoreid]');if(r){var c=S.cls.find(function(x){return x.id===r.dataset.restoreid;});if(c){c.archived=false;save();renderArchive();}}
+  var di=e.target.closest('[data-dismissid]');if(di)dismissCls(di.dataset.dismissid);
+  var dx=e.target.closest('[data-delidx]');if(dx){S.sch.splice(parseInt(dx.dataset.delidx),1);save();renderSchedule();}
+});
+
+function goTo(name,el){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active');});
+  var pg=document.getElementById('pg-'+name);if(pg)pg.classList.add('active');
+  if(el)el.classList.add('active');else{var f=document.querySelector('[data-page="'+name+'"]');if(f)f.classList.add('active');}
+  document.getElementById('pg-title').textContent=TITLES[name]||name;
+  if(name==='dashboard')renderDash();
+  if(name==='classes')renderClasses();
+  if(name==='schedule')renderSchedule();
+  if(name==='classinfo')renderInfo();
+  if(name==='archive')renderArchive();
+  if(name==='dismiss')renderDismiss();
+}
+
+function renderDash(){
+  var a=act(),r=arc(),all=S.cls;
+  var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var today=days[new Date().getDay()];
+  var el=document.getElementById('d-cls-list');el.innerHTML='';
+  if(a.length===0){el.innerHTML='<p class="empty-inline">No classes yet. <button class="link-btn" data-goto="create">Create one →</button></p>';}
+  else{
+    a.slice(0,4).forEach(function(c,i){
+      var row=document.createElement('div');row.className='d-cls-row';
+      row.style.borderLeftColor=clr(i);
+      row.innerHTML='<div class="d-cls-bdg" style="background:'+clr(i)+'">'+ini(c.course)+'</div>'+
+        '<div class="d-cls-info"><strong>'+c.course+'</strong><span>'+c.dept+' · Batch '+c.batch+' · Sec '+c.section+'</span></div>'+
+        '<span class="d-cls-tag">Active</span>';
+      el.appendChild(row);
+    });
+    if(a.length>4){var m=document.createElement('p');m.className='more-note';m.textContent='+' +(a.length-4)+' more';el.appendChild(m);}
+  }
+  var body=document.getElementById('d-sched-body');body.innerHTML='';
+  if(S.sch.length===0){document.getElementById('d-sched-table').style.display='none';document.getElementById('d-sched-empty').style.display='flex';}
+  else{
+    document.getElementById('d-sched-table').style.display='table';
+    document.getElementById('d-sched-empty').style.display='none';
+    S.sch.slice(0,6).forEach(function(s,i){
+      var cls=S.cls.find(function(c){return c.id===s.classId;})||{course:'Unknown'};
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+(i+1)+'</td><td><span class="t-dot" style="background:'+clr(i)+'"></span>'+cls.course+'</td><td>'+s.day+'</td><td>'+s.time+'</td><td>'+(s.room||'—')+'</td>';
+      body.appendChild(tr);
+    });
+  }
+}
+
+function renderClasses(){
+  var grid=document.getElementById('cls-grid'),emp=document.getElementById('cls-empty'),a=act();
+  document.getElementById('cls-count').textContent=a.length;
+  grid.querySelectorAll('.cls-card').forEach(function(e){e.remove();});
+  if(a.length===0){emp.style.display='flex';return;}emp.style.display='none';
+  a.forEach(function(c,i){
+    var card=document.createElement('div');card.className='cls-card';
+    card.innerHTML='<div class="cls-top" style="background:'+clr(i)+'">'+
+      '<div class="cls-bdg">'+ini(c.course)+'</div>'+
+      '<div class="cls-menu-wrap"><button class="dot-btn" data-id="'+c.id+'">⋯</button>'+
+      '<div class="dot-drop" id="dd-'+c.id+'">'+
+      '<button data-action="archive" data-id="'+c.id+'">📦 Archive</button>'+
+      '<button data-action="dismiss"  data-id="'+c.id+'">🗑️ Dismiss</button>'+
+      '<button data-action="info"     data-id="'+c.id+'">ℹ️ Info</button></div></div></div>'+
+      '<div class="cls-body"><h3>'+c.course+'</h3>'+
+      '<p class="cls-meta">'+c.dept+' · Batch '+c.batch+' · Sec '+c.section+'</p>'+
+      '<p class="cls-ids">ID: '+c.idFrom+' – '+c.idTo+'</p>'+
+      '<div class="cls-status"><span class="sdot green"></span>Active</div></div>';
+    grid.insertBefore(card,emp);
+  });
+}
+
+document.getElementById('create-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  S.cls.push({id:'c'+Date.now(),course:document.getElementById('f-course').value.trim(),dept:document.getElementById('f-dept').value.trim(),batch:document.getElementById('f-batch').value.trim(),section:document.getElementById('f-section').value.trim(),idFrom:document.getElementById('f-idfrom').value.trim(),idTo:document.getElementById('f-idto').value.trim(),created:new Date().toLocaleDateString(),archived:false});
+  save();document.getElementById('create-form').reset();goTo('classes');
+});
+
+function archiveCls(id){confirm2('Archive Class','Move this class to archives?',function(){var c=S.cls.find(function(x){return x.id===id;});if(c){c.archived=true;save();renderClasses();}});}
+function renderArchive(){
+  var grid=document.getElementById('arc-grid'),emp=document.getElementById('arc-empty'),r=arc();
+  document.getElementById('arc-count').textContent=r.length;
+  grid.querySelectorAll('.cls-card').forEach(function(e){e.remove();});
+  if(r.length===0){emp.style.display='flex';return;}emp.style.display='none';
+  r.forEach(function(c){
+    var card=document.createElement('div');card.className='cls-card cls-card--arc';
+    card.innerHTML='<div class="cls-top" style="background:#a8b8c0"><div class="cls-bdg">'+ini(c.course)+'</div></div>'+
+      '<div class="cls-body"><h3>'+c.course+'</h3><p class="cls-meta">'+c.dept+' · Batch '+c.batch+'</p>'+
+      '<div class="cls-status"><span class="sdot grey"></span>Archived</div>'+
+      '<button class="btn-restore" data-restoreid="'+c.id+'">Restore</button></div>';
+    grid.insertBefore(card,emp);
+  });
+}
+
+function renderInfo(){
+  var row=document.getElementById('info-pills'),emp=document.getElementById('info-empty'),a=act();
+  row.innerHTML='';
+  if(a.length===0){emp.style.display='flex';document.getElementById('info-card').style.display='none';return;}
+  emp.style.display='none';
+  a.forEach(function(c){
+    var b=document.createElement('button');b.className='pill';b.textContent=c.course;
+    b.onclick=function(){document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('active');});b.classList.add('active');showInfo(c.id);};
+    row.appendChild(b);
+  });
+}
+function showInfo(id){
+  var c=S.cls.find(function(x){return x.id===id;});if(!c)return;
+  document.getElementById('info-card').style.display='block';
+  document.getElementById('i-bdg').textContent=ini(c.course);
+  document.getElementById('i-course').textContent=c.course;
+  document.getElementById('i-sub').textContent=c.dept+' · Batch '+c.batch;
+  document.getElementById('i-dept').textContent=c.dept;
+  document.getElementById('i-batch').textContent=c.batch;
+  document.getElementById('i-section').textContent=c.section;
+  document.getElementById('i-ids').textContent=c.idFrom+' – '+c.idTo;
+  document.getElementById('i-created').textContent=c.created;
+  document.getElementById('i-status').textContent=c.archived?'Archived':'Active';
+}
+function viewInfo(id){goTo('classinfo');setTimeout(function(){showInfo(id);},80);}
+
+function renderDismiss(){
+  var list=document.getElementById('dis-list'),emp=document.getElementById('dis-empty'),a=act();
+  list.querySelectorAll('.dis-row').forEach(function(e){e.remove();});
+  if(a.length===0){emp.style.display='flex';return;}emp.style.display='none';
+  a.forEach(function(c,i){
+    var row=document.createElement('div');row.className='dis-row';
+    row.innerHTML='<div class="dis-info"><div class="dis-bdg" style="background:'+clr(i)+'">'+ini(c.course)+'</div>'+
+      '<div><strong>'+c.course+'</strong><span>'+c.dept+' · Batch '+c.batch+'</span></div></div>'+
+      '<button class="btn-danger" data-dismissid="'+c.id+'">Dismiss</button>';
+    list.insertBefore(row,emp);
+  });
+}
+function dismissCls(id){confirm2('Dismiss Class','Permanently delete this class? Cannot be undone.',function(){S.cls=S.cls.filter(function(c){return c.id!==id;});S.sch=S.sch.filter(function(s){return s.classId!==id;});save();renderClasses();renderDismiss();});}
+
+function fillScSel(){var s=document.getElementById('sc-cls');s.innerHTML='<option value="">Select class…</option>';act().forEach(function(c){var o=document.createElement('option');o.value=c.id;o.textContent=c.course;s.appendChild(o);});}
+function openSc(){fillScSel();document.getElementById('sc-modal').style.display='flex';}
+function closeSc(){document.getElementById('sc-modal').style.display='none';}
+document.getElementById('open-sc-btn').onclick=openSc;
+document.getElementById('add-slot-empty').onclick=openSc;
+document.getElementById('close-sc').onclick=closeSc;
+document.getElementById('cancel-sc').onclick=closeSc;
+document.getElementById('save-sc').onclick=function(){
+  var cid=document.getElementById('sc-cls').value,day=document.getElementById('sc-day').value,time=document.getElementById('sc-time').value,room=document.getElementById('sc-room').value.trim();
+  if(!cid||!time){alert('Select a class and time.');return;}
+  S.sch.push({classId:cid,day:day,time:time,room:room});save();closeSc();renderSchedule();
+};
+function renderSchedule(){
+  var list=document.getElementById('slot-list'),emp=document.getElementById('slot-empty');
+  document.getElementById('slot-count').textContent=S.sch.length;
+  list.querySelectorAll('.slot-row').forEach(function(e){e.remove();});
+  if(S.sch.length===0){emp.style.display='flex';return;}emp.style.display='none';
+  S.sch.forEach(function(s,i){
+    var cls=S.cls.find(function(c){return c.id===s.classId;})||{course:'Unknown'};
+    var row=document.createElement('div');row.className='slot-row';
+    row.innerHTML='<div class="slot-bar" style="background:'+clr(i)+'"></div>'+
+      '<div class="slot-body"><strong>'+cls.course+'</strong><span>'+s.day+' · '+s.time+(s.room?' · '+s.room:'')+'</span></div>'+
+      '<button class="del-btn" data-delidx="'+i+'">✕</button>';
+    list.insertBefore(row,emp);
+  });
+}
+
+var _cb=null;
+function confirm2(t,m,cb){document.getElementById('conf-t').textContent=t;document.getElementById('conf-m').textContent=m;_cb=cb;document.getElementById('conf-bg').style.display='flex';}
+document.getElementById('conf-no').onclick=function(){document.getElementById('conf-bg').style.display='none';_cb=null;};
+document.getElementById('conf-yes').onclick=function(){if(_cb)_cb();document.getElementById('conf-bg').style.display='none';_cb=null;};
+
+document.getElementById('tb-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+renderDash();
+</script>
 </body>
 </html>
