@@ -6,144 +6,115 @@
   <title>Unispace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/index.css"/>
 </head>
 <body>
 
-  <!-- Full-page centered card -->
-  <div class="page">
+  <div class="main-page">
+    <div class="big-card">
 
-    <!-- The split card -->
-    <div class="card" id="card">
+      <!-- left panel -->
+      <div class="left-panel">
+        <div class="shape1"></div>
+        <div class="shape2"></div>
+        <div class="shape3"></div>
+        <div class="shape4"></div>
 
-      <!-- ── LEFT PANEL ── -->
-      <div class="card__left">
-        <!-- Layered diagonal/chevron shapes -->
-        <div class="shape shape--back"></div>
-        <div class="shape shape--mid"></div>
-        <div class="shape shape--front"></div>
-
-        <!-- Overlapping tab — pops out between panels -->
-        <div class="overlap-tab" id="overlap-tab">
-          <span id="tab-label">LOGIN</span>
-        </div>
-
-        <!-- Bottom label -->
-        <div class="left-bottom">
-          <p class="left-switch-label" id="left-switch-label">SIGN IN</p>
+        <div class="left-text-area">
+          <div class="welcome-text">
+            <h1>Welcome to<br/><em>Unispace-Smart Classroom System</em></h1>
+            <p>Your all-in-one academic workspace — manage classes, resources, schedules and chat with your university community.</p>
+            <p class="small-text">Join thousands of students and teachers already learning together.</p>
+          </div>
         </div>
       </div>
 
-      <!-- ── RIGHT PANEL ── -->
-      <div class="card__right">
+      <!-- right panel -->
+      <div class="right-panel">
 
-        <!-- LOGIN FORM -->
-        <div class="form-panel" id="panel-login">
-          <div class="avatar-icon">
-            <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
-              <circle cx="16" cy="11" r="6" fill="white"/>
-              <path d="M4 29c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h2 class="form-title">LOGIN</h2>
-
-          <div class="field">
-            <svg class="field__ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <input type="email" placeholder="Email"/>
-          </div>
-
-          <div class="field">
-            <svg class="field__ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            <input type="password" placeholder="Password"/>
-          </div>
-
-          <div class="form-footer">
-            <a href="#" class="forgot">Forgot Password?</a>
-            <button class="btn-submit" onclick="location.href='login.html'">LOGIN</button>
-          </div>
-
-          <div class="social-row">
-            <span class="social-label">Or Login With</span>
-            <a href="#" class="social-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-              Google
-            </a>
-            <a href="#" class="social-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" fill="#1877F2"/></svg>
-              Facebook
-            </a>
-          </div>
-
-          <p class="switch-hint">Don't have an account? <a href="#" onclick="switchTo('signup'); return false;">Sign up</a></p>
+        <!-- logo top right -->
+        <div class="top-brand">
+          <img src="../assets/images/logo.png" class="logo-img" alt="Unispace Logo"/>
         </div>
 
-        <!-- SIGNUP FORM -->
-        <div class="form-panel hidden" id="panel-signup">
-          <div class="avatar-icon">
-            <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
-              <circle cx="16" cy="11" r="6" fill="white"/>
-              <path d="M4 29c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h2 class="form-title">SIGN UP</h2>
+        <!-- login and signup buttons -->
+        <div class="btn-section">
+          <h2 class="main-heading">Get Started</h2>
+          <p class="sub-text">New here or returning? Choose below.</p>
 
-          <div class="field">
-            <svg class="field__ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <input type="text" placeholder="Full Name"/>
-          </div>
+          <button class="big-btn" onclick="showPopup('login')">Login</button>
 
-          <div class="field">
-            <svg class="field__ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
-            <input type="email" placeholder="Email"/>
-          </div>
+          <div class="or-divider"><span>or</span></div>
 
-          <div class="field">
-            <svg class="field__ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            <input type="password" placeholder="Password"/>
-          </div>
+          <button class="big-btn outline-btn" onclick="showPopup('signup')">Sign Up</button>
 
-          <!-- Role -->
-          <div class="role-row">
-            <label class="role-opt selected" id="r-student">
-              <input type="radio" name="role" value="student" checked onchange="pickRole(this)"/>
-              🎒 Student
-            </label>
-            <label class="role-opt" id="r-teacher">
-              <input type="radio" name="role" value="teacher" onchange="pickRole(this)"/>
-              👩‍🏫 Teacher
-            </label>
-          </div>
-
-          <div class="form-footer form-footer--single">
-            <button class="btn-submit" onclick="location.href='signup.html'">SIGN UP</button>
-          </div>
-
-          <p class="switch-hint">Already have an account? <a href="#" onclick="switchTo('login'); return false;">Log in</a></p>
         </div>
 
       </div>
-      <!-- end right panel -->
-
     </div>
-    <!-- end card -->
-
   </div>
-  <!-- end page -->
+
+
+  <!-- dark overlay when popup opens -->
+  <div class="dark-overlay" id="dark-overlay" onclick="hidePopup()"></div>
+
+  <!-- popup to choose teacher or student -->
+  <div class="role-popup" id="role-popup">
+    <button class="close-btn" onclick="hidePopup()">&#x2715;</button>
+    <p class="popup-title" id="popup-title">Who are you?</p>
+
+    <button class="role-btn" onclick="goToPage('teacher')">Are you a Teacher?</button>
+
+    <div class="popup-or">OR</div>
+
+    <button class="role-btn" onclick="goToPage('student')">Are you a Student?</button>
+  </div>
+
 
   <script>
-    var current = 'login';
 
-    function switchTo(mode) {
-      current = mode;
-      // tab label
-      document.getElementById('tab-label').textContent = mode === 'login' ? 'LOGIN' : 'SIGN UP';
-      // left bottom label
-      document.getElementById('left-switch-label').textContent = mode === 'login' ? 'SIGN IN' : 'REGISTER';
-      // forms
-      document.getElementById('panel-login').classList.toggle('hidden', mode !== 'login');
-      document.getElementById('panel-signup').classList.toggle('hidden', mode !== 'signup');
+    // login or signup, save which one the user clicked
+    var currentMode = 'login';
+
+    function showPopup(mode) {
+      currentMode = mode;
+
+      // change the heading based on what they clicked
+      if (mode === 'login') {
+        document.getElementById('popup-title').textContent = 'Sign in as...';
+      } else {
+        document.getElementById('popup-title').textContent = 'Sign up as...';
+      }
+
+      document.getElementById('dark-overlay').classList.add('visible');
+      document.getElementById('role-popup').classList.add('visible');
+      document.body.style.overflow = 'hidden';
     }
+
+    function hidePopup() {
+      document.getElementById('dark-overlay').classList.remove('visible');
+      document.getElementById('role-popup').classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+    // redirect to the right page based on role
+    function goToPage(role) {
+      hidePopup();
+      if (currentMode === 'login') {
+        window.location.href = 'login.html?role=' + role;
+      } else {
+        window.location.href = 'signup.html?role=' + role;
+      }
+    }
+
+    // close popup on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        hidePopup();
+      }
+    });
+
   </script>
 
 </body>
