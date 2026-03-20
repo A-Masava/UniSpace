@@ -1,29 +1,29 @@
-/**
- * User Model
- */
-
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: {
-    type: String,
-    unique: true,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  role: {
-    type: String,
-    enum: ['student', 'teacher'],
-    required: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+// ── STUDENT SCHEMA ──
+const StudentSchema = new mongoose.Schema({
+  fullName:   { type: String, required: true, trim: true },
+  idNumber:   { type: String, required: true, trim: true },
+  email:      { type: String, required: true, unique: true, lowercase: true, trim: true },
+  password:   { type: String },
+  department: { type: String, trim: true },
+  googleId:   { type: String },
+  avatar:     { type: String },
+  createdAt:  { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('User', userSchema);
+// ── TEACHER SCHEMA ──
+const TeacherSchema = new mongoose.Schema({
+  fullName:  { type: String, required: true, trim: true },
+  idNumber:  { type: String, required: true, trim: true },
+  email:     { type: String, required: true, unique: true, lowercase: true, trim: true },
+  password:  { type: String },
+  googleId:  { type: String },
+  avatar:    { type: String },
+  createdAt: { type: Date, default: Date.now }
+});
+
+const Student = mongoose.model('Student', StudentSchema);
+const Teacher = mongoose.model('Teacher', TeacherSchema);
+
+module.exports = { Student, Teacher };

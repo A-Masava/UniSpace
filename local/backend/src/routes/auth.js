@@ -1,18 +1,14 @@
-// routes/auth.js
 const express              = require('express');
 const router               = express.Router();
 const bcrypt               = require('bcryptjs');
 const jwt                  = require('jsonwebtoken');
 const { Student, Teacher } = require('../models/User');
 
-// Helper: pick the right collection based on role
 function getModel(role) {
   return role === 'teacher' ? Teacher : Student;
 }
 
-// ─────────────────────────────────────────
-//  POST /api/auth/signup
-// ─────────────────────────────────────────
+// ── POST /api/auth/signup ──
 router.post('/signup', async (req, res) => {
   const { role, fullName, idNumber, email, password, department } = req.body;
 
@@ -62,9 +58,7 @@ router.post('/signup', async (req, res) => {
 });
 
 
-// ─────────────────────────────────────────
-//  POST /api/auth/login
-// ─────────────────────────────────────────
+// ── POST /api/auth/login ──
 router.post('/login', async (req, res) => {
   const { role, email, password } = req.body;
 
@@ -114,9 +108,7 @@ router.post('/login', async (req, res) => {
 });
 
 
-// ─────────────────────────────────────────
-//  POST /api/auth/google
-// ─────────────────────────────────────────
+// ── POST /api/auth/google ──
 router.post('/google', async (req, res) => {
   const { credential, role } = req.body;
 
@@ -167,9 +159,7 @@ router.post('/google', async (req, res) => {
 });
 
 
-// ─────────────────────────────────────────
-//  GET /api/auth/me
-// ─────────────────────────────────────────
+// ── GET /api/auth/me ──
 router.get('/me', async (req, res) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) return res.status(401).json({ msg: 'No token provided' });

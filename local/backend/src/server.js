@@ -1,5 +1,4 @@
-// server.js
-require('dotenv').config();
+require('dotenv').config({ path: './.env' });
 
 const express  = require('express');
 const mongoose = require('mongoose');
@@ -10,8 +9,8 @@ const authRoutes = require('./routes/auth');
 const app = express();
 
 // ── Middleware ──
-app.use(cors());           // allow frontend requests
-app.use(express.json());   // parse JSON bodies
+app.use(cors());
+app.use(express.json());
 
 // ── Database ──
 mongoose.connect(process.env.MONGO_URI)
