@@ -43,7 +43,7 @@
 
       <div class="bottom-row">
         <a href="#" class="forgot-link" onclick="showForgotPopup()">Forgot Password?</a>
-        <button class="login-btn" onclick="goToDashboard()">
+        <button class="login-btn" onclick="handleLogin()">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <rect x="3" y="11" width="18" height="11" rx="2"/>
             <path d="M7 11V7a5 5 0 0110 0v4"/>
@@ -100,14 +100,39 @@
     // update signup link to keep the role
     document.getElementById('signup-link').href = 'signup.html?role=' + userRole;
 
-    // go to the right dashboard
-    function goToDashboard() {
-      if (userRole === 'teacher') {
-        window.location.href = 'teacher/dashboard.html';
-      } else {
-        window.location.href = 'student/dashboard.html';
-      }
+// REPLACE with this:
+async function handleLogin() {
+  const email    = document.querySelector('[type="email"]').value;
+  const password = document.querySelector('[type="password"]').value;
+
+  if (!email || !password) {
+    alert('Please enter your email and password.');
+    return;
+  }
+
+  try {
+    const res  = await fetch('http://localhost:3000/api/auth/login', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ role: userRole, email, password })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem('token',    data.token);
+      localStorage.setItem('role',     data.user.role);
+      localStorage.setItem('fullName', data.user.fullName);
+
+      window.location.href = data.user.role === 'teacher'
+        ? 'teacher/dashboard.html'
+        : 'student/dashboard.html';
+    } else {
+      alert(data.msg || 'Login failed. Please check your credentials.');
     }
+  } catch (err) {
+    alert('Could not connect to server. Make sure the backend is running.');
+  }
+}
 
     // open forgot password popup
     function showForgotPopup() {
@@ -148,11 +173,10 @@
     }
 
     // close popup on escape key
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        hideForgotPopup();
-      }
-    });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') hideForgotPopup();
+    if (e.key === 'Enter')  handleLogin();
+  });
 
   </script>
 
