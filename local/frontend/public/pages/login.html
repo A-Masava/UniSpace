@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/login.css"/>
+
+  
 </head>
 <body>
 
@@ -22,15 +24,16 @@
       </div>
 
       <p class="login-title">Login</p>
-
       <p class="role-text" id="role-text">Sign in to your account</p>
+
+      <p class="error-msg" id="login-error"></p>
 
       <div class="input-field">
         <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
           <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
           <circle cx="12" cy="7" r="4"/>
         </svg>
-        <input type="email" placeholder="Email"/>
+        <input type="email" id="login-email" placeholder="Email"/>
       </div>
 
       <div class="input-field">
@@ -38,12 +41,18 @@
           <rect x="3" y="11" width="18" height="11" rx="2"/>
           <path d="M7 11V7a5 5 0 0110 0v4"/>
         </svg>
-        <input type="password" placeholder="Password"/>
+        <input type="password" id="login-password" placeholder="Password"/>
+        <button type="button" class="toggle-pass" id="pass-toggle-btn" aria-label="Show password">
+          <svg id="pass-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
       </div>
 
       <div class="bottom-row">
-        <a href="#" class="forgot-link" onclick="showForgotPopup()">Forgot Password?</a>
-        <button class="login-btn" onclick="handleLogin()">
+        <a href="#" class="forgot-link" id="forgot-link">Forgot Password?</a>
+        <button class="login-btn" id="login-btn">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <rect x="3" y="11" width="18" height="11" rx="2"/>
             <path d="M7 11V7a5 5 0 0110 0v4"/>
@@ -61,15 +70,15 @@
     </div>
   </div>
 
-  <!-- dark overlay -->
-  <div class="popup-overlay" id="popup-overlay" onclick="hideForgotPopup()"></div>
+  <!-- overlay behind the popup -->
+  <div class="popup-overlay" id="popup-overlay"></div>
 
   <!-- forgot password popup -->
   <div class="forgot-popup" id="forgot-popup">
-    <button class="popup-close-btn" onclick="hideForgotPopup()">&#x2715;</button>
+    <button class="popup-close-btn" id="popup-close-btn">&#x2715;</button>
 
     <p class="forgot-popup-title">Reset Password</p>
-    <p class="forgot-popup-sub">Enter your email and we will send you a reset link</p>
+    <p class="forgot-popup-sub">Enter your email and we'll send you a reset link</p>
 
     <div class="input-field" style="margin-top: 20px;">
       <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
@@ -79,104 +88,175 @@
       <input type="email" id="reset-email" placeholder="Your email address"/>
     </div>
 
-    <button class="send-btn" onclick="sendResetLink()">Send Reset Link</button>
-
+    <button class="send-btn" id="send-reset-btn">Send Reset Link</button>
     <p class="reset-msg" id="reset-msg"></p>
   </div>
 
+
   <script>
 
-    // get the role from url
+  
     var params = new URLSearchParams(window.location.search);
     var userRole = params.get('role') || 'student';
 
-    // show which portal they are logging into
-    if (userRole === 'teacher') {
-      document.getElementById('role-text').textContent = 'Teacher Portal — Sign in';
-    } else {
-      document.getElementById('role-text').textContent = 'Student Portal — Sign in';
-    }
+    var roleLabel = userRole === 'teacher' ? 'Teacher Portal — Sign in' : 'Student Portal — Sign in';
+    document.getElementById('role-text').textContent = roleLabel;
 
-    // update signup link to keep the role
+    
     document.getElementById('signup-link').href = 'signup.html?role=' + userRole;
 
-// REPLACE with this:
-async function handleLogin() {
-  const email    = document.querySelector('[type="email"]').value;
-  const password = document.querySelector('[type="password"]').value;
 
-  if (!email || !password) {
-    alert('Please enter your email and password.');
-    return;
-  }
+    //password toggle
 
-  try {
-    const res  = await fetch('http://localhost:3000/api/auth/login', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ role: userRole, email, password })
+    var passInput = document.getElementById('login-password');
+    var passToggleBtn = document.getElementById('pass-toggle-btn');
+
+    var eyeOpenSVG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    var eyeOffSVG  = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
+    passToggleBtn.addEventListener('click', function() {
+      var isHidden = passInput.type === 'password';
+      passInput.type = isHidden ? 'text' : 'password';
+      passToggleBtn.innerHTML = isHidden ? eyeOffSVG : eyeOpenSVG;
     });
-    const data = await res.json();
 
-    if (res.ok) {
-      localStorage.setItem('token',    data.token);
-      localStorage.setItem('role',     data.user.role);
-      localStorage.setItem('fullName', data.user.fullName);
 
-      window.location.href = data.user.role === 'teacher'
-        ? 'teacher/dashboard.html'
-        : 'student/dashboard.html';
-    } else {
-      alert(data.msg || 'Login failed. Please check your credentials.');
+
+
+    function showError(msg) {
+      document.getElementById('login-error').textContent = msg;
     }
-  } catch (err) {
-    alert('Could not connect to server. Make sure the backend is running.');
-  }
-}
 
-    // open forgot password popup
-    function showForgotPopup() {
-      document.getElementById('popup-overlay').classList.add('visible');
-      document.getElementById('forgot-popup').classList.add('visible');
+    function clearError() {
+      document.getElementById('login-error').textContent = '';
+    }
+
+
+
+    var loginBtn = document.getElementById('login-btn');
+
+    var defaultBtnHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> LOGIN';
+    var loadingBtnHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="animation:spin 1s linear infinite;"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg> Logging in...';
+
+    function setLoading(on) {
+      loginBtn.disabled = on;
+      loginBtn.innerHTML = on ? loadingBtnHTML : defaultBtnHTML;
+    }
+
+
+    //login handle
+
+    async function handleLogin() {
+      clearError();
+
+      var email    = document.getElementById('login-email').value.trim();
+      var password = passInput.value;
+
+      if (!email) {
+        showError('Please enter your email.');
+        return;
+      }
+      if (!email.includes('@')) {
+        showError('Please enter a valid email address.');
+        return;
+      }
+      if (!password) {
+        showError('Please enter your password.');
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        var res  = await fetch('http://localhost:3000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ role: userRole, email: email, password: password })
+        });
+        var data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem('token',    data.token);
+          localStorage.setItem('role',     data.user.role);
+          localStorage.setItem('fullName', data.user.fullName);
+
+          if (data.user.role === 'teacher') {
+            window.location.href = 'teacher/dashboard.html';
+          } else {
+            window.location.href = 'student/dashboard.html';
+          }
+        } else {
+          showError(data.msg || 'Login failed. Please check your credentials.');
+          setLoading(false);
+        }
+      } catch (err) {
+        showError('Could not connect to server. Make sure the backend is running.');
+        setLoading(false);
+      }
+    }
+
+    loginBtn.addEventListener('click', handleLogin);
+
+
+    // forgot password popup
+
+    var overlay   = document.getElementById('popup-overlay');
+    var popup     = document.getElementById('forgot-popup');
+    var closeBtn  = document.getElementById('popup-close-btn');
+    var forgotBtn = document.getElementById('forgot-link');
+
+    function openPopup() {
+      overlay.classList.add('visible');
+      popup.classList.add('visible');
       document.body.style.overflow = 'hidden';
       document.getElementById('reset-msg').textContent = '';
       document.getElementById('reset-email').value = '';
     }
 
-    // close forgot password popup
-    function hideForgotPopup() {
-      document.getElementById('popup-overlay').classList.remove('visible');
-      document.getElementById('forgot-popup').classList.remove('visible');
+    function closePopup() {
+      overlay.classList.remove('visible');
+      popup.classList.remove('visible');
       document.body.style.overflow = '';
     }
 
-    // send reset link
-    function sendResetLink() {
-      var email = document.getElementById('reset-email').value.trim();
-      var msg = document.getElementById('reset-msg');
+    forgotBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openPopup();
+    });
 
-      // check if email is empty
-      if (email === '') {
-        msg.textContent = 'Please enter your email.';
-        msg.style.color = '#e74c3c';
+    closeBtn.addEventListener('click', closePopup);
+    overlay.addEventListener('click',  closePopup);
+
+
+    // send reset link 
+
+    var sendResetBtn = document.getElementById('send-reset-btn');
+
+    sendResetBtn.addEventListener('click', function() {
+      var email   = document.getElementById('reset-email').value.trim();
+      var msgEl   = document.getElementById('reset-msg');
+
+      if (!email) {
+        msgEl.style.color   = '#e74c3c';
+        msgEl.textContent   = 'Please enter your email.';
+        return;
+      }
+      if (!email.includes('@')) {
+        msgEl.style.color   = '#e74c3c';
+        msgEl.textContent   = 'Please enter a valid email.';
         return;
       }
 
-      // check if email looks valid
-      if (email.indexOf('@') === -1) {
-        msg.textContent = 'Please enter a valid email.';
-        msg.style.color = '#e74c3c';
-        return;
-      }
+      //reset email API 
+    });
 
-      // backend api call will go here 
-    }
 
-    // close popup on escape key
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') hideForgotPopup();
-    if (e.key === 'Enter')  handleLogin();
-  });
+    //keyboard shortcuts
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closePopup();
+      if (e.key === 'Enter')  handleLogin();
+    });
 
   </script>
 
