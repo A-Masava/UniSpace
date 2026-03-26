@@ -158,7 +158,7 @@
     var params   = new URLSearchParams(window.location.search);
     var userRole = params.get('role') || 'student';
 
-    // update titles and the login link 
+    // update titles and the login_link 
     if (userRole === 'teacher') {
       document.getElementById('signup-title').textContent = 'Teacher Sign Up';
       document.getElementById('role-text').textContent    = 'Teacher Portal — Create your account';
