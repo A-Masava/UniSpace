@@ -8,8 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="../assets/css/login.css"/>
-
-  
 </head>
 <body>
 
@@ -95,20 +93,18 @@
 
   <script>
 
-  
     var params = new URLSearchParams(window.location.search);
     var userRole = params.get('role') || 'student';
 
     var roleLabel = userRole === 'teacher' ? 'Teacher Portal — Sign in' : 'Student Portal — Sign in';
     document.getElementById('role-text').textContent = roleLabel;
 
-    
     document.getElementById('signup-link').href = 'signup.html?role=' + userRole;
 
 
-    //password toggle
+    // password toggle
 
-    var passInput = document.getElementById('login-password');
+    var passInput     = document.getElementById('login-password');
     var passToggleBtn = document.getElementById('pass-toggle-btn');
 
     var eyeOpenSVG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
@@ -121,7 +117,7 @@
     });
 
 
-
+    // inline error helpers
 
     function showError(msg) {
       document.getElementById('login-error').textContent = msg;
@@ -132,6 +128,7 @@
     }
 
 
+    // button loading state
 
     var loginBtn = document.getElementById('login-btn');
 
@@ -144,7 +141,7 @@
     }
 
 
-    //login handle
+    // handle login
 
     async function handleLogin() {
       clearError();
@@ -169,9 +166,9 @@
 
       try {
         var res  = await fetch('http://localhost:3000/api/auth/login', {
-          method: 'POST',
+          method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ role: userRole, email: email, password: password })
+          body:    JSON.stringify({ role: userRole, email: email, password: password })
         });
         var data = await res.json();
 
@@ -228,30 +225,30 @@
     overlay.addEventListener('click',  closePopup);
 
 
-    // send reset
+    // send reset link
 
     var sendResetBtn = document.getElementById('send-reset-btn');
 
     sendResetBtn.addEventListener('click', function() {
-      var email   = document.getElementById('reset-email').value.trim();
-      var msgEl   = document.getElementById('reset-msg');
+      var email = document.getElementById('reset-email').value.trim();
+      var msgEl = document.getElementById('reset-msg');
 
       if (!email) {
-        msgEl.style.color   = '#e74c3c';
-        msgEl.textContent   = 'Please enter your email.';
+        msgEl.style.color = '#e74c3c';
+        msgEl.textContent = 'Please enter your email.';
         return;
       }
       if (!email.includes('@')) {
-        msgEl.style.color   = '#e74c3c';
-        msgEl.textContent   = 'Please enter a valid email.';
+        msgEl.style.color = '#e74c3c';
+        msgEl.textContent = 'Please enter a valid email.';
         return;
       }
 
-      //reset email API 
+      // reset email API call goes here when ready
     });
 
 
-    //keyboard shortcuts
+    // keyboard shortcuts
 
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closePopup();
