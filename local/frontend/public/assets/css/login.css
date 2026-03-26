@@ -27,7 +27,7 @@ html, body {
 }
 
 
-/* ─── page background ─── */
+
 
 .login-page {
   min-height: 100vh;
@@ -66,7 +66,7 @@ html, body {
 }
 
 
-/* ─── white card ─── */
+
 
 .login-card {
   position: relative;
@@ -83,7 +83,7 @@ html, body {
 }
 
 
-/* ─── user icon ─── */
+
 
 .user-icon {
   width: 70px;
@@ -98,7 +98,7 @@ html, body {
 }
 
 
-/* ─── headings ─── */
+
 
 .login-title {
   font-family: var(--normal-font);
@@ -128,9 +128,6 @@ html, body {
   height: 1px;
   background: var(--border);
 }
-
-
-/* ─── input fields ─── */
 
 .input-field {
   position: relative;
@@ -168,7 +165,6 @@ html, body {
 }
 
 
-/* ─── password eye toggle ─── */
 
 .toggle-pass {
   position: absolute;
@@ -190,7 +186,7 @@ html, body {
 }
 
 
-/* ─── inline error message ─── */
+
 
 .error-msg {
   color: #e74c3c;
@@ -202,7 +198,7 @@ html, body {
 }
 
 
-/* ─── bottom row (forgot + login btn) ─── */
+
 
 .bottom-row {
   width: 100%;
@@ -226,7 +222,7 @@ html, body {
 }
 
 
-/* ─── login button ─── */
+/*  login button  */
 
 .login-btn {
   display: flex;
@@ -262,7 +258,7 @@ html, body {
 }
 
 
-/* ─── sign up link ─── */
+/*  sign up link */
 
 .no-account {
   font-size: 13px;
@@ -281,7 +277,7 @@ html, body {
 }
 
 
-/* ─── back to home ─── */
+
 
 .back-home {
   margin-top: 14px;
@@ -300,7 +296,7 @@ html, body {
 }
 
 
-/* ─── forgot password overlay ─── */
+/* forgot password overlay */
 
 .popup-overlay {
   position: fixed;
@@ -321,7 +317,7 @@ html, body {
 }
 
 
-/* ─── forgot password popup ─── */
+/*forgot password popup */
 
 .forgot-popup {
   position: fixed;
@@ -414,7 +410,7 @@ html, body {
 }
 
 
-/* ─── spinner for loading state ─── */
+/* spinner for loading state*/
 
 @keyframes spin {
   from { transform: rotate(0deg); }
@@ -422,7 +418,7 @@ html, body {
 }
 
 
-/* ─── mobile ─── */
+/* mobile */
 
 @media (max-width: 480px) {
   .login-card {
