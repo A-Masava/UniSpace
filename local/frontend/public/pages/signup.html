@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unispace Sign Up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/css/signup.css"/>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  
+</head>
+<body>
+
+  <div class="signup-page">
+    <div class="signup-card">
+
+      <div class="user-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="11" r="6" fill="white"/>
+          <path d="M4 29c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <p class="signup-title" id="signup-title">Sign Up</p>
+      <p class="role-text" id="role-text">Create your account</p>
+
+      <p class="error-msg" id="signup-error"></p>
+
+  
+      <form class="signup-form hidden" id="student-form">
+
+        <div class="input-field">
+          <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <input type="text" id="s-name" placeholder="Full Name" required/>
+        </div>
+
+        <div class="input-field">
+          <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+          </svg>
+          <input type="text" id="s-id" placeholder="Student ID" required/>
+        </div>
+
+        <div class="input-field">
+          <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2z"/><path d="M22 6l-10 7L2 6"/>
+          </svg>
+          <input type="email" id="s-email" placeholder="Email" required/>
+        </div>
+
+        <div class="input-field">
+          <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+          <input type="password" id="s-password" placeholder="Password" required/>
+          <button type="button" class="toggle-pass" id="s-pass-toggle" aria-label="Show password">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="input-field">
+          <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <input type="text" id="s-dept" placeholder="Department (e.g. CSE, EEE)" required/>
+        </div>
+
+        <button type="submit" class="create-btn" id="student-submit-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+          Create Account
+        </button>
+
+      </form>
+
+  
+      <form class="signup-form hidden" id="teacher-form">
+
+        <div class="input-field">
+          <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <input type="text" id="t-name" placeholder="Full Name" required/>
+        </div>
+
+        <div class="input-field">
+          <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>
+          </svg>
+          <input type="text" id="t-id" placeholder="Teacher ID" required/>
+        </div>
+
+        <div class="input-field">
+          <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2z"/><path d="M22 6l-10 7L2 6"/>
+          </svg>
+          <input type="email" id="t-email" placeholder="Email" required/>
+        </div>
+
+        <div class="input-field">
+          <svg class="input-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+          <input type="password" id="t-password" placeholder="Password" required/>
+          <button type="button" class="toggle-pass" id="t-pass-toggle" aria-label="Show password">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+
+        <button type="submit" class="create-btn" id="teacher-submit-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+          Create Account
+        </button>
+
+      </form>
+
+      <div class="or-line"><span>or continue with</span></div>
+
+      <button class="google-btn" id="google-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <p class="already-have">Already have an account? <a href="#" id="login-link">Log in</a></p>
+
+      <div class="back-home">
+        <a href="index.html" class="back-link">&#8592; Back to home</a>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+
+  
+    var params   = new URLSearchParams(window.location.search);
+    var userRole = params.get('role') || 'student';
+
+    // update titles and the login link 
+    if (userRole === 'teacher') {
+      document.getElementById('signup-title').textContent = 'Teacher Sign Up';
+      document.getElementById('role-text').textContent    = 'Teacher Portal — Create your account';
+    } else {
+      document.getElementById('signup-title').textContent = 'Student Sign Up';
+      document.getElementById('role-text').textContent    = 'Student Portal — Create your account';
+    }
+
+    document.getElementById('login-link').href = 'login.html?role=' + userRole;
+
+  
+    var studentForm = document.getElementById('student-form');
+    var teacherForm = document.getElementById('teacher-form');
+    studentForm.classList.toggle('hidden', userRole !== 'student');
+    teacherForm.classList.toggle('hidden', userRole !== 'teacher');
+
+
+
+    var eyeOpenSVG = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    var eyeOffSVG  = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
+    function wirePasswordToggle(inputId, btnId) {
+      var input = document.getElementById(inputId);
+      var btn   = document.getElementById(btnId);
+      btn.addEventListener('click', function() {
+        var hidden = input.type === 'password';
+        input.type    = hidden ? 'text' : 'password';
+        btn.innerHTML = hidden ? eyeOffSVG : eyeOpenSVG;
+      });
+    }
+
+    wirePasswordToggle('s-password', 's-pass-toggle');
+    wirePasswordToggle('t-password', 't-pass-toggle');
+
+
+    
+
+    function showError(msg) {
+      document.getElementById('signup-error').textContent = msg;
+    }
+
+    function clearError() {
+      document.getElementById('signup-error').textContent = '';
+    }
+
+
+    // button state helpers
+
+    var createBtnHTML  = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg> Create Account';
+    var loadingBtnHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="animation:spin 1s linear infinite;"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg> Creating...';
+
+    function setLoading(btnEl, on) {
+      btnEl.disabled   = on;
+      btnEl.innerHTML  = on ? loadingBtnHTML : createBtnHTML;
+    }
+
+
+
+    function validate(fields) {
+      if (!fields.fullName.trim()) {
+        showError('Please enter your full name.');
+        return false;
+      }
+      if (!fields.idNumber.trim()) {
+        showError('Please enter your ID.');
+        return false;
+      }
+      if (!fields.email.includes('@')) {
+        showError('Please enter a valid email address.');
+        return false;
+      }
+      if (fields.password.length < 8) {
+        showError('Password must be at least 8 characters.');
+        return false;
+      }
+      if (userRole === 'student' && !fields.department.trim()) {
+        showError('Please enter your department.');
+        return false;
+      }
+      return true;
+    }
+
+
+    // form submit
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      clearError();
+
+      var btnId = userRole === 'student' ? 'student-submit-btn' : 'teacher-submit-btn';
+      var btn   = document.getElementById(btnId);
+
+      // pull values from the visible form's named inputs
+      var fields = {};
+      if (userRole === 'student') {
+        fields.fullName   = document.getElementById('s-name').value;
+        fields.idNumber   = document.getElementById('s-id').value;
+        fields.email      = document.getElementById('s-email').value;
+        fields.password   = document.getElementById('s-password').value;
+        fields.department = document.getElementById('s-dept').value;
+      } else {
+        fields.fullName   = document.getElementById('t-name').value;
+        fields.idNumber   = document.getElementById('t-id').value;
+        fields.email      = document.getElementById('t-email').value;
+        fields.password   = document.getElementById('t-password').value;
+        fields.department = '';
+      }
+
+      if (!validate(fields)) return;
+
+      setLoading(btn, true);
+
+      try {
+        var res  = await fetch('http://localhost:3000/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            role:       userRole,
+            fullName:   fields.fullName,
+            idNumber:   fields.idNumber,
+            email:      fields.email,
+            password:   fields.password,
+            department: fields.department
+          })
+        });
+        var data = await res.json();
+
+        if (res.ok) {
+          window.location.href = 'login.html?role=' + userRole;
+        } else {
+          showError(data.msg || 'Signup failed. Please try again.');
+          setLoading(btn, false);
+        }
+      } catch (err) {
+        showError('Could not connect to server. Make sure the backend is running.');
+        setLoading(btn, false);
+      }
+    }
+
+    studentForm.addEventListener('submit', handleSubmit);
+    teacherForm.addEventListener('submit', handleSubmit);
+
+
+    //  google sign up
+
+    document.getElementById('google-btn').addEventListener('click', function() {
+      if (typeof google === 'undefined') {
+        showError('Google Sign-Up is not configured yet. Please sign up with email.');
+        return;
+      }
+
+      google.accounts.id.initialize({
+        client_id: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+        callback: async function(response) {
+          try {
+            var res  = await fetch('http://localhost:3000/api/auth/google', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ credential: response.credential, role: userRole })
+            });
+            var data = await res.json();
+
+            if (res.ok) {
+              window.location.href = 'login.html?role=' + userRole;
+            } else {
+              showError(data.msg || 'Google sign-up failed. Please try again.');
+            }
+          } catch (err) {
+            showError('Server error during Google sign-up. Try again later.');
+          }
+        },
+        auto_select: false
+      });
+
+      google.accounts.id.prompt();
+    });
+
+  </script>
+
+</body>
+</html>
