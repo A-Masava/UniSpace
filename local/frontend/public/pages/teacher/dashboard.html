@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — Unispace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/Teacher_dashboard.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="app-box">
+
+        <!-- sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
+               
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-link active">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="classes.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                    </svg>
+                    <span>My Classes</span>
+                </a>
+                <a href="create-class.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 8v8M8 12h8"/>
+                    </svg>
+                    <span>New Class</span>
+                </a>
+                <a href="schedule.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    <span>Schedule</span>
+                </a>
+                <a href="class-info.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    <span>Class Info</span>
+                </a>
+                <a href="archive.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <polyline points="21 8 21 21 3 21 3 8"/>
+                        <rect x="1" y="3" width="22" height="5" rx="1"/>
+                        <path d="M10 12h4"/>
+                    </svg>
+                    <span>Archive</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="teacher-avatar">T</div>
+                <div class="teacher-info">
+                    <span class="teacher-name">Dr. Rahman</span>
+                    <span class="teacher-role">Teacher</span>
+                </div>
+                <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+                    </svg>
+                </button>
+            </div>
+
+        </aside>
+
+        
+        <main class="main-content">
+
+            <header class="topbar">
+                <div class="topbar-left">
+                    <p>Welcome back, Dr. Rahman </p>
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="topbar-right">
+                    <span class="current-date" id="today-date"></span>
+                    <div class="topbar-avatar">T</div>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <div class="page-content">
+                    <div class="dashboard-layout">
+
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-title">My Classes</span>
+                                <a href="classes.html" class="card-link">View all →</a>
+                            </div>
+                            <div class="classes-preview" id="classes-list"></div>
+                        </div>
+
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-title">Weekly Schedule</span>
+                                <a href="schedule.html" class="card-link">View all →</a>
+                            </div>
+
+                            <table class="schedule-table" id="schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Class</th>
+                                        <th>Day</th>
+                                        <th>Time</th>
+                                        <th>Room</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="schedule-rows"></tbody>
+                            </table>
+
+                            <div id="no-schedule-msg" style="display:none; padding:14px 0; font-size:12.5px; color:#8a7868;">
+                                No schedule yet. <a href="schedule.html" style="color:#587c8d; font-weight:600;">Add slots →</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+
+
+<div class="modal-overlay" id="signout-overlay" style="display:none;" onclick="handleBackdropClick(event)">
+    <div class="signout-box">
+
+        <div class="signout-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8" stroke-linecap="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+        </div>
+
+        <h3>Sign out?</h3>
+        <p>You'll be taken back to the login screen.</p>
+
+        <div class="signout-actions">
+            <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
+            <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    var classes   = JSON.parse(localStorage.getItem('us_cls') || '[]');
+    var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');
+
+    // color palette for class cards/rows
+    var palette = [
+        '#587c8d', '#2a5070', '#3d7096',
+        '#1e3a52', '#6e9ab0', '#3db87a',
+        '#9b6ec8', '#e09c3a'
+    ];
+
+    function color(i) {
+        return palette[i % palette.length];
+    }
+
+    // get 2-letter initials from a course name
+    function initials(name) {
+        return name
+            .split(' ')
+            .map(function(w) { return w[0] || ''; })
+            .join('')
+            .toUpperCase()
+            .slice(0, 2);
+    }
+
+    function activeClasses() {
+        return classes.filter(function(c) { return !c.archived; });
+    }
+
+    // todays date
+    document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+
+    // build the classes preview list
+    var active = activeClasses();
+    var listEl = document.getElementById('classes-list');
+
+    if (active.length === 0) {
+        listEl.innerHTML =
+            '<p style="font-size:12.5px; color:#8a7868; padding:6px 0;">' +
+                'No classes yet. <a href="create-class.html" style="color:#587c8d; font-weight:600;">Create one →</a>' +
+            '</p>';
+    } else {
+        // 4 classes show
+        active.slice(0, 4).forEach(function(cls, i) {
+            var row = document.createElement('div');
+            row.className = 'preview-row';
+            row.style.borderLeftColor = color(i);
+            row.innerHTML =
+                '<div class="preview-badge" style="background:' + color(i) + '">' + initials(cls.course) + '</div>' +
+                '<div class="preview-info">' +
+                    '<strong>' + cls.course + '</strong>' +
+                    '<span>' + cls.dept + ' · Batch ' + cls.batch + ' · Sec ' + cls.section + '</span>' +
+                '</div>' +
+                '<span class="active-pill">Active</span>';
+            listEl.appendChild(row);
+        });
+
+        if (active.length > 4) {
+            var note = document.createElement('p');
+            note.className = 'more-note';
+            note.textContent = '+' + (active.length - 4) + ' more classes';
+            listEl.appendChild(note);
+        }
+    }
+
+
+    // fill in the schedule table
+    var tableEl = document.getElementById('schedule-table');
+    var rowsEl  = document.getElementById('schedule-rows');
+
+    if (schedules.length === 0) {
+        tableEl.style.display = 'none';
+        document.getElementById('no-schedule-msg').style.display = 'block';
+    } else {
+        schedules.slice(0, 6).forEach(function(slot, i) {
+            var match = classes.find(function(c) { return c.id === slot.classId; });
+            var name  = match ? match.course : 'Unknown';
+
+            var tr = document.createElement('tr');
+            tr.innerHTML =
+                '<td>' + (i + 1) + '</td>' +
+                '<td><span class="color-dot" style="background:' + color(i) + '"></span>' + name + '</td>' +
+                '<td>' + slot.day + '</td>' +
+                '<td>' + slot.time + '</td>' +
+                '<td>' + (slot.room || '—') + '</td>';
+            rowsEl.appendChild(tr);
+        });
+    }
+
+
+    
+    function openSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.style.display = 'flex';
+        setTimeout(function() { el.classList.add('visible'); }, 10);
+    }
+
+    function closeSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.classList.remove('visible');
+        setTimeout(function() { el.style.display = 'none'; }, 230);
+    }
+
+    function handleBackdropClick(e) {
+        if (e.target === document.getElementById('signout-overlay')) {
+            closeSignoutPopup();
+        }
+    }
+
+    function doSignout() {
+        window.location.href = '../login.html';
+    }
+
+</script>
+
+</body>
+</html>
