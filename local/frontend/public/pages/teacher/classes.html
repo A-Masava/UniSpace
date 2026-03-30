@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule — Unispace</title>
+    <title>My Classes — Unispace</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
 
             <div class="sidebar-brand">
                 <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
-            
+                
             </div>
 
             <nav class="sidebar-nav">
@@ -32,7 +32,7 @@
                     </svg>
                     <span>Dashboard</span>
                 </a>
-                <a href="classes.html" class="nav-link">
+                <a href="classes.html" class="nav-link active">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
                         <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
                         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
@@ -46,7 +46,7 @@
                     </svg>
                     <span>New Class</span>
                 </a>
-                <a href="schedule.html" class="nav-link active">
+                <a href="schedule.html" class="nav-link">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
                         <rect x="3" y="4" width="18" height="18" rx="2"/>
                         <path d="M16 2v4M8 2v4M3 10h18"/>
@@ -91,7 +91,7 @@
             <header class="topbar">
                 <div class="topbar-left">
                     <p>Welcome back, Dr. Rahman 👋</p>
-                    <h1>Schedule</h1>
+                    <h1>My Classes</h1>
                 </div>
                 <div class="topbar-right">
                     <span class="current-date" id="today-date"></span>
@@ -103,15 +103,20 @@
                 <div class="page-content">
 
                     <div class="toolbar-row">
-                        <p class="count-label">Total slots: <strong id="slot-count">0</strong></p>
-                        <button class="btn-primary" id="open-modal-btn">+ Add Slot</button>
+                        <p class="count-label">Active classes: <strong id="active-count">0</strong></p>
+                        <a href="create-class.html" class="btn-primary">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                            New Class
+                        </a>
                     </div>
 
-                    <div class="slot-list" id="slot-list">
+                    <div class="class-grid" id="class-grid">
                         <div class="empty-state" id="empty-state">
-                            <div class="empty-icon">📅</div>
-                            <p>No schedule slots yet.</p>
-                            <button class="btn-outline" id="add-first-btn" style="margin-top:4px;">Add your first slot</button>
+                            <div class="empty-icon">📚</div>
+                            <p>No classes yet.</p>
+                            <a href="create-class.html" class="btn-outline" style="margin-top:4px;">Create your first class</a>
                         </div>
                     </div>
 
@@ -124,55 +129,20 @@
 </div>
 
 
-<!-- add slot modal -->
-<div class="modal-overlay" id="slot-modal" style="display:none;" onclick="handleModalBackdrop(event)">
-    <div class="modal-box">
-
+<!-- archive confirmation popup -->
+<div class="modal-overlay" id="confirm-overlay" style="display:none;" onclick="handleBackdropClick(event)">
+    <div class="modal-box small-modal">
         <div class="modal-header">
-            <h3>Add Schedule Slot</h3>
-            <button class="modal-close-btn" onclick="closeModal()">✕</button>
+            <h3 id="confirm-title">Archive Class</h3>
+            <button class="modal-close-btn" onclick="closeConfirm()">✕</button>
         </div>
-
-        <div class="form-group">
-            <label for="pick-class">Class</label>
-            <select id="pick-class">
-                <option value="">Select a class...</option>
-            </select>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="pick-day">Day</label>
-                <select id="pick-day">
-                    <option>Monday</option>
-                    <option>Tuesday</option>
-                    <option>Wednesday</option>
-                    <option>Thursday</option>
-                    <option>Friday</option>
-                    <option>Saturday</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="pick-time">Time</label>
-                <input type="time" id="pick-time">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="room-no">Room</label>
-            <div class="input-wrap">
-                <input type="text" id="room-no" placeholder="e.g. Room 301">
-            </div>
-        </div>
-
+        <p id="confirm-msg" style="font-size:13px; color:#8a7868; line-height:1.6; margin-bottom:22px;"></p>
         <div class="form-actions">
-            <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-            <button class="btn-primary" id="save-slot-btn">Save Slot</button>
+            <button class="btn-secondary" onclick="closeConfirm()">Cancel</button>
+            <button class="btn-danger" id="confirm-ok-btn">Archive</button>
         </div>
-
     </div>
 </div>
-
 
 <!-- signout popup -->
 <div class="modal-overlay" id="signout-overlay" style="display:none;" onclick="handleSignoutBackdrop(event)">
@@ -205,12 +175,16 @@
 
     function color(i) { return palette[i % palette.length]; }
 
+    function initials(name) {
+        return name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
+    }
+
     function save() {
         localStorage.setItem('us_cls', JSON.stringify(classes));
         localStorage.setItem('us_sch', JSON.stringify(schedules));
     }
 
-    function activeClasses() {
+    function activeList() {
         return classes.filter(function(c) { return !c.archived; });
     }
 
@@ -218,100 +192,128 @@
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    function renderSlots() {
-        var list  = document.getElementById('slot-list');
-        var empty = document.getElementById('empty-state');
+    function renderClasses() {
+        var grid   = document.getElementById('class-grid');
+        var empty  = document.getElementById('empty-state');
+        var active = activeList();
 
-        document.getElementById('slot-count').textContent = schedules.length;
+        document.getElementById('active-count').textContent = active.length;
 
-        // clear and redraw
-        list.querySelectorAll('.slot-row').forEach(function(el) { el.remove(); });
+        // remove existing cards before re-rendering
+        grid.querySelectorAll('.class-card').forEach(function(el) { el.remove(); });
 
-        if (schedules.length === 0) {
+        if (active.length === 0) {
             empty.style.display = 'flex';
             return;
         }
 
         empty.style.display = 'none';
 
-        schedules.forEach(function(slot, i) {
-            var match = classes.find(function(c) { return c.id === slot.classId; });
-            var name  = match ? match.course : 'Unknown';
-
-            var row = document.createElement('div');
-            row.className = 'slot-row';
-            row.innerHTML =
-                '<div class="slot-color-strip" style="background:' + color(i) + '"></div>' +
-                '<div class="slot-details">' +
-                    '<strong>' + name + '</strong>' +
-                    '<span>' + slot.day + ' · ' + slot.time + (slot.room ? ' · ' + slot.room : '') + '</span>' +
+        active.forEach(function(cls, i) {
+            var card = document.createElement('div');
+            card.className = 'class-card';
+            card.style.cursor = 'pointer';
+            // clicking the card opens the class announcement page
+            // but we stop it from firing if the three-dot menu was clicked
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('.card-menu-wrap')) {
+                    window.location.href = 'class/announcement.html?id=' + cls.id;
+                }
+            });
+            card.innerHTML =
+                '<div class="class-card-top" style="background:' + color(i) + '">' +
+                    '<div class="class-initials">' + initials(cls.course) + '</div>' +
+                    '<div class="card-menu-wrap">' +
+                        '<button class="three-dot-btn" data-id="' + cls.id + '">⋯</button>' +
+                        '<div class="card-dropdown" id="menu-' + cls.id + '">' +
+                            '<button data-action="archive" data-id="' + cls.id + '">📦 Archive</button>' +
+                            '<button onclick="window.location.href=\'class-info.html?id=' + cls.id + '\'">ℹ️ View Info</button>' +
+                        '</div>' +
+                    '</div>' +
                 '</div>' +
-                '<button class="slot-remove-btn" data-index="' + i + '">✕</button>';
-            list.insertBefore(row, empty);
+                '<div class="class-card-body">' +
+                    '<h3>' + cls.course + '</h3>' +
+                    '<p class="class-meta">' + cls.dept + ' · Batch ' + cls.batch + ' · Sec ' + cls.section + '</p>' +
+                    '<p class="class-id-range">ID: ' + cls.idFrom + ' – ' + cls.idTo + '</p>' +
+                    '<div class="class-status-row"><span class="status-dot green"></span>Active</div>' +
+                '</div>';
+            grid.insertBefore(card, empty);
         });
     }
 
-    // fill the class dropdown when opening the modal
-    function fillClassDropdown() {
-        var dropdown = document.getElementById('pick-class');
-        var active   = activeClasses();
+    // handle clicks on the grid (three-dot menu + dropdown actions)
+    document.addEventListener('click', function(e) {
 
-        dropdown.innerHTML = '<option value="">Select a class...</option>';
-        active.forEach(function(cls) {
-            var opt = document.createElement('option');
-            opt.value       = cls.id;
-            opt.textContent = cls.course;
-            dropdown.appendChild(opt);
-        });
-    }
+        var menuBtn = e.target.closest('.three-dot-btn');
+        if (menuBtn) {
+            e.stopPropagation();
+            var id      = menuBtn.dataset.id;
+            var menu    = document.getElementById('menu-' + id);
+            var wasOpen = menu.classList.contains('open');
 
-    function openModal() {
-        fillClassDropdown();
-        var el = document.getElementById('slot-modal');
+            // close all open menus first
+            document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
+            if (!wasOpen) menu.classList.add('open');
+            return;
+        }
+
+        var actionBtn = e.target.closest('[data-action]');
+        if (actionBtn) {
+            document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
+
+            var action  = actionBtn.dataset.action;
+            var classId = actionBtn.dataset.id;
+
+            if (action === 'archive') {
+                openConfirm(
+                    'Archive this class?',
+                    'The class will be moved to your archive. You can restore it later.',
+                    function() {
+                        var found = classes.find(function(c) { return c.id === classId; });
+                        if (found) {
+                            found.archived = true;
+                            save();
+                            renderClasses();
+                        }
+                    }
+                );
+            }
+            return;
+        }
+
+        // click anywhere else closes open menus
+        document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
+    });
+
+
+    // confirm popup
+    var pendingFn = null;
+
+    function openConfirm(title, msg, callback) {
+        document.getElementById('confirm-title').textContent = title;
+        document.getElementById('confirm-msg').textContent   = msg;
+        pendingFn = callback;
+        var el = document.getElementById('confirm-overlay');
         el.style.display = 'flex';
         setTimeout(function() { el.classList.add('visible'); }, 10);
     }
 
-    function closeModal() {
-        var el = document.getElementById('slot-modal');
+    function closeConfirm() {
+        var el = document.getElementById('confirm-overlay');
         el.classList.remove('visible');
         setTimeout(function() { el.style.display = 'none'; }, 230);
+        pendingFn = null;
     }
 
-    function handleModalBackdrop(e) {
-        if (e.target === document.getElementById('slot-modal')) closeModal();
+    function handleBackdropClick(e) {
+        if (e.target === document.getElementById('confirm-overlay')) closeConfirm();
     }
 
-    document.getElementById('open-modal-btn').onclick = openModal;
-    document.getElementById('add-first-btn').onclick  = openModal;
-
-    document.getElementById('save-slot-btn').onclick = function() {
-        var classId = document.getElementById('pick-class').value;
-        var day     = document.getElementById('pick-day').value;
-        var time    = document.getElementById('pick-time').value;
-        var room    = document.getElementById('room-no').value.trim();
-
-        if (!classId || !time) {
-            alert('Please select a class and set a time.');
-            return;
-        }
-
-        schedules.push({ classId: classId, day: day, time: time, room: room });
-        save();
-        closeModal();
-        renderSlots();
+    document.getElementById('confirm-ok-btn').onclick = function() {
+        if (pendingFn) pendingFn();
+        closeConfirm();
     };
 
-    // remove slot via the x button
-    document.addEventListener('click', function(e) {
-        var removeBtn = e.target.closest('[data-index]');
-        if (removeBtn) {
-            var idx = parseInt(removeBtn.dataset.index);
-            schedules.splice(idx, 1);
-            save();
-            renderSlots();
-        }
-    });
 
     // signout popup
     function openSignoutPopup() {
@@ -334,7 +336,7 @@
         window.location.href = '../login.html';
     }
 
-    renderSlots();
+    renderClasses();
 
 </script>
 
