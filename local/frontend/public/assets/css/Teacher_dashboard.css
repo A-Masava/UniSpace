@@ -1,4 +1,3 @@
-
 .dashboard-layout {
     display: grid;
     grid-template-columns: 1fr;
@@ -10,7 +9,6 @@
     flex-direction: column;
     gap: 9px;
 }
-
 
 .preview-row {
     display: flex;
@@ -38,7 +36,6 @@
     color: #fff;
     font-weight: 700;
     font-size: 11px;
-    
 }
 
 .preview-info strong {
@@ -53,7 +50,6 @@
     color: #8a7868;
 }
 
-
 .active-pill {
     margin-left: auto;
     font-size: 9.5px;
@@ -67,13 +63,11 @@
     flex-shrink: 0;
 }
 
-
 .more-note {
     font-size: 11.5px;
     color: #8a7868;
     padding: 3px 13px;
 }
-
 
 .schedule-table {
     width: 100%;
@@ -110,7 +104,6 @@
     color: #2c1f14;
 }
 
-/*class name */
 .color-dot {
     display: inline-block;
     width: 7px;
@@ -118,4 +111,168 @@
     border-radius: 50%;
     margin-right: 7px;
     vertical-align: middle;
+}
+
+/* inline fallback text helpers (replaces inline styles in HTML) */
+.no-classes-msg {
+    font-size: 12.5px;
+    color: #8a7868;
+    padding: 6px 0;
+}
+
+.no-classes-link {
+    color: #587c8d;
+    font-weight: 600;
+}
+
+.no-schedule-msg {
+    display: none;
+    padding: 14px 0;
+    font-size: 12.5px;
+    color: #8a7868;
+}
+
+.no-schedule-link {
+    color: #587c8d;
+    font-weight: 600;
+}
+
+
+/*
+   NEW — Topbar avatar dropdown
+*/
+
+.topbar-avatar-wrap {
+    position: relative;
+    display: inline-flex;
+}
+
+.topbar-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1e3a52;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.topbar-avatar:hover {
+    box-shadow: 0 0 0 3px rgba(88, 124, 141, 0.3);
+    transform: scale(1.05);
+}
+
+.topbar-avatar.open {
+    box-shadow: 0 0 0 3px rgba(88, 124, 141, 0.45);
+}
+
+.avatar-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 210px;
+    background: #fff;
+    border: 1px solid #e5e1db;
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(30, 58, 82, 0.13), 0 2px 8px rgba(30, 58, 82, 0.07);
+    padding: 6px;
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transform-origin: top right;
+}
+
+.avatar-dropdown.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.dropdown-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 10px 8px;
+    border-bottom: 1px solid #f0ece7;
+    margin-bottom: 4px;
+}
+
+.dropdown-header-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #1e3a52;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dropdown-header-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dropdown-header-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e3a52;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-header-role {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: #8a7868;
+    font-weight: 400;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #2e4a5e;
+    text-decoration: none;
+    transition: background 0.14s ease, color 0.14s ease;
+    text-align: left;
+}
+
+.dropdown-item:hover {
+    background: #f3f0ec;
+    color: #1e3a52;
+}
+
+.dropdown-item svg {
+    flex-shrink: 0;
+    opacity: 0.75;
+}
+
+.dropdown-item:hover svg {
+    opacity: 1;
 }
