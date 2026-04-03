@@ -95,7 +95,7 @@
                 <div class="topbar-right">
                     <span class="current-date" id="today-date"></span>
 
-                    <!-- Avatar with dropdown -->
+                        <!-- Avatar with dropdown -->
                     <div class="topbar-avatar-wrap" id="avatar-wrap">
                         <div class="topbar-avatar" id="topbar-avatar" onclick="toggleDropdown(event)" title="Account"></div>
 
@@ -201,6 +201,30 @@
     document.getElementById('topbar-avatar').textContent   = initial;
     document.getElementById('dropdown-avatar').textContent = initial;
     document.getElementById('dropdown-name').textContent   = fullName;
+
+    /* Fetch fresh user data from API and cache it for profile/settings pages */
+    var token = localStorage.getItem('token') || '';
+    if (token) {
+        fetch('http://localhost:3000/api/auth/me', {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+            if (data._id || data.id) {
+                localStorage.setItem('us_user', JSON.stringify(data));
+                var fn = data.fullName || fullName;
+                var si = fn.charAt(0).toUpperCase();
+                localStorage.setItem('fullName', fn);
+                document.getElementById('teacher-name').textContent    = fn;
+                document.getElementById('welcome-msg').textContent     = 'Welcome back, ' + fn;
+                document.getElementById('sidebar-avatar').textContent  = si;
+                document.getElementById('topbar-avatar').textContent   = si;
+                document.getElementById('dropdown-avatar').textContent = si;
+                document.getElementById('dropdown-name').textContent   = fn;
+            }
+        })
+        .catch(function(){});
+    }
 
     var classes   = JSON.parse(localStorage.getItem('us_cls') || '[]');
     var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');

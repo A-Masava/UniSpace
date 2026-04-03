@@ -1,14 +1,14 @@
-const express              = require('express');
-const router               = express.Router();
-const bcrypt               = require('bcryptjs');
-const jwt                  = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { Student, Teacher } = require('../models/User');
 
 function getModel(role) {
   return role === 'teacher' ? Teacher : Student;
 }
 
-// ── POST /api/auth/signup ──
+// POST /api/auth/signup
 router.post('/signup', async (req, res) => {
   const { role, fullName, idNumber, email, password, department } = req.body;
 
@@ -24,7 +24,7 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ msg: 'An account with this email already exists' });
     }
 
-    const salt   = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(password, salt);
 
     const data = { fullName, idNumber, email, password: hashed };
@@ -43,10 +43,10 @@ router.post('/signup', async (req, res) => {
       msg: 'Account created successfully',
       token,
       user: {
-        id:         user._id,
+        id: user._id,
         role,
-        fullName:   user.fullName,
-        email:      user.email,
+        fullName: user.fullName,
+        email: user.email,
         department: user.department || null
       }
     });
@@ -58,7 +58,7 @@ router.post('/signup', async (req, res) => {
 });
 
 
-// ── POST /api/auth/login ──
+// POST /api/auth/login
 router.post('/login', async (req, res) => {
   const { role, email, password } = req.body;
 
@@ -93,10 +93,10 @@ router.post('/login', async (req, res) => {
       msg: 'Login successful',
       token,
       user: {
-        id:         user._id,
+        id: user._id,
         role,
-        fullName:   user.fullName,
-        email:      user.email,
+        fullName: user.fullName,
+        email: user.email,
         department: user.department || null
       }
     });
@@ -108,7 +108,7 @@ router.post('/login', async (req, res) => {
 });
 
 
-// ── POST /api/auth/google ──
+// POST /api/auth/google
 router.post('/google', async (req, res) => {
   const { credential, role } = req.body;
 
@@ -121,7 +121,7 @@ router.post('/google', async (req, res) => {
     const { sub: googleId, email, name, picture } = payload;
 
     const Model = getModel(role);
-    let user    = await Model.findOne({ email });
+    let user = await Model.findOne({ email });
 
     if (!user) {
       user = new Model({
@@ -144,11 +144,11 @@ router.post('/google', async (req, res) => {
       msg: 'Google sign-in successful',
       token,
       user: {
-        id:       user._id,
+        id: user._id,
         role,
         fullName: user.fullName,
-        email:    user.email,
-        avatar:   user.avatar
+        email: user.email,
+        avatar: user.avatar
       }
     });
 
@@ -159,7 +159,7 @@ router.post('/google', async (req, res) => {
 });
 
 
-// ── GET /api/auth/me ──
+// GET /api/auth/me
 router.get('/me', async (req, res) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) return res.status(401).json({ msg: 'No token provided' });
@@ -167,13 +167,15 @@ router.get('/me', async (req, res) => {
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const Model   = getModel(decoded.role);
-    const user    = await Model.findById(decoded.id).select('-password');
+    const Model = getModel(decoded.role);
+    const user = await Model.findById(decoded.id).select('-password');
     if (!user) return res.status(404).json({ msg: 'User not found' });
     res.json({ ...user.toObject(), role: decoded.role });
   } catch (err) {
     res.status(401).json({ msg: 'Invalid or expired token' });
   }
 });
+
+
 
 module.exports = router;

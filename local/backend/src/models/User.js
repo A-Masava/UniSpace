@@ -14,13 +14,18 @@ const StudentSchema = new mongoose.Schema({
 
 // ── TEACHER SCHEMA ──
 const TeacherSchema = new mongoose.Schema({
-  fullName:  { type: String, required: true, trim: true },
-  idNumber:  { type: String, required: true, trim: true },
-  email:     { type: String, required: true, unique: true, lowercase: true, trim: true },
-  password:  { type: String },
-  googleId:  { type: String },
-  avatar:    { type: String },
-  createdAt: { type: Date, default: Date.now }
+  fullName:    { type: String, required: true, trim: true },
+  idNumber:    { type: String, required: true, trim: true },
+  email:       { type: String, required: true, unique: true, lowercase: true, trim: true },
+  password:    { type: String },
+  googleId:    { type: String },
+  avatar:      { type: String },
+  bio:         { type: String, trim: true, default: '' },
+  phone:       { type: String, trim: true, default: '' },
+  department:  { type: String, trim: true, default: '' },
+  designation: { type: String, trim: true, default: '' },
+  website:     { type: String, trim: true, default: '' },
+  createdAt:   { type: Date, default: Date.now }
 });
 
 const Student = mongoose.model('Student', StudentSchema);
