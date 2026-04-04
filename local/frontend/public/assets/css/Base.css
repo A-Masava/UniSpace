@@ -529,10 +529,14 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 11px;
-    padding: 48px 20px;
+    padding: 60px 20px;
     color: #8a7868;
     text-align: center;
+    grid-column: 1 / -1;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .empty-state .empty-icon {
@@ -666,6 +670,7 @@ button {
     padding: 32px 36px;
     max-width: 630px;
     box-shadow: 0 4px 18px rgba(145,105,65,0.06);
+    margin: 0 auto;
 }
 
 .form-card h2 {
@@ -798,7 +803,7 @@ input[type="time"]:focus {
     display: flex;
     flex-direction: column;
     gap: 9px;
-    max-width: 690px;
+    width: 100%;
 }
 
 .slot-row {
@@ -809,6 +814,7 @@ input[type="time"]:focus {
     border-radius: 13px;
     overflow: hidden;
     box-shadow: 0 2px 7px rgba(145,105,65,0.04);
+    max-width: 690px;
 }
 
 /* the left colored strip, color is set via JS */

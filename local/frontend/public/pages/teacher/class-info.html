@@ -151,7 +151,13 @@
                     </div>
 
                     <div class="empty-state" id="empty-state">
-                        <div class="empty-icon">ℹ️</div>
+                        <div class="empty-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                        </div>
                         <p>No active classes found. <a href="create-class.html" style="color: #587c8d;">Create one first.</a></p>
                     </div>
 
@@ -170,7 +176,7 @@
     document.getElementById('teacher-name').textContent   = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
     document.getElementById('topbar-avatar').textContent  = initial;
-    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName + ' 👋';
+    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
 
     var savedClasses = JSON.parse(localStorage.getItem('us_cls') || '[]');
 

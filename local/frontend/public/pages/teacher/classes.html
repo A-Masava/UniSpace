@@ -114,7 +114,12 @@
 
                     <div class="class-grid" id="class-grid">
                         <div class="empty-state" id="empty-state">
-                            <div class="empty-icon">📚</div>
+                            <div class="empty-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                </svg>
+                            </div>
                             <p>No classes yet.</p>
                             <a href="create-class.html" class="btn-outline" style="margin-top:4px;">Create your first class</a>
                         </div>
@@ -169,7 +174,7 @@
     document.getElementById('teacher-name').textContent   = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
     document.getElementById('topbar-avatar').textContent  = initial;
-    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName + ' 👋';
+    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
 
     var classes   = JSON.parse(localStorage.getItem('us_cls') || '[]');
     var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');

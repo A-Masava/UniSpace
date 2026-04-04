@@ -109,7 +109,14 @@
 
                     <div class="slot-list" id="slot-list">
                         <div class="empty-state" id="empty-state">
-                            <div class="empty-icon">📅</div>
+                            <div class="empty-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </div>
                             <p>No schedule slots yet.</p>
                             <button class="btn-outline" id="add-first-btn" style="margin-top:4px;">Add your first slot</button>
                         </div>
@@ -199,7 +206,7 @@
     document.getElementById('teacher-name').textContent   = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
     document.getElementById('topbar-avatar').textContent  = initial;
-    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName + ' 👋';
+    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
 
     var classes   = JSON.parse(localStorage.getItem('us_cls') || '[]');
     var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');

@@ -108,7 +108,13 @@
 
                     <div class="class-grid" id="archive-grid">
                         <div class="empty-state" id="empty-state">
-                            <div class="empty-icon">🗂️</div>
+                            <div class="empty-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="21 8 21 21 3 21 3 8"></polyline>
+                                    <rect x="1" y="3" width="22" height="5" rx="1"></rect>
+                                    <line x1="10" y1="12" x2="14" y2="12"></line>
+                                </svg>
+                            </div>
                             <p>Nothing archived yet.</p>
                             <p style="font-size:12px; color:#aaa; margin-top:-4px;">Archive a class from My Classes.</p>
                         </div>
@@ -148,7 +154,7 @@
     document.getElementById('teacher-name').textContent   = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
     document.getElementById('topbar-avatar').textContent  = initial;
-    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName + ' 👋';
+    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
 
     var classes = JSON.parse(localStorage.getItem('us_cls') || '[]');
 
