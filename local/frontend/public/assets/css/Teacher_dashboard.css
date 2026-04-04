@@ -138,9 +138,6 @@
 }
 
 
-/*
-   NEW — Topbar avatar dropdown
-*/
 
 .topbar-avatar-wrap {
     position: relative;
@@ -277,3 +274,130 @@
     opacity: 1;
 }
 
+
+
+.input-wrap.has-actions {
+    padding-right: 0;
+    overflow: hidden;
+}
+
+.input-wrap.has-actions input {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    flex: 1;
+    min-width: 0;
+}
+
+.code-actions {
+    display: flex;
+    align-items: stretch;
+    flex-shrink: 0;
+    padding: 5px 6px;
+    gap: 5px;
+}
+
+/* Copy button — subtle ghost style */
+.code-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 12px;
+    height: 100%;
+    background: transparent;
+    border: 1.5px solid #d8e2ea;
+    border-radius: 7px;
+    color: #6a7f8e;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+
+.code-copy-btn:hover {
+    border-color: #1e3a52;
+    color: #1e3a52;
+    background: #f4f8fb;
+}
+
+/* OK button — solid pill */
+.code-ok-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 20px;
+    height: 100%;
+    background: #1e3a52;
+    border: none;
+    border-radius: 7px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+    box-shadow: 0 2px 8px rgba(30, 58, 82, 0.18);
+    white-space: nowrap;
+}
+
+.code-ok-btn:hover {
+    background: #16303f;
+    box-shadow: 0 4px 14px rgba(30, 58, 82, 0.28);
+    transform: translateY(-1px);
+}
+
+.code-ok-btn:active {
+    transform: translateY(0);
+}
+
+.code-ok-btn.confirmed {
+    background: #1f7a4f;
+    box-shadow: 0 2px 10px rgba(31, 122, 79, 0.28);
+    cursor: default;
+}
+
+.code-ok-btn.confirmed:hover {
+    background: #1f7a4f;
+    transform: none;
+}
+
+.ok-check {
+    display: none;
+}
+
+.code-ok-btn.confirmed .ok-check {
+    display: inline;
+}
+
+.code-ok-btn.confirmed .ok-text {
+    display: none;
+}
+
+/* copy toast */
+.copy-toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: #1e3a52;
+    color: #fff;
+    padding: 9px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s, transform 0.22s;
+    z-index: 9999;
+}
+
+.copy-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

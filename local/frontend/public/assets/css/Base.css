@@ -1,4 +1,4 @@
-/* base.css - shared styles for all teacher pages */
+
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
@@ -44,7 +44,7 @@ button {
     inset: 0;
 }
 
-/* blurry blobs on top of the gradient for extra depth */
+
 .page-wrapper::before {
     content: '';
     position: fixed;
@@ -817,7 +817,7 @@ input[type="time"]:focus {
     max-width: 690px;
 }
 
-/* the left colored strip, color is set via JS */
+
 .slot-color-strip {
     width: 5px;
     min-height: 58px;
@@ -1101,7 +1101,7 @@ input[type="time"]:focus {
 @media (max-width: 700px) {
     .page-wrapper { padding: 8px; }
 
-    /* collapse sidebar to icons only */
+   
     .sidebar { width: 58px; }
 
     .sidebar-logo,
