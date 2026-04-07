@@ -113,7 +113,24 @@
     vertical-align: middle;
 }
 
-/* inline fallback text helpers (replaces inline styles in HTML) */
+.schedule-edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #587c8d;
+    transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.schedule-edit-btn:hover {
+    color: #1565C0;
+    transform: scale(1.1);
+}
+
+/* inline fallback text helpers */
 .no-classes-msg {
     font-size: 12.5px;
     color: #8a7868;

@@ -154,6 +154,7 @@
                                         <th>Day</th>
                                         <th>Time</th>
                                         <th>Room</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="schedule-rows"></tbody>
@@ -230,9 +231,8 @@
     var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');
 
     var palette = [
-        '#587c8d', '#2a5070', '#3d7096',
-        '#1e3a52', '#6e9ab0', '#3db87a',
-        '#9b6ec8', '#e09c3a'
+        '#1565C0', '#1976D2', '#1E88E5', '#2196F3',
+        '#42A5F5', '#64B5F6', '#90CAF9', '#BBDEFB'
     ];
 
     function color(i) { return palette[i % palette.length]; }
@@ -297,7 +297,13 @@
                 '<td><span class="color-dot" style="background:' + color(i) + '"></span>' + name + '</td>' +
                 '<td>' + slot.day + '</td>' +
                 '<td>' + slot.time + '</td>' +
-                '<td>' + (slot.room || '—') + '</td>';
+                '<td>' + (slot.room || '—') + '</td>' +
+                '<td><button class="schedule-edit-btn" title="Edit schedule" onclick="editScheduleSlot(' + i + ')">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+                '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>' +
+                '<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>' +
+                '</svg>' +
+                '</button></td>';
             rowsEl.appendChild(tr);
         });
     }
@@ -334,6 +340,14 @@
         if (e.key === 'Escape' && isOpen) closeDropdown();
     });
 
+    /* Schedule edit function */
+    function editScheduleSlot(index) {
+        var slot = schedules[index];
+        if (slot) {
+            window.location.href = 'schedule.html?edit=' + index;
+        }
+    }
+
     /* Sign out modal */
     function openSignoutPopup() {
         var el = document.getElementById('signout-overlay');
@@ -352,7 +366,7 @@
     }
 
     function doSignout() {
-        window.location.href = '../login.html';
+        window.location.href = '../index.html';
     }
 
 </script>

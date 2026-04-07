@@ -136,7 +136,7 @@
     <div class="modal-box">
 
         <div class="modal-header">
-            <h3>Add Schedule Slot</h3>
+            <h3 id="modal-title">Add Schedule Slot</h3>
             <button class="modal-close-btn" onclick="closeModal()">✕</button>
         </div>
 
@@ -212,9 +212,8 @@
     var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');
 
     var palette = [
-        '#587c8d', '#2a5070', '#3d7096',
-        '#1e3a52', '#6e9ab0', '#3db87a',
-        '#9b6ec8', '#e09c3a'
+        '#1565C0', '#1976D2', '#1E88E5', '#2196F3',
+        '#42A5F5', '#64B5F6', '#90CAF9', '#BBDEFB'
     ];
 
     function color(i) { return palette[i % palette.length]; }
@@ -260,6 +259,12 @@
                     '<strong>' + name + '</strong>' +
                     '<span>' + slot.day + ' · ' + slot.time + (slot.room ? ' · ' + slot.room : '') + '</span>' +
                 '</div>' +
+                '<button class="slot-edit-btn" data-index="' + i + '" title="Edit slot">' +
+                '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+                '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>' +
+                '<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>' +
+                '</svg>' +
+                '</button>' +
                 '<button class="slot-remove-btn" data-index="' + i + '">✕</button>';
             list.insertBefore(row, empty);
         });
@@ -279,14 +284,39 @@
         });
     }
 
-    function openModal() {
+    function editSlot(index) {
+        editingIndex = index;
+        var slot = schedules[index];
+        
         fillClassDropdown();
+        
+        document.getElementById('pick-class').value = slot.classId;
+        document.getElementById('pick-day').value = slot.day;
+        document.getElementById('pick-time').value = slot.time;
+        document.getElementById('room-no').value = slot.room || '';
+        document.getElementById('modal-title').textContent = 'Edit Schedule Slot';
+        document.getElementById('save-slot-btn').textContent = 'Update Slot';
+        
+        openModal();
+    }
+
+    function openModal() {
+        if (editingIndex === null) {
+            // Reset form for adding new slot
+            document.getElementById('pick-class').value = '';
+            document.getElementById('pick-day').value = 'Monday';
+            document.getElementById('pick-time').value = '';
+            document.getElementById('room-no').value = '';
+            document.getElementById('modal-title').textContent = 'Add Schedule Slot';
+            document.getElementById('save-slot-btn').textContent = 'Save Slot';
+        }
         var el = document.getElementById('slot-modal');
         el.style.display = 'flex';
         setTimeout(function() { el.classList.add('visible'); }, 10);
     }
 
     function closeModal() {
+        editingIndex = null;
         var el = document.getElementById('slot-modal');
         el.classList.remove('visible');
         setTimeout(function() { el.style.display = 'none'; }, 230);
@@ -299,6 +329,8 @@
     document.getElementById('open-modal-btn').onclick = openModal;
     document.getElementById('add-first-btn').onclick  = openModal;
 
+    var editingIndex = null;
+
     document.getElementById('save-slot-btn').onclick = function() {
         var classId = document.getElementById('pick-class').value;
         var day     = document.getElementById('pick-day').value;
@@ -310,15 +342,29 @@
             return;
         }
 
-        schedules.push({ classId: classId, day: day, time: time, room: room });
+        if (editingIndex !== null) {
+            // Update existing slot
+            schedules[editingIndex] = { classId: classId, day: day, time: time, room: room };
+            editingIndex = null;
+        } else {
+            // Add new slot
+            schedules.push({ classId: classId, day: day, time: time, room: room });
+        }
         save();
         closeModal();
         renderSlots();
     };
 
-    // remove slot via the x button
+    // edit slot
     document.addEventListener('click', function(e) {
-        var removeBtn = e.target.closest('[data-index]');
+        var editBtn = e.target.closest('.slot-edit-btn');
+        if (editBtn) {
+            var idx = parseInt(editBtn.dataset.index);
+            editSlot(idx);
+            return;
+        }
+
+        var removeBtn = e.target.closest('[data-index].slot-remove-btn');
         if (removeBtn) {
             var idx = parseInt(removeBtn.dataset.index);
             schedules.splice(idx, 1);
