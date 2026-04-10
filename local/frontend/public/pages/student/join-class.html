@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Class — Unispace Student</title>
+    <meta name="description" content="Join a class on Unispace by entering the class code shared by your teacher.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/Student_base.css">
+
+    <style>
+        /* center the join box vertically and horizontally */
+        .join-center {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .join-card {
+            width: min(520px, 100%);
+            background: #fff;
+            border: 1.5px solid #c8d6e8;
+            border-top: 4px solid #0e2b4e;
+            border-radius: 18px;
+            padding: 36px 38px 32px;
+            box-shadow:
+                0 4px 24px rgba(14, 43, 78, 0.09),
+                0 1px 4px rgba(14, 43, 78, 0.06);
+        }
+
+        .join-card-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: #eef3f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .join-card-icon svg {
+            stroke: #0e2b4e;
+        }
+
+        .join-card h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: #0e2b4e;
+            margin-bottom: 5px;
+        }
+
+        .join-card .form-subtitle {
+            font-size: 12.5px;
+            color: #8a7868;
+            margin-bottom: 26px;
+            line-height: 1.5;
+        }
+
+        .join-card .form-group label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #0e2b4e;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        #join-feedback {
+            font-size: 12.5px;
+            margin-top: 10px;
+            display: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="app-box">
+
+        <!-- sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="join-class.html" class="nav-link active">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/>
+                        <line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                    <span>Join Class</span>
+                </a>
+                <a href="classes.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                    </svg>
+                    <span>My Classes</span>
+                </a>
+                <a href="routine.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    <span>Routine</span>
+                </a>
+                <a href="archive.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <polyline points="21 8 21 21 3 21 3 8"/>
+                        <rect x="1" y="3" width="22" height="5" rx="1"/>
+                        <path d="M10 12h4"/>
+                    </svg>
+                    <span>Archive</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="student-avatar" id="sidebar-avatar"></div>
+                <div class="student-info">
+                    <span class="student-name" id="student-name"></span>
+                    <span class="student-role">Student</span>
+                </div>
+                <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+                    </svg>
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- main content -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div class="topbar-left">
+                    <p id="welcome-msg"></p>
+                    <h1>Join Class</h1>
+                </div>
+                <div class="topbar-right">
+                    <span class="current-date" id="today-date"></span>
+                    <div class="topbar-avatar" id="topbar-avatar"></div>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <div class="join-center">
+
+                    <div class="join-card">
+                        <div class="join-card-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/>
+                                <polyline points="10 17 15 12 10 7"/>
+                                <line x1="15" y1="12" x2="3" y2="12"/>
+                            </svg>
+                        </div>
+
+                        <h2>Enter Class Code</h2>
+                        <p class="form-subtitle">Ask your teacher for the class code and type it below to join.</p>
+
+                        <div class="form-group">
+                            <label for="class-code-input">Class Code</label>
+                            <div class="input-wrap has-actions">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2"/>
+                                    <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+                                    <line x1="12" y1="12" x2="12" y2="16"/>
+                                    <line x1="10" y1="14" x2="14" y2="14"/>
+                                </svg>
+                                <input type="text" id="class-code-input" placeholder="e.g. ABC123" maxlength="10" autocomplete="off" spellcheck="false">
+                                <div class="code-actions">
+                                    <button class="code-join-btn" id="join-btn" onclick="joinClass()">
+                                        <span class="join-text">Join</span>
+                                        <span class="join-check" style="display:none;">✓ Joined!</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p id="join-feedback"></p>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+
+<!-- sign-out popup -->
+<div class="modal-overlay" id="signout-overlay" style="display:none;" onclick="handleBackdropClick(event)">
+    <div class="signout-box">
+        <div class="signout-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0e2b4e" stroke-width="1.8" stroke-linecap="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+        </div>
+        <h3>Sign out?</h3>
+        <p>You'll be taken back to the login screen.</p>
+        <div class="signout-actions">
+            <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
+            <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    var fullName = localStorage.getItem('fullName') || 'Student';
+    var initial  = fullName.charAt(0).toUpperCase();
+    document.getElementById('student-name').textContent   = fullName;
+    document.getElementById('sidebar-avatar').textContent = initial;
+    document.getElementById('topbar-avatar').textContent  = initial;
+    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
+
+    document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    var joined = JSON.parse(localStorage.getItem('st_cls') || '[]');
+
+    function save() {
+        localStorage.setItem('st_cls', JSON.stringify(joined));
+    }
+
+    /* enforce uppercase on input */
+    var codeInput = document.getElementById('class-code-input');
+    codeInput.addEventListener('input', function() {
+        var pos = this.selectionStart;
+        this.value = this.value.toUpperCase();
+        this.setSelectionRange(pos, pos);
+    });
+
+    /* join a class */
+    function joinClass() {
+        var code = codeInput.value.trim().toUpperCase();
+
+        if (!code) {
+            showFeedback('Please enter a class code.', '#bc4f47');
+            return;
+        }
+
+        /* check duplicate */
+        var existing = joined.find(function(c) { return c.code === code && !c.archived; });
+        if (existing) {
+            showFeedback('You have already joined this class.', '#bc4f47');
+            return;
+        }
+
+        /* look up from teacher's class list */
+        var teacherClasses = JSON.parse(localStorage.getItem('us_cls') || '[]');
+        var found = teacherClasses.find(function(c) { return c.code === code && !c.archived; });
+
+        if (!found) {
+            showFeedback('No active class found with that code. Check with your teacher.', '#bc4f47');
+            return;
+        }
+
+        /* add to student list */
+        joined.unshift({
+            id:       found.id,
+            code:     found.code,
+            course:   found.course,
+            dept:     found.dept,
+            batch:    found.batch,
+            section:  found.section,
+            teacher:  found.teacherName || 'Teacher',
+            joinedAt: new Date().toISOString(),
+            archived: false
+        });
+
+        save();
+        codeInput.value = '';
+        showFeedback(' Successfully joined ' + found.course + '!', '#39865a');
+
+        /* flash join button */
+        var btn = document.getElementById('join-btn');
+        btn.querySelector('.join-text').style.display = 'none';
+        btn.querySelector('.join-check').style.display = 'inline';
+        setTimeout(function() {
+            btn.querySelector('.join-text').style.display = 'inline';
+            btn.querySelector('.join-check').style.display = 'none';
+        }, 2200);
+    }
+
+    function showFeedback(msg, clr) {
+        var el = document.getElementById('join-feedback');
+        el.textContent = msg;
+        el.style.color = clr;
+        el.style.display = 'block';
+        clearTimeout(el._timer);
+        el._timer = setTimeout(function() { el.style.display = 'none'; }, 4000);
+    }
+
+    /* allow Enter key to join */
+    codeInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') joinClass();
+    });
+
+    /* sign-out */
+    function openSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.style.display = 'flex';
+        setTimeout(function() { el.classList.add('visible'); }, 10);
+    }
+
+    function closeSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.classList.remove('visible');
+        setTimeout(function() { el.style.display = 'none'; }, 230);
+    }
+
+    function handleBackdropClick(e) {
+        if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup();
+    }
+
+    function doSignout() {
+        window.location.href = '../index.html';
+    }
+
+</script>
+
+</body>
+</html>

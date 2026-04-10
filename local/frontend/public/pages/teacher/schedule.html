@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/Teacher_base.css">
 </head>
 <body>
 
@@ -145,6 +145,9 @@
             <select id="pick-class">
                 <option value="">Select a class...</option>
             </select>
+            <div id="no-classes-msg" style="display:none; font-size:12px; color:#ff6b6b; margin-top:4px;">
+                No classes available. <a href="create-class.html" style="color:#ff6b6b; text-decoration:underline; cursor:pointer;">Create one first</a>
+            </div>
         </div>
 
         <div class="form-row">
@@ -209,7 +212,19 @@
     document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
 
     var classes   = JSON.parse(localStorage.getItem('us_cls') || '[]');
+    var currentUserId = localStorage.getItem('userId');
+    
+   
+    classes = classes.filter(function(c) { 
+        return c.teacherId === currentUserId || !c.teacherId; 
+    });
+    
     var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');
+    
+    // Filter schedules to only show those whose classes belong to the current teacher
+    schedules = schedules.filter(function(s) {
+        return classes.some(function(c) { return c.id === s.classId; });
+    });
 
     var palette = [
         '#1565C0', '#1976D2', '#1E88E5', '#2196F3',
@@ -273,15 +288,22 @@
     // fill the class dropdown when opening the modal
     function fillClassDropdown() {
         var dropdown = document.getElementById('pick-class');
+        var msg      = document.getElementById('no-classes-msg');
         var active   = activeClasses();
 
         dropdown.innerHTML = '<option value="">Select a class...</option>';
-        active.forEach(function(cls) {
-            var opt = document.createElement('option');
-            opt.value       = cls.id;
-            opt.textContent = cls.course;
-            dropdown.appendChild(opt);
-        });
+        
+        if (active.length === 0) {
+            msg.style.display = 'block';
+        } else {
+            msg.style.display = 'none';
+            active.forEach(function(cls) {
+                var opt = document.createElement('option');
+                opt.value       = cls.id;
+                opt.textContent = cls.course;
+                dropdown.appendChild(opt);
+            });
+        }
     }
 
     function editSlot(index) {
@@ -301,6 +323,9 @@
     }
 
     function openModal() {
+  
+        fillClassDropdown();
+        
         if (editingIndex === null) {
             // Reset form for adding new slot
             document.getElementById('pick-class').value = '';
@@ -391,7 +416,7 @@
     }
 
     function doSignout() {
-        window.location.href = '../login.html';
+        window.location.href = '../index.html';
     }
 
     renderSlots();

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — Unispace Student</title>
+    <meta name="description" content="Your student dashboard on Unispace — view joined classes and your routine at a glance.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/Student_base.css">
+    <link rel="stylesheet" href="../../assets/css/Student_dashboard.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="app-box">
+
+        <!-- sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-link active">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="join-class.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/>
+                        <line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                    <span>Join Class</span>
+                </a>
+                <a href="classes.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                    </svg>
+                    <span>My Classes</span>
+                </a>
+                <a href="routine.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    <span>Routine</span>
+                </a>
+                <a href="archive.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <polyline points="21 8 21 21 3 21 3 8"/>
+                        <rect x="1" y="3" width="22" height="5" rx="1"/>
+                        <path d="M10 12h4"/>
+                    </svg>
+                    <span>Archive</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="student-avatar" id="sidebar-avatar"></div>
+                <div class="student-info">
+                    <span class="student-name" id="student-name"></span>
+                    <span class="student-role">Student</span>
+                </div>
+                <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+                    </svg>
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- main content -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div class="topbar-left">
+                    <p id="welcome-msg"></p>
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="topbar-right">
+                    <span class="current-date" id="today-date"></span>
+
+                    <!-- Avatar with dropdown -->
+                    <div class="topbar-avatar-wrap" id="avatar-wrap">
+                        <div class="topbar-avatar" id="topbar-avatar" onclick="toggleDropdown(event)" title="Account"></div>
+
+                        <div class="avatar-dropdown" id="avatar-dropdown">
+                            <div class="dropdown-header">
+                                <div class="dropdown-header-avatar" id="dropdown-avatar"></div>
+                                <div class="dropdown-header-info">
+                                    <span class="dropdown-header-name" id="dropdown-name"></span>
+                                    <span class="dropdown-header-role">Student</span>
+                                </div>
+                            </div>
+
+                            <a href="profile.html" class="dropdown-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                    <circle cx="12" cy="8" r="4"/>
+                                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                                </svg>
+                                View Profile
+                            </a>
+
+                            <a href="settings.html" class="dropdown-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+                                </svg>
+                                Settings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <div class="page-content">
+
+                    <!-- Stat cards -->
+                    <div class="stat-row">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round">
+                                    <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                                </svg>
+                            </div>
+                            <div class="stat-value" id="stat-classes">0</div>
+                            <div class="stat-label">Classes Joined</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                    <path d="M16 2v4M8 2v4M3 10h18"/>
+                                </svg>
+                            </div>
+                            <div class="stat-value" id="stat-slots">0</div>
+                            <div class="stat-label">Routine Slots</div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-layout">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-title">My Classes</span>
+                                <a href="classes.html" class="card-link">View all →</a>
+                            </div>
+                            <div class="classes-preview" id="classes-list"></div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-title">My Routine</span>
+                                <a href="routine.html" class="card-link">View all →</a>
+                            </div>
+
+                            <table class="schedule-table" id="schedule-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Subject</th>
+                                        <th>Day</th>
+                                        <th>Time</th>
+                                        <th>Room</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="schedule-rows"></tbody>
+                            </table>
+
+                            <div id="no-schedule-msg" class="no-schedule-msg">
+                                No routine slots yet. <a href="routine.html" class="no-schedule-link">Add slots →</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+
+<!-- sign-out modal -->
+<div class="modal-overlay" id="signout-overlay" style="display:none;" onclick="handleBackdropClick(event)">
+    <div class="signout-box">
+        <div class="signout-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0e2b4e" stroke-width="1.8" stroke-linecap="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+        </div>
+        <h3>Sign out?</h3>
+        <p>You'll be taken back to the login screen.</p>
+        <div class="signout-actions">
+            <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
+            <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    var fullName = localStorage.getItem('fullName') || 'Student';
+    var initial  = fullName.charAt(0).toUpperCase();
+
+    document.getElementById('student-name').textContent    = fullName;
+    document.getElementById('welcome-msg').textContent     = 'Welcome back, ' + fullName;
+    document.getElementById('sidebar-avatar').textContent  = initial;
+    document.getElementById('topbar-avatar').textContent   = initial;
+    document.getElementById('dropdown-avatar').textContent = initial;
+    document.getElementById('dropdown-name').textContent   = fullName;
+
+    document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    var joined  = JSON.parse(localStorage.getItem('st_cls') || '[]');
+    var routine = JSON.parse(localStorage.getItem('st_rtn') || '[]');
+    var active  = joined.filter(function(c) { return !c.archived; });
+
+    document.getElementById('stat-classes').textContent = active.length;
+    document.getElementById('stat-slots').textContent   = routine.length;
+
+    var palette = ['#1565C0','#0e2b4e','#1976D2','#1a4a7a','#163d6a','#2a5f94','#1E88E5','#0d3568'];
+    function color(i) { return palette[i % palette.length]; }
+
+    function initials(name) {
+        return name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
+    }
+
+    /* classes preview */
+    var listEl = document.getElementById('classes-list');
+    if (active.length === 0) {
+        listEl.innerHTML = '<p class="no-classes-msg">No classes yet. <a href="join-class.html" class="no-classes-link">Join one →</a></p>';
+    } else {
+        active.slice(0, 4).forEach(function(cls, i) {
+            var row = document.createElement('div');
+            row.className = 'preview-row';
+            row.style.borderLeftColor = color(i);
+            row.innerHTML =
+                '<div class="preview-badge" style="background:' + color(i) + '">' + initials(cls.course) + '</div>' +
+                '<div class="preview-info">' +
+                    '<strong>' + cls.course + '</strong>' +
+                    '<span>' + cls.teacher + ' · Code: ' + cls.code + '</span>' +
+                '</div>' +
+                '<span class="active-pill">Active</span>';
+            listEl.appendChild(row);
+        });
+        if (active.length > 4) {
+            var note = document.createElement('p');
+            note.className = 'more-note';
+            note.textContent = '+' + (active.length - 4) + ' more classes';
+            listEl.appendChild(note);
+        }
+    }
+
+    /* routine preview */
+    var tableEl = document.getElementById('schedule-table');
+    var rowsEl  = document.getElementById('schedule-rows');
+    var noSchEl = document.getElementById('no-schedule-msg');
+
+    if (routine.length === 0) {
+        tableEl.style.display = 'none';
+        noSchEl.style.display = 'block';
+    } else {
+        noSchEl.style.display = 'none';
+        routine.slice(0, 6).forEach(function(slot, i) {
+            var tr = document.createElement('tr');
+            tr.innerHTML =
+                '<td>' + (i + 1) + '</td>' +
+                '<td><span class="color-dot" style="background:' + color(i) + '"></span>' + slot.subject + '</td>' +
+                '<td>' + slot.day + '</td>' +
+                '<td>' + slot.time + '</td>' +
+                '<td>' + (slot.room || '—') + '</td>';
+            rowsEl.appendChild(tr);
+        });
+    }
+
+    /* avatar dropdown */
+    var dropdownEl = document.getElementById('avatar-dropdown');
+    var avatarEl   = document.getElementById('topbar-avatar');
+    var isOpen     = false;
+
+    function toggleDropdown(e) {
+        e.stopPropagation();
+        isOpen ? closeDropdown() : openDropdown();
+    }
+
+    function openDropdown() {
+        isOpen = true;
+        dropdownEl.classList.add('visible');
+        avatarEl.classList.add('open');
+    }
+
+    function closeDropdown() {
+        isOpen = false;
+        dropdownEl.classList.remove('visible');
+        avatarEl.classList.remove('open');
+    }
+
+    document.addEventListener('click', function(e) {
+        if (isOpen && !document.getElementById('avatar-wrap').contains(e.target)) closeDropdown();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isOpen) closeDropdown();
+    });
+
+    /* sign-out */
+    function openSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.style.display = 'flex';
+        setTimeout(function() { el.classList.add('visible'); }, 10);
+    }
+
+    function closeSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.classList.remove('visible');
+        setTimeout(function() { el.style.display = 'none'; }, 230);
+    }
+
+    function handleBackdropClick(e) {
+        if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup();
+    }
+
+    function doSignout() {
+        window.location.href = '../index.html';
+    }
+
+</script>
+
+</body>
+</html>

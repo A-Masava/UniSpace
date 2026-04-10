@@ -1,0 +1,200 @@
+
+@import url('Student_base.css');
+
+
+
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: 800px;
+}
+
+/* joined classes preview list */
+.classes-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.preview-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 10px 13px;
+    border-radius: 11px;
+    background: #f4f7fc;
+    border-left: 4px solid;
+    transition: background 0.15s;
+    cursor: default;
+}
+
+.preview-row:hover {
+    background: #eaf0f8;
+}
+
+.preview-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 11px;
+}
+
+.preview-info strong {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #0e2b4e;
+}
+
+.preview-info span {
+    font-size: 10.5px;
+    color: #8a7868;
+}
+
+.active-pill {
+    margin-left: auto;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: #e5f5ed;
+    color: #39865a;
+    padding: 3px 9px;
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+.more-note {
+    font-size: 11.5px;
+    color: #8a7868;
+    padding: 3px 13px;
+}
+
+.no-classes-msg {
+    font-size: 12.5px;
+    color: #8a7868;
+    padding: 6px 0;
+}
+
+.no-classes-link {
+    color: #0e2b4e;
+    font-weight: 600;
+}
+
+/* schedule table on dashboard */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+}
+
+.schedule-table thead th {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #8a7868;
+    padding: 6px 9px;
+    border-bottom: 1px solid #e6e1db;
+    text-align: left;
+}
+
+.schedule-table tbody tr {
+    border-bottom: 1px solid #f0ebe3;
+    transition: background 0.15s;
+}
+
+.schedule-table tbody tr:hover {
+    background: #f4f7fc;
+}
+
+.schedule-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.schedule-table tbody td {
+    padding: 10px 9px;
+    color: #2c1f14;
+}
+
+.color-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 7px;
+    vertical-align: middle;
+}
+
+.no-schedule-msg {
+    display: none;
+    padding: 14px 0;
+    font-size: 12.5px;
+    color: #8a7868;
+}
+
+.no-schedule-link {
+    color: #0e2b4e;
+    font-weight: 600;
+}
+
+
+
+
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #e6e1db;
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(14,43,78,0.05);
+    transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14,43,78,0.1);
+}
+
+.stat-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #eef3f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.stat-icon svg {
+    stroke: #0e2b4e;
+}
+
+.stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: #0e2b4e;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #8a7868;
+    font-weight: 500;
+}

@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/Teacher_base.css">
     <link rel="stylesheet" href="../../assets/css/class-info.css">
 </head>
 <body>
@@ -179,6 +179,20 @@
     document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
 
     var savedClasses = JSON.parse(localStorage.getItem('us_cls') || '[]');
+    var currentUserId = localStorage.getItem('userId');
+    
+    
+    savedClasses = savedClasses.filter(function(c) { 
+        return c.teacherId === currentUserId || !c.teacherId; 
+    });
+
+    
+    var palette = [
+        '#a9c1cc', '#93b1be', '#7da0af', '#678fa1',
+        '#587c8d', '#4b6a78', '#3d5863', '#2f454e'
+    ];
+
+    function color(i) { return palette[i % palette.length]; }
 
     function getInitials(name) {
         return name
@@ -226,7 +240,7 @@
             pillRow.appendChild(pill);
         });
 
-        // if a class id was passed in the url, auto select it
+      
         var urlParams  = new URLSearchParams(window.location.search);
         var passedId   = urlParams.get('id');
 
@@ -243,8 +257,14 @@
         var cls = savedClasses.find(function(c) { return c.id === classId; });
         if (!cls) return;
 
+       
+        var activeClasses = getActiveClasses();
+        var classIndex = activeClasses.findIndex(function(c) { return c.id === classId; });
+        var classColor = color(classIndex);
+
         document.getElementById('info-card').style.display = 'block';
         document.getElementById('info-badge').textContent       = getInitials(cls.course);
+        document.getElementById('info-badge').style.background  = classColor;
         document.getElementById('info-course-name').textContent = cls.course;
         document.getElementById('info-subtitle').textContent    = cls.dept + ' · Batch ' + cls.batch;
         document.getElementById('info-dept').textContent        = cls.dept;

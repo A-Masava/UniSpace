@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/Teacher_base.css">
 </head>
 <body>
 
@@ -156,9 +156,9 @@
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8" stroke-linecap="round">
                 <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
             </svg>
-        </div>
+        </div
         <h3>Sign out?</h3>
-        <p>You'll be taken back to the login screen.</p>
+        <p >Are you sure you want to sign out?</p>
         <div class="signout-actions">
             <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
             <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
@@ -177,11 +177,18 @@
     document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
 
     var classes   = JSON.parse(localStorage.getItem('us_cls') || '[]');
+    var currentUserId = localStorage.getItem('userId');
+    
+    
+    classes = classes.filter(function(c) { 
+        return c.teacherId === currentUserId || !c.teacherId; 
+    });
+    
     var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');
 
     var palette = [
-        '#1565C0', '#1976D2', '#1E88E5', '#2196F3',
-        '#42A5F5', '#64B5F6', '#90CAF9', '#BBDEFB'
+        '#a9c1cc', '#93b1be', '#7da0af', '#678fa1',
+        '#587c8d', '#4b6a78', '#3d5863', '#2f454e'
     ];
 
     function color(i) { return palette[i % palette.length]; }
@@ -252,7 +259,7 @@
         });
     }
 
-    // handle clicks on the grid (three-dot menu + dropdown actions)
+   
     document.addEventListener('click', function(e) {
 
         var menuBtn = e.target.closest('.three-dot-btn');
@@ -292,7 +299,7 @@
             return;
         }
 
-        // click anywhere else closes open menus
+   
         document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
     });
 
@@ -344,7 +351,7 @@
     }
 
     function doSignout() {
-        window.location.href = '../login.html';
+        window.location.href = '../index.html';
     }
 
     renderClasses();

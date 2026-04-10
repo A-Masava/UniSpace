@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/Teacher_base.css">
     <link rel="stylesheet" href="../../assets/css/Teacher_dashboard.css">
 </head>
 <body>
@@ -203,7 +203,7 @@
     document.getElementById('dropdown-avatar').textContent = initial;
     document.getElementById('dropdown-name').textContent   = fullName;
 
-    /* Fetch fresh user data from API and cache it for profile/settings pages */
+   
     var token = localStorage.getItem('token') || '';
     if (token) {
         fetch('http://localhost:3000/api/auth/me', {
@@ -228,7 +228,19 @@
     }
 
     var classes   = JSON.parse(localStorage.getItem('us_cls') || '[]');
+    var currentUserId = localStorage.getItem('userId');
+    
+    
+    classes = classes.filter(function(c) { 
+        return c.teacherId === currentUserId || !c.teacherId; 
+    });
+    
     var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');
+    
+    // Filter schedules to only show those whose classes belong to the current teacher
+    schedules = schedules.filter(function(s) {
+        return classes.some(function(c) { return c.id === s.classId; });
+    });
 
     var palette = [
         '#1565C0', '#1976D2', '#1E88E5', '#2196F3',
