@@ -407,33 +407,62 @@
             e.preventDefault();
 
             var code = document.getElementById('class-code').value.trim().toUpperCase();
-            if (!code) { alert('Please enter a class code.'); return; }
+            if (!code) { showFormError('Please enter a class code.'); return; }
 
-            var allClasses = JSON.parse(localStorage.getItem('us_cls') || '[]');
-            var duplicate = allClasses.find(function (c) { return c.code === code; });
-            if (duplicate) {
-                alert('Class code "' + code + '" is already in use. Please choose a different code.');
+            var token = localStorage.getItem('token') || '';
+            if (!token) {
+                showFormError('You are not logged in. Please log in again.');
                 return;
             }
 
-            var newClass = {
-                id: 'cls_' + Date.now(),
-                course: document.getElementById('course-name').value.trim(),
-                dept: document.getElementById('dept').value.trim(),
-                batch: document.getElementById('batch').value.trim(),
-                section: document.getElementById('section').value.trim(),
-                idFrom: document.getElementById('id-from').value.trim(),
-                idTo: document.getElementById('id-to').value.trim(),
-                code: code,
-                students: [],
-                created: new Date().toLocaleDateString(),
-                archived: false,
-                teacherId: localStorage.getItem('userId')
+            var submitBtn = document.querySelector('[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating…';
+
+            var payload = {
+                course:    document.getElementById('course-name').value.trim(),
+                dept:      document.getElementById('dept').value.trim(),
+                batch:     document.getElementById('batch').value.trim(),
+                section:   document.getElementById('section').value.trim(),
+                idFrom:    document.getElementById('id-from').value.trim(),
+                idTo:      document.getElementById('id-to').value.trim(),
+                classCode: code
             };
 
-            allClasses.push(newClass);
-            localStorage.setItem('us_cls', JSON.stringify(allClasses));
-            window.location.href = 'classes.html';
+            fetch('http://localhost:3000/api/classrooms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.classroom) {
+                    window.location.href = 'classes.html';
+                } else {
+                    showFormError(data.message || 'Something went wrong. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Create Class';
+                }
+            })
+            .catch(function() {
+                showFormError('Network error — please check your connection.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create Class';
+            });
+        }
+
+        function showFormError(msg) {
+            var existing = document.getElementById('form-error-msg');
+            if (existing) existing.remove();
+            var p = document.createElement('p');
+            p.id = 'form-error-msg';
+            p.style.cssText = 'color:#bc4f47;font-size:12.5px;margin-top:10px;font-weight:500;';
+            p.textContent = msg;
+            document.querySelector('.form-actions').insertAdjacentElement('afterend', p);
+            setTimeout(function() { if (p.parentNode) p.remove(); }, 5000);
         }
 
         function openSignoutPopup() {

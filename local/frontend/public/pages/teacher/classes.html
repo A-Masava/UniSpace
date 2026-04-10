@@ -19,7 +19,6 @@
 
             <div class="sidebar-brand">
                 <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
-                
             </div>
 
             <nav class="sidebar-nav">
@@ -156,9 +155,9 @@
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8" stroke-linecap="round">
                 <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
             </svg>
-        </div
+        </div>
         <h3>Sign out?</h3>
-        <p >Are you sure you want to sign out?</p>
+        <p>Are you sure you want to sign out?</p>
         <div class="signout-actions">
             <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
             <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
@@ -169,22 +168,15 @@
 
 <script>
 
+    var API   = 'http://localhost:3000/api/classrooms';
+    var token = localStorage.getItem('token') || '';
+
     var fullName = localStorage.getItem('fullName') || 'Teacher';
     var initial  = fullName.charAt(0).toUpperCase();
     document.getElementById('teacher-name').textContent   = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
     document.getElementById('topbar-avatar').textContent  = initial;
     document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
-
-    var classes   = JSON.parse(localStorage.getItem('us_cls') || '[]');
-    var currentUserId = localStorage.getItem('userId');
-    
-    
-    classes = classes.filter(function(c) { 
-        return c.teacherId === currentUserId || !c.teacherId; 
-    });
-    
-    var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');
 
     var palette = [
         '#a9c1cc', '#93b1be', '#7da0af', '#678fa1',
@@ -197,79 +189,74 @@
         return name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
     }
 
-    function save() {
-        localStorage.setItem('us_cls', JSON.stringify(classes));
-        localStorage.setItem('us_sch', JSON.stringify(schedules));
-    }
-
-    function activeList() {
-        return classes.filter(function(c) { return !c.archived; });
-    }
-
     document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    function renderClasses() {
-        var grid   = document.getElementById('class-grid');
-        var empty  = document.getElementById('empty-state');
-        var active = activeList();
+    /* ── Load classes from MongoDB ── */
+    function loadClasses() {
+        if (!token) { renderClasses([]); return; }
+        fetch(API + '/my-classes', {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) { renderClasses(Array.isArray(data) ? data : []); })
+        .catch(function() { renderClasses([]); });
+    }
 
-        document.getElementById('active-count').textContent = active.length;
+    function renderClasses(list) {
+        var grid  = document.getElementById('class-grid');
+        var empty = document.getElementById('empty-state');
 
-        // remove existing cards before re-rendering
+        document.getElementById('active-count').textContent = list.length;
         grid.querySelectorAll('.class-card').forEach(function(el) { el.remove(); });
 
-        if (active.length === 0) {
-            empty.style.display = 'flex';
-            return;
-        }
-
+        if (list.length === 0) { empty.style.display = 'flex'; return; }
         empty.style.display = 'none';
 
-        active.forEach(function(cls, i) {
+        list.forEach(function(cls, i) {
             var card = document.createElement('div');
             card.className = 'class-card';
             card.style.cursor = 'pointer';
-            // clicking the card opens the class announcement page
-            // but we stop it from firing if the three-dot menu was clicked
             card.addEventListener('click', function(e) {
                 if (!e.target.closest('.card-menu-wrap')) {
-                    window.location.href = 'class/announcement.html?id=' + cls.id;
+                    window.location.href = 'class-students.html?id=' + cls._id;
                 }
             });
+
+            var studentCount = (cls.students && cls.students.length) || 0;
             card.innerHTML =
                 '<div class="class-card-top" style="background:' + color(i) + '">' +
                     '<div class="class-initials">' + initials(cls.course) + '</div>' +
                     '<div class="card-menu-wrap">' +
-                        '<button class="three-dot-btn" data-id="' + cls.id + '">⋯</button>' +
-                        '<div class="card-dropdown" id="menu-' + cls.id + '">' +
-                            '<button data-action="archive" data-id="' + cls.id + '">📦 Archive</button>' +
-                            '<button onclick="window.location.href=\'class-info.html?id=' + cls.id + '\'">ℹ️ View Info</button>' +
+                        '<button class="three-dot-btn" data-id="' + cls._id + '">⋯</button>' +
+                        '<div class="card-dropdown" id="menu-' + cls._id + '">' +
+                            '<button data-action="archive" data-id="' + cls._id + '">📦 Archive</button>' +
+                            '<button onclick="window.location.href=\'class-info.html?id=' + cls._id + '\'">ℹ️ View Info</button>' +
+                            '<button onclick="window.location.href=\'class-students.html?id=' + cls._id + '\'">👥 Students (' + studentCount + ')</button>' +
                         '</div>' +
                     '</div>' +
                 '</div>' +
                 '<div class="class-card-body">' +
                     '<h3>' + cls.course + '</h3>' +
                     '<p class="class-meta">' + cls.dept + ' · Batch ' + cls.batch + ' · Sec ' + cls.section + '</p>' +
-                    '<p class="class-id-range">ID: ' + cls.idFrom + ' – ' + cls.idTo + '</p>' +
-                    '<div class="class-status-row"><span class="status-dot green"></span>Active</div>' +
+                    '<p class="class-id-range">Code: <strong>' + cls.classCode + '</strong></p>' +
+                    '<div class="class-status-row">' +
+                        '<span class="status-dot green"></span>Active · ' + studentCount + ' student' + (studentCount !== 1 ? 's' : '') +
+                    '</div>' +
                 '</div>';
             grid.insertBefore(card, empty);
         });
     }
 
-   
+    /* ── Three-dot menu & actions ── */
     document.addEventListener('click', function(e) {
-
         var menuBtn = e.target.closest('.three-dot-btn');
         if (menuBtn) {
             e.stopPropagation();
             var id      = menuBtn.dataset.id;
             var menu    = document.getElementById('menu-' + id);
             var wasOpen = menu.classList.contains('open');
-
-            // close all open menus first
             document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
             if (!wasOpen) menu.classList.add('open');
             return;
@@ -278,33 +265,28 @@
         var actionBtn = e.target.closest('[data-action]');
         if (actionBtn) {
             document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
-
             var action  = actionBtn.dataset.action;
             var classId = actionBtn.dataset.id;
-
             if (action === 'archive') {
                 openConfirm(
                     'Archive this class?',
-                    'The class will be moved to your archive. You can restore it later.',
+                    'The class will be moved to your archive. Students will no longer see it.',
                     function() {
-                        var found = classes.find(function(c) { return c.id === classId; });
-                        if (found) {
-                            found.archived = true;
-                            save();
-                            renderClasses();
-                        }
+                        fetch(API + '/' + classId + '/archive', {
+                            method: 'PATCH',
+                            headers: { Authorization: 'Bearer ' + token }
+                        })
+                        .then(function() { loadClasses(); })
+                        .catch(function() { alert('Failed to archive.'); });
                     }
                 );
             }
             return;
         }
-
-   
         document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
     });
 
-
-    // confirm popup
+    /* Confirm popup */
     var pendingFn = null;
 
     function openConfirm(title, msg, callback) {
@@ -332,8 +314,7 @@
         closeConfirm();
     };
 
-
-    // signout popup
+    /* Sign-out popup */
     function openSignoutPopup() {
         var el = document.getElementById('signout-overlay');
         el.style.display = 'flex';
@@ -351,10 +332,12 @@
     }
 
     function doSignout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('us_user');
         window.location.href = '../index.html';
     }
 
-    renderClasses();
+    loadClasses();
 
 </script>
 

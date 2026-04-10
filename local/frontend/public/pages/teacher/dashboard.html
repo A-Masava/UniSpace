@@ -227,20 +227,9 @@
         .catch(function(){});
     }
 
-    var classes   = JSON.parse(localStorage.getItem('us_cls') || '[]');
-    var currentUserId = localStorage.getItem('userId');
-    
-    
-    classes = classes.filter(function(c) { 
-        return c.teacherId === currentUserId || !c.teacherId; 
-    });
-    
+    var token   = localStorage.getItem('token') || '';
+    var API     = 'http://localhost:3000/api/classrooms';
     var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');
-    
-    // Filter schedules to only show those whose classes belong to the current teacher
-    schedules = schedules.filter(function(s) {
-        return classes.some(function(c) { return c.id === s.classId; });
-    });
 
     var palette = [
         '#1565C0', '#1976D2', '#1E88E5', '#2196F3',
@@ -254,41 +243,54 @@
             .join('').toUpperCase().slice(0, 2);
     }
 
-    function activeClasses() {
-        return classes.filter(function(c) { return !c.archived; });
-    }
-
     document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    var active = activeClasses();
     var listEl = document.getElementById('classes-list');
 
-    if (active.length === 0) {
+    /* Fetch classes from MongoDB API */
+    if (token) {
+        fetch(API + '/my-classes', {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(classes) {
+            if (!Array.isArray(classes) || classes.length === 0) {
+                listEl.innerHTML =
+                    '<p class="no-classes-msg">No classes yet. <a href="create-class.html" class="no-classes-link">Create one →</a></p>';
+            } else {
+                listEl.innerHTML = '';
+                classes.slice(0, 4).forEach(function(cls, i) {
+                    var row = document.createElement('div');
+                    row.className = 'preview-row';
+                    row.style.borderLeftColor = color(i);
+                    var studentCount = (cls.students && cls.students.length) || 0;
+                    row.innerHTML =
+                        '<div class="preview-badge" style="background:' + color(i) + '">' + initials(cls.course) + '</div>' +
+                        '<div class="preview-info">' +
+                            '<strong>' + cls.course + '</strong>' +
+                            '<span>' + cls.dept + ' · Batch ' + cls.batch + ' · Sec ' + cls.section +
+                            ' · <em>' + studentCount + ' student' + (studentCount !== 1 ? 's' : '') + '</em></span>' +
+                        '</div>' +
+                        '<span class="active-pill">Active</span>';
+                    listEl.appendChild(row);
+                });
+
+                if (classes.length > 4) {
+                    var note = document.createElement('p');
+                    note.className = 'more-note';
+                    note.textContent = '+' + (classes.length - 4) + ' more classes';
+                    listEl.appendChild(note);
+                }
+            }
+        })
+        .catch(function() {
+            listEl.innerHTML = '<p class="no-classes-msg">Could not load classes.</p>';
+        });
+    } else {
         listEl.innerHTML =
             '<p class="no-classes-msg">No classes yet. <a href="create-class.html" class="no-classes-link">Create one →</a></p>';
-    } else {
-        active.slice(0, 4).forEach(function(cls, i) {
-            var row = document.createElement('div');
-            row.className = 'preview-row';
-            row.style.borderLeftColor = color(i);
-            row.innerHTML =
-                '<div class="preview-badge" style="background:' + color(i) + '">' + initials(cls.course) + '</div>' +
-                '<div class="preview-info">' +
-                    '<strong>' + cls.course + '</strong>' +
-                    '<span>' + cls.dept + ' · Batch ' + cls.batch + ' · Sec ' + cls.section + '</span>' +
-                '</div>' +
-                '<span class="active-pill">Active</span>';
-            listEl.appendChild(row);
-        });
-
-        if (active.length > 4) {
-            var note = document.createElement('p');
-            note.className = 'more-note';
-            note.textContent = '+' + (active.length - 4) + ' more classes';
-            listEl.appendChild(note);
-        }
     }
 
     var tableEl = document.getElementById('schedule-table');

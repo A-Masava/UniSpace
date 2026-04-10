@@ -228,6 +228,9 @@
 
 <script>
 
+    var API   = 'http://localhost:3000/api/classrooms';
+    var token = localStorage.getItem('token') || '';
+
     var fullName = localStorage.getItem('fullName') || 'Student';
     var initial  = fullName.charAt(0).toUpperCase();
     document.getElementById('student-name').textContent   = fullName;
@@ -239,12 +242,6 @@
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    var joined = JSON.parse(localStorage.getItem('st_cls') || '[]');
-
-    function save() {
-        localStorage.setItem('st_cls', JSON.stringify(joined));
-    }
-
     /* enforce uppercase on input */
     var codeInput = document.getElementById('class-code-input');
     codeInput.addEventListener('input', function() {
@@ -253,7 +250,7 @@
         this.setSelectionRange(pos, pos);
     });
 
-    /* join a class */
+    /* join a class via API */
     function joinClass() {
         var code = codeInput.value.trim().toUpperCase();
 
@@ -262,47 +259,46 @@
             return;
         }
 
-        /* check duplicate */
-        var existing = joined.find(function(c) { return c.code === code && !c.archived; });
-        if (existing) {
-            showFeedback('You have already joined this class.', '#bc4f47');
+        if (!token) {
+            showFeedback('You are not logged in. Please log in again.', '#bc4f47');
             return;
         }
 
-        /* look up from teacher's class list */
-        var teacherClasses = JSON.parse(localStorage.getItem('us_cls') || '[]');
-        var found = teacherClasses.find(function(c) { return c.code === code && !c.archived; });
-
-        if (!found) {
-            showFeedback('No active class found with that code. Check with your teacher.', '#bc4f47');
-            return;
-        }
-
-        /* add to student list */
-        joined.unshift({
-            id:       found.id,
-            code:     found.code,
-            course:   found.course,
-            dept:     found.dept,
-            batch:    found.batch,
-            section:  found.section,
-            teacher:  found.teacherName || 'Teacher',
-            joinedAt: new Date().toISOString(),
-            archived: false
-        });
-
-        save();
-        codeInput.value = '';
-        showFeedback(' Successfully joined ' + found.course + '!', '#39865a');
-
-        /* flash join button */
         var btn = document.getElementById('join-btn');
-        btn.querySelector('.join-text').style.display = 'none';
-        btn.querySelector('.join-check').style.display = 'inline';
-        setTimeout(function() {
-            btn.querySelector('.join-text').style.display = 'inline';
-            btn.querySelector('.join-check').style.display = 'none';
-        }, 2200);
+        btn.disabled = true;
+
+        fetch(API + '/join', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({ classCode: code })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            btn.disabled = false;
+            if (data.classroom) {
+                codeInput.value = '';
+                var cls = data.classroom;
+                var courseName = cls.course || 'the class';
+                showFeedback('Successfully joined ' + courseName + '!', '#39865a');
+
+                /* flash join button */
+                btn.querySelector('.join-text').style.display = 'none';
+                btn.querySelector('.join-check').style.display = 'inline';
+                setTimeout(function() {
+                    btn.querySelector('.join-text').style.display = 'inline';
+                    btn.querySelector('.join-check').style.display = 'none';
+                }, 2200);
+            } else {
+                showFeedback(data.message || 'Something went wrong. Try again.', '#bc4f47');
+            }
+        })
+        .catch(function() {
+            btn.disabled = false;
+            showFeedback('Network error — please check your connection.', '#bc4f47');
+        });
     }
 
     function showFeedback(msg, clr) {

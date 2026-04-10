@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Roster — Unispace</title>
+    <meta name="description" content="View the full list of students enrolled in your class on Unispace.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/Teacher_base.css">
+    <style>
+        /* ── Roster page styles ── */
+        .roster-header {
+            background: #fff;
+            border: 1.5px solid #d6cfc6;
+            border-radius: 18px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .roster-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #3d5863, #2f454e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+
+        .roster-info h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            color: #1e3a52;
+            margin-bottom: 4px;
+        }
+
+        .roster-meta {
+            font-size: 12.5px;
+            color: #8a7868;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .roster-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .code-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #eef3f9;
+            border: 1px solid #c8d6e8;
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #1e3a52;
+            letter-spacing: 0.06em;
+        }
+
+        /* Student table */
+        .student-table-wrap {
+            background: #fff;
+            border: 1.5px solid #d6cfc6;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .table-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            border-bottom: 1px solid #ede8e2;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .table-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1e3a52;
+            letter-spacing: 0.03em;
+        }
+
+        .count-chip {
+            background: #1e3a52;
+            color: #fff;
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .search-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f7f4f1;
+            border: 1px solid #d6cfc6;
+            border-radius: 10px;
+            padding: 0 12px;
+            height: 36px;
+        }
+
+        .search-wrap svg { flex-shrink: 0; }
+
+        .search-wrap input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12.5px;
+            color: #1e3a52;
+            width: 180px;
+        }
+
+        .search-wrap input::placeholder { color: #a99e93; }
+
+        /* Table */
+        .roster-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .roster-table thead th {
+            padding: 11px 20px;
+            text-align: left;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: #8a7868;
+            background: #faf8f5;
+            border-bottom: 1px solid #ede8e2;
+        }
+
+        .roster-table tbody tr {
+            border-bottom: 1px solid #ede8e2;
+            transition: background 0.15s;
+        }
+
+        .roster-table tbody tr:last-child { border-bottom: none; }
+        .roster-table tbody tr:hover { background: #faf8f5; }
+
+        .roster-table td {
+            padding: 13px 20px;
+            font-size: 13px;
+            color: #3a3029;
+            vertical-align: middle;
+        }
+
+        .student-cell {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .student-mini-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #678fa1, #3d5863);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .student-cell-name { font-weight: 600; color: #1e3a52; }
+        .student-cell-email { font-size: 11.5px; color: #8a7868; margin-top: 1px; }
+
+        .dept-badge {
+            display: inline-block;
+            background: #eef3f9;
+            color: #1e3a52;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .empty-roster {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8a7868;
+        }
+
+        .empty-roster svg { opacity: 0.4; margin-bottom: 14px; }
+        .empty-roster p { font-size: 13.5px; margin-bottom: 6px; }
+        .empty-roster .code-share { font-size: 12px; }
+
+        .loading-row td {
+            padding: 50px;
+            text-align: center;
+            color: #a99e93;
+            font-size: 13px;
+        }
+
+        /* Back button */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #4b6a78;
+            text-decoration: none;
+            margin-bottom: 18px;
+            transition: color 0.15s;
+        }
+
+        .back-link:hover { color: #1e3a52; }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="app-box">
+
+        <!-- sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="classes.html" class="nav-link active">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                    </svg>
+                    <span>My Classes</span>
+                </a>
+                <a href="create-class.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 8v8M8 12h8"/>
+                    </svg>
+                    <span>New Class</span>
+                </a>
+                <a href="schedule.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    <span>Schedule</span>
+                </a>
+                <a href="archive.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <polyline points="21 8 21 21 3 21 3 8"/>
+                        <rect x="1" y="3" width="22" height="5" rx="1"/>
+                        <path d="M10 12h4"/>
+                    </svg>
+                    <span>Archive</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="teacher-avatar" id="sidebar-avatar"></div>
+                <div class="teacher-info">
+                    <span class="teacher-name" id="teacher-name"></span>
+                    <span class="teacher-role">Teacher</span>
+                </div>
+                <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- main content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <p id="welcome-msg"></p>
+                    <h1>Class Roster</h1>
+                </div>
+                <div class="topbar-right">
+                    <span class="current-date" id="today-date"></span>
+                    <div class="topbar-avatar" id="topbar-avatar"></div>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <div class="page-content">
+
+                    <a href="classes.html" class="back-link">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                            <path d="M19 12H5M12 5l-7 7 7 7"/>
+                        </svg>
+                        Back to My Classes
+                    </a>
+
+                    <!-- Class info header -->
+                    <div class="roster-header" id="roster-header" style="display:none;">
+                        <div class="roster-avatar" id="roster-avatar"></div>
+                        <div class="roster-info">
+                            <h2 id="roster-course"></h2>
+                            <div class="roster-meta">
+                                <span id="roster-dept-batch"></span>
+                                <span id="roster-teacher"></span>
+                                <span class="code-chip" id="roster-code">
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                        <path d="M7 11V7a5 5 0 0110 0v4"/>
+                                    </svg>
+                                    <span id="roster-code-val"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student table -->
+                    <div class="student-table-wrap">
+                        <div class="table-toolbar">
+                            <div>
+                                <span class="table-title">Enrolled Students</span>
+                                <span class="count-chip" id="student-count">0</span>
+                            </div>
+                            <div class="search-wrap">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8a7868" stroke-width="2" stroke-linecap="round">
+                                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                                </svg>
+                                <input type="text" id="search-input" placeholder="Search students…" oninput="filterStudents(this.value)">
+                            </div>
+                        </div>
+                        <table class="roster-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Student</th>
+                                    <th>ID Number</th>
+                                    <th>Department</th>
+                                    <th>Joined</th>
+                                </tr>
+                            </thead>
+                            <tbody id="roster-body">
+                                <tr class="loading-row"><td colspan="5">Loading students…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+<!-- signout popup -->
+<div class="modal-overlay" id="signout-overlay" style="display:none;" onclick="handleSignoutBackdrop(event)">
+    <div class="signout-box">
+        <div class="signout-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8" stroke-linecap="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+        </div>
+        <h3>Sign out?</h3>
+        <p>You'll be taken back to the login screen.</p>
+        <div class="signout-actions">
+            <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
+            <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var API   = 'http://localhost:3000/api/classrooms';
+    var token = localStorage.getItem('token') || '';
+
+    var fullName = localStorage.getItem('fullName') || 'Teacher';
+    var initial  = fullName.charAt(0).toUpperCase();
+    document.getElementById('teacher-name').textContent   = fullName;
+    document.getElementById('sidebar-avatar').textContent = initial;
+    document.getElementById('topbar-avatar').textContent  = initial;
+    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
+
+    document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    /* Get class ID from query string */
+    var classId = new URLSearchParams(location.search).get('id');
+
+    var allStudents = [];
+
+    function initials(name) {
+        return (name || '').split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2) || '?';
+    }
+
+    function formatDate(iso) {
+        if (!iso) return '—';
+        return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function renderStudents(list) {
+        var tbody = document.getElementById('roster-body');
+        document.getElementById('student-count').textContent = list.length;
+
+        if (list.length === 0) {
+            tbody.innerHTML =
+                '<tr><td colspan="5">' +
+                    '<div class="empty-roster">' +
+                        '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">' +
+                            '<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>' +
+                            '<circle cx="9" cy="7" r="4"/>' +
+                            '<path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>' +
+                        '</svg>' +
+                        '<p>No students have joined this class yet.</p>' +
+                        '<span class="code-share">Share the class code with your students to get started.</span>' +
+                    '</div>' +
+                '</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = '';
+        list.forEach(function(student, i) {
+            var tr = document.createElement('tr');
+            tr.innerHTML =
+                '<td style="color:#a99e93;font-size:12px;">' + (i + 1) + '</td>' +
+                '<td>' +
+                    '<div class="student-cell">' +
+                        '<div class="student-mini-avatar">' + initials(student.fullName) + '</div>' +
+                        '<div>' +
+                            '<div class="student-cell-name">' + (student.fullName || '—') + '</div>' +
+                            '<div class="student-cell-email">' + (student.email || '') + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</td>' +
+                '<td style="font-size:12.5px;color:#4b6a78;font-weight:600;">' + (student.idNumber || '—') + '</td>' +
+                '<td>' + (student.department ? '<span class="dept-badge">' + student.department + '</span>' : '—') + '</td>' +
+                '<td style="font-size:12px;color:#a99e93;">' + formatDate(student.createdAt) + '</td>';
+            tbody.appendChild(tr);
+        });
+    }
+
+    function filterStudents(query) {
+        var q = query.toLowerCase();
+        var filtered = allStudents.filter(function(s) {
+            return (s.fullName || '').toLowerCase().includes(q) ||
+                   (s.email || '').toLowerCase().includes(q) ||
+                   (s.idNumber || '').toLowerCase().includes(q) ||
+                   (s.department || '').toLowerCase().includes(q);
+        });
+        renderStudents(filtered);
+    }
+
+    /* ── Load class + students from MongoDB ── */
+    if (!classId) {
+        document.getElementById('roster-body').innerHTML =
+            '<tr class="loading-row"><td colspan="5">No class selected.</td></tr>';
+    } else if (!token) {
+        document.getElementById('roster-body').innerHTML =
+            '<tr class="loading-row"><td colspan="5">Please log in to view this page.</td></tr>';
+    } else {
+        fetch(API + '/' + classId + '/students', {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (data.message) {
+                document.getElementById('roster-body').innerHTML =
+                    '<tr class="loading-row"><td colspan="5">' + data.message + '</td></tr>';
+                return;
+            }
+
+            var cls = data.classroom;
+            allStudents = data.students || [];
+
+            /* Populate header */
+            var hdr = document.getElementById('roster-header');
+            hdr.style.display = 'flex';
+            document.getElementById('roster-avatar').textContent = initials(cls.course);
+            document.getElementById('roster-course').textContent = cls.course;
+            document.getElementById('roster-dept-batch').textContent =
+                cls.dept + ' · Batch ' + cls.batch + ' · Sec ' + cls.section;
+            document.getElementById('roster-teacher').textContent = 'By ' + (cls.teacherName || fullName);
+            document.getElementById('roster-code-val').textContent = cls.classCode;
+
+            /* Update page title */
+            document.title = cls.course + ' Roster — Unispace';
+
+            renderStudents(allStudents);
+        })
+        .catch(function(err) {
+            document.getElementById('roster-body').innerHTML =
+                '<tr class="loading-row"><td colspan="5">Failed to load students. Please try again.</td></tr>';
+        });
+    }
+
+    /* Sign-out */
+    function openSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.style.display = 'flex';
+        setTimeout(function() { el.classList.add('visible'); }, 10);
+    }
+
+    function closeSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.classList.remove('visible');
+        setTimeout(function() { el.style.display = 'none'; }, 230);
+    }
+
+    function handleSignoutBackdrop(e) {
+        if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup();
+    }
+
+    function doSignout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('us_user');
+        window.location.href = '../index.html';
+    }
+
+</script>
+
+</body>
+</html>

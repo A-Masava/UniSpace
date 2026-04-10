@@ -128,21 +128,6 @@
 </div>
 
 
-<!-- archive confirmation popup -->
-<div class="modal-overlay" id="confirm-overlay" style="display:none;" onclick="handleConfirmBackdrop(event)">
-    <div class="modal-box small-modal">
-        <div class="modal-header">
-            <h3 id="confirm-title">Archive Class</h3>
-            <button class="modal-close-btn" onclick="closeConfirm()">✕</button>
-        </div>
-        <p id="confirm-msg" style="font-size:13px; color:#8a7868; line-height:1.6; margin-bottom:22px;"></p>
-        <div class="form-actions">
-            <button class="btn-secondary" onclick="closeConfirm()">Cancel</button>
-            <button class="btn-danger" id="confirm-ok-btn">Archive</button>
-        </div>
-    </div>
-</div>
-
 <!-- sign-out popup -->
 <div class="modal-overlay" id="signout-overlay" style="display:none;" onclick="handleSignoutBackdrop(event)">
     <div class="signout-box">
@@ -163,6 +148,9 @@
 
 <script>
 
+    var API   = 'http://localhost:3000/api/classrooms';
+    var token = localStorage.getItem('token') || '';
+
     var fullName = localStorage.getItem('fullName') || 'Student';
     var initial  = fullName.charAt(0).toUpperCase();
     document.getElementById('student-name').textContent   = fullName;
@@ -174,123 +162,50 @@
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    var joined = JSON.parse(localStorage.getItem('st_cls') || '[]');
-
-    function save() {
-        localStorage.setItem('st_cls', JSON.stringify(joined));
-    }
-
     var palette = ['#1565C0','#0e2b4e','#1976D2','#1a4a7a','#163d6a','#2a5f94','#1E88E5','#0d3568'];
     function color(i) { return palette[i % palette.length]; }
     function initials(name) {
         return name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
     }
 
-    function activeList() {
-        return joined.filter(function(c) { return !c.archived; });
+    /* ── Load classes from MongoDB ── */
+    function loadClasses() {
+        if (!token) { renderClasses([]); return; }
+        fetch(API + '/my-classes', {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) { renderClasses(Array.isArray(data) ? data : []); })
+        .catch(function() { renderClasses([]); });
     }
 
-    function renderClasses() {
-        var grid   = document.getElementById('class-grid');
-        var empty  = document.getElementById('empty-state');
-        var active = activeList();
+    function renderClasses(list) {
+        var grid  = document.getElementById('class-grid');
+        var empty = document.getElementById('empty-state');
 
-        document.getElementById('active-count').textContent = active.length;
-
-        /* remove old cards */
+        document.getElementById('active-count').textContent = list.length;
         grid.querySelectorAll('.class-card').forEach(function(el) { el.remove(); });
 
-        if (active.length === 0) {
-            empty.style.display = 'flex';
-            return;
-        }
+        if (list.length === 0) { empty.style.display = 'flex'; return; }
         empty.style.display = 'none';
 
-        active.forEach(function(cls, i) {
+        list.forEach(function(cls, i) {
             var card = document.createElement('div');
             card.className = 'class-card';
+            var teacherName = (cls.teacher && cls.teacher.fullName) ? cls.teacher.fullName : (cls.teacherName || 'Teacher');
             card.innerHTML =
                 '<div class="class-card-top" style="background:' + color(i) + '">' +
                     '<div class="class-initials">' + initials(cls.course) + '</div>' +
-                    '<div class="card-menu-wrap">' +
-                        '<button class="three-dot-btn" data-id="' + cls.id + '">⋯</button>' +
-                        '<div class="card-dropdown" id="menu-' + cls.id + '">' +
-                            '<button data-action="archive" data-id="' + cls.id + '">📦 Archive</button>' +
-                        '</div>' +
-                    '</div>' +
                 '</div>' +
                 '<div class="class-card-body">' +
                     '<h3>' + cls.course + '</h3>' +
-                    '<p class="class-meta">' + (cls.teacher || 'Teacher') + ' · Batch ' + (cls.batch || '—') + '</p>' +
-                    '<p class="class-code-badge">Code: ' + cls.code + '</p>' +
+                    '<p class="class-meta">' + teacherName + ' · Batch ' + cls.batch + '</p>' +
+                    '<p class="class-code-badge">Code: ' + cls.classCode + '</p>' +
                     '<div class="class-status-row"><span class="status-dot green"></span>Active</div>' +
                 '</div>';
             grid.insertBefore(card, empty);
         });
     }
-
-    
-    document.addEventListener('click', function(e) {
-
-        var menuBtn = e.target.closest('.three-dot-btn');
-        if (menuBtn) {
-            e.stopPropagation();
-            var id      = menuBtn.dataset.id;
-            var menu    = document.getElementById('menu-' + id);
-            var wasOpen = menu.classList.contains('open');
-            document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
-            if (!wasOpen) menu.classList.add('open');
-            return;
-        }
-
-        var actionBtn = e.target.closest('[data-action]');
-        if (actionBtn) {
-            document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
-            var action  = actionBtn.dataset.action;
-            var classId = actionBtn.dataset.id;
-            if (action === 'archive') {
-                openConfirm(
-                    'Leave & Archive Class',
-                    'This class will be moved to your archive. You can restore it any time.',
-                    function() {
-                        var found = joined.find(function(c) { return c.id === classId; });
-                        if (found) { found.archived = true; save(); renderClasses(); }
-                    }
-                );
-            }
-            return;
-        }
-
-        document.querySelectorAll('.card-dropdown').forEach(function(d) { d.classList.remove('open'); });
-    });
-
-    /* confirm popup */
-    var pendingFn = null;
-
-    function openConfirm(title, msg, callback) {
-        document.getElementById('confirm-title').textContent = title;
-        document.getElementById('confirm-msg').textContent   = msg;
-        pendingFn = callback;
-        var el = document.getElementById('confirm-overlay');
-        el.style.display = 'flex';
-        setTimeout(function() { el.classList.add('visible'); }, 10);
-    }
-
-    function closeConfirm() {
-        var el = document.getElementById('confirm-overlay');
-        el.classList.remove('visible');
-        setTimeout(function() { el.style.display = 'none'; }, 230);
-        pendingFn = null;
-    }
-
-    function handleConfirmBackdrop(e) {
-        if (e.target === document.getElementById('confirm-overlay')) closeConfirm();
-    }
-
-    document.getElementById('confirm-ok-btn').onclick = function() {
-        if (pendingFn) pendingFn();
-        closeConfirm();
-    };
 
     /* sign-out */
     function openSignoutPopup() {
@@ -310,10 +225,12 @@
     }
 
     function doSignout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('us_user');
         window.location.href = '../index.html';
     }
 
-    renderClasses();
+    loadClasses();
 
 </script>
 
