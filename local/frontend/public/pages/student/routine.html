@@ -196,7 +196,7 @@
 
 <script>
 
-    var fullName = localStorage.getItem('fullName') || 'Student';
+    var fullName = localStorage.getItem('student_fullName') || 'Student';
     var initial  = fullName.charAt(0).toUpperCase();
     document.getElementById('student-name').textContent   = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
@@ -207,10 +207,11 @@
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    var routine = JSON.parse(localStorage.getItem('st_rtn') || '[]');
+    var userId = localStorage.getItem('userId') || '';
+    var routine = JSON.parse(localStorage.getItem('st_rtn_' + userId) || '[]');
 
     function save() {
-        localStorage.setItem('st_rtn', JSON.stringify(routine));
+        localStorage.setItem('st_rtn_' + userId, JSON.stringify(routine));
     }
 
     var palette = ['#1565C0','#0e2b4e','#1976D2','#1a4a7a','#163d6a','#2a5f94','#1E88E5','#0d3568'];

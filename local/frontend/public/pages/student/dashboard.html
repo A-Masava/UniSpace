@@ -215,7 +215,7 @@
 
 <script>
 
-    var fullName = localStorage.getItem('fullName') || 'Student';
+    var fullName = localStorage.getItem('student_fullName') || 'Student';
     var initial  = fullName.charAt(0).toUpperCase();
 
     document.getElementById('student-name').textContent    = fullName;
@@ -229,8 +229,9 @@
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    var joined  = JSON.parse(localStorage.getItem('st_cls') || '[]');
-    var routine = JSON.parse(localStorage.getItem('st_rtn') || '[]');
+    var userId = localStorage.getItem('userId') || '';
+    var joined  = JSON.parse(localStorage.getItem('st_cls_' + userId) || '[]');
+    var routine = JSON.parse(localStorage.getItem('st_rtn_' + userId) || '[]');
     var active  = joined.filter(function(c) { return !c.archived; });
 
     document.getElementById('stat-classes').textContent = active.length;

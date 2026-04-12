@@ -193,7 +193,7 @@
 
 <script>
 
-    var fullName = localStorage.getItem('fullName') || 'Teacher';
+    var fullName = localStorage.getItem('teacher_fullName') || 'Teacher';
     var initial  = fullName.charAt(0).toUpperCase();
 
     document.getElementById('teacher-name').textContent    = fullName;
@@ -215,7 +215,7 @@
                 localStorage.setItem('us_user', JSON.stringify(data));
                 var fn = data.fullName || fullName;
                 var si = fn.charAt(0).toUpperCase();
-                localStorage.setItem('fullName', fn);
+                localStorage.setItem('teacher_fullName', fn);
                 document.getElementById('teacher-name').textContent    = fn;
                 document.getElementById('welcome-msg').textContent     = 'Welcome back, ' + fn;
                 document.getElementById('sidebar-avatar').textContent  = si;
@@ -228,8 +228,9 @@
     }
 
     var token   = localStorage.getItem('token') || '';
+    var userId  = localStorage.getItem('userId') || '';
     var API     = 'http://localhost:3000/api/classrooms';
-    var schedules = JSON.parse(localStorage.getItem('us_sch') || '[]');
+    var schedules = JSON.parse(localStorage.getItem('us_sch_' + userId) || '[]');
 
     var palette = [
         '#1565C0', '#1976D2', '#1E88E5', '#2196F3',

@@ -176,7 +176,8 @@
           localStorage.setItem('token',    data.token);
           localStorage.setItem('userId',   data.user.id);
           localStorage.setItem('role',     data.user.role);
-          localStorage.setItem('fullName', data.user.fullName);
+          var nameKey = data.user.role === 'teacher' ? 'teacher_fullName' : 'student_fullName';
+          localStorage.setItem(nameKey, data.user.fullName);
 
           if (data.user.role === 'teacher') {
             window.location.href = 'teacher/dashboard.html';

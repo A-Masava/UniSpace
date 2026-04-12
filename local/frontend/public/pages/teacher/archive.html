@@ -149,27 +149,22 @@
 
 <script>
 
-    var fullName = localStorage.getItem('fullName') || 'Teacher';
+    var fullName = localStorage.getItem('teacher_fullName') || 'Teacher';
     var initial  = fullName.charAt(0).toUpperCase();
     document.getElementById('teacher-name').textContent   = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
     document.getElementById('topbar-avatar').textContent  = initial;
     document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
 
-    var classes = JSON.parse(localStorage.getItem('us_cls') || '[]');
     var currentUserId = localStorage.getItem('userId');
-    
-
-    classes = classes.filter(function(c) { 
-        return c.teacherId === currentUserId || !c.teacherId; 
-    });
+    var classes = JSON.parse(localStorage.getItem('us_cls_' + currentUserId) || '[]');
 
     function initials(name) {
         return name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
     }
 
     function save() {
-        localStorage.setItem('us_cls', JSON.stringify(classes));
+        localStorage.setItem('us_cls_' + currentUserId, JSON.stringify(classes));
     }
 
     function archivedList() {

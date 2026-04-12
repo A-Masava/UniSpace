@@ -231,7 +231,7 @@
     var API   = 'http://localhost:3000/api/classrooms';
     var token = localStorage.getItem('token') || '';
 
-    var fullName = localStorage.getItem('fullName') || 'Student';
+    var fullName = localStorage.getItem('student_fullName') || 'Student';
     var initial  = fullName.charAt(0).toUpperCase();
     document.getElementById('student-name').textContent   = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;

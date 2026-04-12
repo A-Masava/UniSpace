@@ -318,7 +318,7 @@
 
     /* ── Boot: populate UI from localStorage first, then refresh from server ── */
     var cachedUser = JSON.parse(localStorage.getItem('us_user') || '{}');
-    var fullName   = cachedUser.fullName || localStorage.getItem('fullName') || 'Teacher';
+    var fullName   = cachedUser.fullName || localStorage.getItem('teacher_fullName') || 'Teacher';
     var initial    = fullName.charAt(0).toUpperCase();
     var ini2       = fullName.split(' ').map(function(w){ return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
 

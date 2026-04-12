@@ -171,20 +171,15 @@
 
 <script>
 
-    var fullName = localStorage.getItem('fullName') || 'Teacher';
+    var fullName = localStorage.getItem('teacher_fullName') || 'Teacher';
     var initial  = fullName.charAt(0).toUpperCase();
     document.getElementById('teacher-name').textContent   = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
     document.getElementById('topbar-avatar').textContent  = initial;
     document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
 
-    var savedClasses = JSON.parse(localStorage.getItem('us_cls') || '[]');
     var currentUserId = localStorage.getItem('userId');
-    
-    
-    savedClasses = savedClasses.filter(function(c) { 
-        return c.teacherId === currentUserId || !c.teacherId; 
-    });
+    var savedClasses = JSON.parse(localStorage.getItem('us_cls_' + currentUserId) || '[]');
 
     
     var palette = [
