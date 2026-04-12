@@ -192,6 +192,11 @@
         list.forEach(function(cls, i) {
             var card = document.createElement('div');
             card.className = 'class-card';
+            card.style.cursor = 'pointer';
+            card.onclick = function() {
+                window.location.href = 'class-info.html?id=' + cls._id;
+            };
+            
             var teacherName = (cls.teacher && cls.teacher.fullName) ? cls.teacher.fullName : (cls.teacherName || 'Teacher');
             card.innerHTML =
                 '<div class="class-card-top" style="background:' + color(i) + '">' +

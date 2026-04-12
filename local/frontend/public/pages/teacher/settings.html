@@ -594,7 +594,7 @@
     function openSignoutPopup()  { var el = document.getElementById('signout-overlay'); el.style.display = 'flex'; setTimeout(function(){ el.classList.add('visible'); }, 10); }
     function closeSignoutPopup() { var el = document.getElementById('signout-overlay'); el.classList.remove('visible'); setTimeout(function(){ el.style.display = 'none'; }, 230); }
     function handleBackdropClick(e) { if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup(); }
-    function doSignout() { localStorage.removeItem('token'); localStorage.removeItem('us_user'); window.location.href = '../login.html'; }
+    function doSignout() { localStorage.removeItem('token'); localStorage.removeItem('us_user'); window.location.href = '../index.html'; }
 </script>
 
 </body>

@@ -8,6 +8,6 @@ const chatController = require('../controllers/chatController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/messages', authMiddleware.verifyToken, chatController.sendMessage);
-router.get('/messages/:conversationId', authMiddleware.verifyToken, chatController.getMessages);
+router.get('/messages/:classroomId', authMiddleware.verifyToken, chatController.getMessages);
 
 module.exports = router;

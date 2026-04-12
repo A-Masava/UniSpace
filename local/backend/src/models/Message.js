@@ -5,12 +5,25 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
-  conversationId: String,
+  classroom: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Classroom',
+    required: true
+  },
   sender: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    refPath: 'senderModel',
+    required: true
   },
-  message: String,
+  senderModel: {
+    type: String,
+    enum: ['Teacher', 'Student'],
+    required: true
+  },
+  message: {
+    type: String,
+    required: true
+  },
   createdAt: {
     type: Date,
     default: Date.now

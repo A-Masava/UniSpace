@@ -381,9 +381,10 @@
     }
 
     function doSignout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('us_user');
         window.location.href = '../index.html';
     }
-
 </script>
 
 </body>
