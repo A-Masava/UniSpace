@@ -138,7 +138,7 @@
             </svg>
         </div>
         <h3>Sign out?</h3>
-        <p>You'll be taken back to the login screen.</p>
+        <p>Are you sure you want to sign out?</p>
         <div class="signout-actions">
             <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
             <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
@@ -159,8 +159,7 @@
     var classes = JSON.parse(localStorage.getItem('us_cls') || '[]');
     var currentUserId = localStorage.getItem('userId');
     
-    // Filter classes to only show those created by the current teacher
-    // For backward compatibility, also show classes without teacherId (created before the filter was added)
+
     classes = classes.filter(function(c) { 
         return c.teacherId === currentUserId || !c.teacherId; 
     });
