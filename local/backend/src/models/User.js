@@ -9,6 +9,9 @@ const StudentSchema = new mongoose.Schema({
   department: { type: String, trim: true },
   googleId:   { type: String },
   avatar:     { type: String },
+  bio:        { type: String, trim: true, default: '' },
+  phone:      { type: String, trim: true, default: '' },
+  website:    { type: String, trim: true, default: '' },
   createdAt:  { type: Date, default: Date.now }
 });
 
