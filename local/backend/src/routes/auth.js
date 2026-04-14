@@ -213,4 +213,47 @@ router.get('/me', async (req, res) => {
 
 
 
+// PUT /api/auth/change-password
+router.put('/change-password', async (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ msg: 'No token provided' });
+
+  const token = authHeader.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const Model = getModel(decoded.role);
+    const user = await Model.findById(decoded.id);
+
+    if (!user) return res.status(404).json({ msg: 'User not found' });
+
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ msg: 'Please provide current and new password' });
+    }
+
+    if (!user.password) {
+      return res.status(400).json({ msg: 'This account uses Google Sign-In and has no password' });
+    }
+
+    const match = await bcrypt.compare(currentPassword, user.password);
+    if (!match) {
+      return res.status(400).json({ msg: 'Current password is incorrect' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ msg: 'New password must be at least 6 characters' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+
+    res.json({ msg: 'Password changed successfully' });
+  } catch (err) {
+    console.error('Change password error:', err.message);
+    res.status(500).json({ msg: 'Server error, please try again' });
+  }
+});
+
 module.exports = router;
