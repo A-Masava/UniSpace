@@ -418,3 +418,56 @@
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
+
+/* Stat cards for Dashboard */
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #e6e1db;
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(30, 58, 82, 0.05);
+    transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(30, 58, 82, 0.1);
+}
+
+.stat-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #f4f8fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.stat-icon svg {
+    stroke: #1e3a52;
+}
+
+.stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    color: #1e3a52;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #8a7868;
+    font-weight: 500;
+}
