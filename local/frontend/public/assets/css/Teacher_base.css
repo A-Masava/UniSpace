@@ -539,17 +539,7 @@ button {
     border-color: #1565C0;
 }
 
-.info-detail-card {
-    background: #fff;
-    border: 1px solid #e6e1db;
-    border-radius: 12px;
-    padding: 20px;
-    display: none;
-}
 
-.info-detail-card.show {
-    display: block;
-}
 
 .info-detail-top {
     display: flex;
