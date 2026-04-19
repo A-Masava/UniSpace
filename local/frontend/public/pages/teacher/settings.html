@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <meta name="description" content="Change your password and manage account security on Unispace.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/base.css">
     <link rel="stylesheet" href="../../assets/css/Teacher_dashboard.css">
     <link rel="stylesheet" href="../../assets/css/teacher_profile.css">
@@ -19,28 +22,34 @@
             border-radius: 18px;
             padding: 24px 28px;
         }
+
         .danger-zone-card .section-header-icon {
             background: #fde8e7;
         }
+
         .danger-zone-card .section-header-icon svg {
             color: #bc4f47;
         }
+
         .danger-zone-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
         }
+
         .danger-zone-row p {
             font-size: 12.5px;
             color: #8a7868;
             line-height: 1.5;
         }
+
         .account-stat-row {
             display: flex;
             gap: 12px;
             margin-bottom: 2px;
         }
+
         .account-stat {
             flex: 1;
             background: #faf5ef;
@@ -51,6 +60,7 @@
             flex-direction: column;
             gap: 3px;
         }
+
         .account-stat .stat-label {
             font-size: 9.5px;
             font-weight: 700;
@@ -58,23 +68,27 @@
             text-transform: uppercase;
             color: #8a7868;
         }
+
         .account-stat .stat-val {
             font-size: 13px;
             font-weight: 600;
             color: #1e3a52;
         }
+
         .hint-text {
             font-size: 11px;
             color: #8a7868;
             margin-top: 5px;
             line-height: 1.5;
         }
+
         .requirements-list {
             display: flex;
             flex-direction: column;
             gap: 4px;
             margin-top: 10px;
         }
+
         .req-item {
             display: flex;
             align-items: center;
@@ -83,9 +97,11 @@
             color: #8a7868;
             transition: color 0.2s;
         }
+
         .req-item.met {
             color: #3db87a;
         }
+
         .req-dot {
             width: 6px;
             height: 6px;
@@ -94,508 +110,563 @@
             flex-shrink: 0;
             transition: background 0.2s;
         }
+
         .req-item.met .req-dot {
             background: #3db87a;
         }
     </style>
 </head>
+
 <body>
 
-<div class="page-wrapper">
-    <div class="app-box">
+    <div class="page-wrapper">
+        <div class="app-box">
 
-        <!-- sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
-            </div>
-            <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-                    </svg>
-                    <span>Dashboard</span>
-                </a>
-                <a href="classes.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-                    </svg>
-                    <span>My Classes</span>
-                </a>
-                <a href="create-class.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 8v8M8 12h8"/>
-                    </svg>
-                    <span>New Class</span>
-                </a>
-                <a href="schedule.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <rect x="3" y="4" width="18" height="18" rx="2"/>
-                        <path d="M16 2v4M8 2v4M3 10h18"/>
-                    </svg>
-                    <span>Schedule</span>
-                </a>
-                <a href="class-info.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 16v-4M12 8h.01"/>
-                    </svg>
-                    <span>Class Info</span>
-                </a>
-                <a href="archive.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <polyline points="21 8 21 21 3 21 3 8"/>
-                        <rect x="1" y="3" width="22" height="5" rx="1"/>
-                        <path d="M10 12h4"/>
-                    </svg>
-                    <span>Archive</span>
-                </a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="teacher-avatar" id="sidebar-avatar"></div>
-                <div class="teacher-info">
-                    <span class="teacher-name" id="sidebar-name"></span>
-                    <span class="teacher-role">Teacher</span>
+            <!-- sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-brand">
+                    <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
                 </div>
-                <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
-                    </svg>
-                </button>
-            </div>
-        </aside>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="classes.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+                        </svg>
+                        <span>My Classes</span>
+                    </a>
+                    <a href="create-class.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v8M8 12h8" />
+                        </svg>
+                        <span>New Class</span>
+                    </a>
+                    <a href="schedule.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" />
+                            <path d="M16 2v4M8 2v4M3 10h18" />
+                        </svg>
+                        <span>Schedule</span>
+                    </a>
+                    <a href="class-info.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4M12 8h.01" />
+                        </svg>
+                        <span>Class Info</span>
+                    </a>
+                    <a href="archive.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <polyline points="21 8 21 21 3 21 3 8" />
+                            <rect x="1" y="3" width="22" height="5" rx="1" />
+                            <path d="M10 12h4" />
+                        </svg>
+                        <span>Archive</span>
+                    </a>
+                </nav>
 
-        <!-- main -->
-        <main class="main-content">
-            <header class="topbar">
-                <div class="topbar-left">
-                    <p id="welcome-msg"></p>
-                    <h1>Settings</h1>
-                </div>
-                <div class="topbar-right">
-                    <span class="current-date" id="today-date"></span>
-                    <div class="topbar-avatar-wrap" id="avatar-wrap">
-                        <div class="topbar-avatar" id="topbar-avatar" onclick="toggleDropdown(event)" title="Account"></div>
-                        <div class="avatar-dropdown" id="avatar-dropdown">
-                            <div class="dropdown-header">
-                                <div class="dropdown-header-avatar" id="dropdown-avatar"></div>
-                                <div class="dropdown-header-info">
-                                    <span class="dropdown-header-name" id="dropdown-name"></span>
-                                    <span class="dropdown-header-role">Teacher</span>
-                                </div>
-                            </div>
-                            <a href="profile.html" class="dropdown-item">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                    <circle cx="12" cy="8" r="4"/>
-                                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-                                </svg>
-                                View Profile
-                            </a>
-                            <a href="settings.html" class="dropdown-item" style="background:#f3f0ec;">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                    <circle cx="12" cy="12" r="3"/>
-                                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
-                                </svg>
-                                Settings
-                            </a>
-                        </div>
+                <div class="sidebar-footer">
+                    <div class="teacher-avatar" id="sidebar-avatar"></div>
+                    <div class="teacher-info">
+                        <span class="teacher-name" id="sidebar-name"></span>
+                        <span class="teacher-role">Teacher</span>
                     </div>
+                    <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                        </svg>
+                    </button>
                 </div>
-            </header>
+            </aside>
 
-            <div class="page-body">
-                <div class="page-content">
-                    <div class="settings-layout">
-
-                        <!-- Account Info (read-only) -->
-                        <div class="section-card">
-                            <div class="section-header">
-                                <div class="section-header-icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                        <circle cx="12" cy="8" r="4"/>
-                                        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            <!-- main -->
+            <main class="main-content">
+                <header class="topbar">
+                    <div class="topbar-left">
+                        <p id="welcome-msg"></p>
+                        <h1>Settings</h1>
+                    </div>
+                    <div class="topbar-right">
+                        <span class="current-date" id="today-date"></span>
+                        <div class="topbar-avatar-wrap" id="avatar-wrap">
+                            <div class="topbar-avatar" id="topbar-avatar" onclick="toggleDropdown(event)"
+                                title="Account"></div>
+                            <div class="avatar-dropdown" id="avatar-dropdown">
+                                <div class="dropdown-header">
+                                    <div class="dropdown-header-avatar" id="dropdown-avatar"></div>
+                                    <div class="dropdown-header-info">
+                                        <span class="dropdown-header-name" id="dropdown-name"></span>
+                                        <span class="dropdown-header-role">Teacher</span>
+                                    </div>
+                                </div>
+                                <a href="profile.html" class="dropdown-item">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round">
+                                        <circle cx="12" cy="8" r="4" />
+                                        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                                     </svg>
-                                </div>
-                                <div class="section-header-text">
-                                    <h3>Account Overview</h3>
-                                    <p>Your account details at a glance</p>
-                                </div>
-                            </div>
-
-                            <div class="account-stat-row">
-                                <div class="account-stat">
-                                    <span class="stat-label">Full Name</span>
-                                    <span class="stat-val" id="stat-name">—</span>
-                                </div>
-                                <div class="account-stat">
-                                    <span class="stat-label">Email</span>
-                                    <span class="stat-val" id="stat-email" style="font-size:12px;">—</span>
-                                </div>
-                            </div>
-                            <div class="account-stat-row" style="margin-top:10px;">
-                                <div class="account-stat">
-                                    <span class="stat-label">Role</span>
-                                    <span class="stat-val">Teacher</span>
-                                </div>
-                                <div class="account-stat">
-                                    <span class="stat-label">Member Since</span>
-                                    <span class="stat-val" id="stat-joined">—</span>
-                                </div>
-                            </div>
-
-                            <div style="margin-top:16px; padding-top:14px; border-top:1px solid #f0ece7;">
-                                <a href="profile.html" class="btn-secondary" style="font-size:12.5px; padding:8px 18px;">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                                    Edit Profile Details
+                                    View Profile
+                                </a>
+                                <a href="settings.html" class="dropdown-item" style="background:#f3f0ec;">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round">
+                                        <circle cx="12" cy="12" r="3" />
+                                        <path
+                                            d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                                    </svg>
+                                    Settings
                                 </a>
                             </div>
                         </div>
+                    </div>
+                </header>
 
-                        <!-- Change Password -->
-                        <div class="section-card">
-                            <div class="section-header">
-                                <div class="section-header-icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                                        <path d="M7 11V7a5 5 0 0110 0v4"/>
-                                    </svg>
+                <div class="page-body">
+                    <div class="page-content">
+                        <div class="settings-layout">
+
+                            <!-- Account Info (read-only) -->
+                            <div class="section-card">
+                                <div class="section-header">
+                                    <div class="section-header-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                            <circle cx="12" cy="8" r="4" />
+                                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                                        </svg>
+                                    </div>
+                                    <div class="section-header-text">
+                                        <h3>Account Overview</h3>
+                                        <p>Your account details at a glance</p>
+                                    </div>
                                 </div>
-                                <div class="section-header-text">
-                                    <h3>Change Password</h3>
-                                    <p>Update your account password</p>
+
+                                <div class="account-stat-row">
+                                    <div class="account-stat">
+                                        <span class="stat-label">Full Name</span>
+                                        <span class="stat-val" id="stat-name">—</span>
+                                    </div>
+                                    <div class="account-stat">
+                                        <span class="stat-label">Email</span>
+                                        <span class="stat-val" id="stat-email" style="font-size:12px;">—</span>
+                                    </div>
+                                </div>
+                                <div class="account-stat-row" style="margin-top:10px;">
+                                    <div class="account-stat">
+                                        <span class="stat-label">Role</span>
+                                        <span class="stat-val">Teacher</span>
+                                    </div>
+                                    <div class="account-stat">
+                                        <span class="stat-label">Member Since</span>
+                                        <span class="stat-val" id="stat-joined">—</span>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top:16px; padding-top:14px; border-top:1px solid #f0ece7;">
+                                    <a href="profile.html" class="btn-secondary"
+                                        style="font-size:12.5px; padding:8px 18px;">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                                            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                        </svg>
+                                        Edit Profile Details
+                                    </a>
                                 </div>
                             </div>
 
-                            <!-- Current password -->
-                            <div class="profile-form-group">
-                                <label for="current-password">Current Password</label>
-                                <div class="profile-input-wrap">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                                    <input type="password" id="current-password" placeholder="Enter your current password" autocomplete="current-password">
-                                    <button class="eye-btn" type="button" onclick="toggleEye('current-password', this)" title="Show/hide password">
-                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="eye-icon">
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                            <circle cx="12" cy="12" r="3"/>
+                            <!-- Change Password -->
+                            <div class="section-card">
+                                <div class="section-header">
+                                    <div class="section-header-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                            <path d="M7 11V7a5 5 0 0110 0v4" />
                                         </svg>
+                                    </div>
+                                    <div class="section-header-text">
+                                        <h3>Change Password</h3>
+                                        <p>Update your account password</p>
+                                    </div>
+                                </div>
+
+                                <!-- Current password -->
+                                <div class="profile-form-group">
+                                    <label for="current-password">Current Password</label>
+                                    <div class="profile-input-wrap">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                            <path d="M7 11V7a5 5 0 0110 0v4" />
+                                        </svg>
+                                        <input type="password" id="current-password"
+                                            placeholder="Enter your current password" autocomplete="current-password">
+                                        <button class="eye-btn" type="button"
+                                            onclick="toggleEye('current-password', this)" title="Show/hide password">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                                class="eye-icon">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                <circle cx="12" cy="12" r="3" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- New password -->
+                                <div class="profile-form-group">
+                                    <label for="new-password">New Password</label>
+                                    <div class="profile-input-wrap">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                        </svg>
+                                        <input type="password" id="new-password"
+                                            placeholder="Enter a strong new password" autocomplete="new-password"
+                                            oninput="checkStrength(this.value)">
+                                        <button class="eye-btn" type="button" onclick="toggleEye('new-password', this)"
+                                            title="Show/hide password">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                                class="eye-icon">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                <circle cx="12" cy="12" r="3" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <!-- Strength bar -->
+                                    <div class="strength-bar-wrap" id="strength-bar">
+                                        <div class="strength-seg" id="seg1"></div>
+                                        <div class="strength-seg" id="seg2"></div>
+                                        <div class="strength-seg" id="seg3"></div>
+                                        <div class="strength-seg" id="seg4"></div>
+                                    </div>
+                                    <span class="strength-label" id="strength-label"></span>
+
+                                    <!-- Requirements -->
+                                    <div class="requirements-list">
+                                        <div class="req-item" id="req-len">
+                                            <div class="req-dot"></div>At least 6 characters
+                                        </div>
+                                        <div class="req-item" id="req-upper">
+                                            <div class="req-dot"></div>At least one uppercase letter
+                                        </div>
+                                        <div class="req-item" id="req-num">
+                                            <div class="req-dot"></div>At least one number
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Confirm new password -->
+                                <div class="profile-form-group">
+                                    <label for="confirm-password">Confirm New Password</label>
+                                    <div class="profile-input-wrap">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                            <polyline points="20 6 9 17 4 12" />
+                                        </svg>
+                                        <input type="password" id="confirm-password" placeholder="Re-enter new password"
+                                            autocomplete="new-password" oninput="checkMatch()">
+                                        <button class="eye-btn" type="button"
+                                            onclick="toggleEye('confirm-password', this)" title="Show/hide password">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                                class="eye-icon">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                <circle cx="12" cy="12" r="3" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <span class="hint-text" id="match-hint"></span>
+                                </div>
+
+                                <div class="section-actions">
+                                    <button class="btn-primary" id="change-pwd-btn" onclick="changePassword()">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                            <path d="M7 11V7a5 5 0 0110 0v4" />
+                                        </svg>
+                                        Update Password
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- New password -->
-                            <div class="profile-form-group">
-                                <label for="new-password">New Password</label>
-                                <div class="profile-input-wrap">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                                    <input type="password" id="new-password" placeholder="Enter a strong new password" autocomplete="new-password" oninput="checkStrength(this.value)">
-                                    <button class="eye-btn" type="button" onclick="toggleEye('new-password', this)" title="Show/hide password">
-                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="eye-icon">
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                            <circle cx="12" cy="12" r="3"/>
+                            <!-- Danger zone (sign out all) -->
+                            <div class="danger-zone-card">
+                                <div class="section-header" style="margin-bottom:14px; padding-bottom:12px;">
+                                    <div class="section-header-icon">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
                                         </svg>
+                                    </div>
+                                    <div class="section-header-text">
+                                        <h3 style="color:#bc4f47;">Sign Out</h3>
+                                        <p>End your current session</p>
+                                    </div>
+                                </div>
+                                <div class="danger-zone-row">
+                                    <p>You will be redirected to the Index page. Any unsaved changes will be lost.</p>
+                                    <button class="btn-danger" onclick="openSignoutPopup()"
+                                        style="white-space:nowrap; flex-shrink:0;">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                                        </svg>
+                                        Sign Out
                                     </button>
                                 </div>
-
-                                <!-- Strength bar -->
-                                <div class="strength-bar-wrap" id="strength-bar">
-                                    <div class="strength-seg" id="seg1"></div>
-                                    <div class="strength-seg" id="seg2"></div>
-                                    <div class="strength-seg" id="seg3"></div>
-                                    <div class="strength-seg" id="seg4"></div>
-                                </div>
-                                <span class="strength-label" id="strength-label"></span>
-
-                                <!-- Requirements -->
-                                <div class="requirements-list">
-                                    <div class="req-item" id="req-len">
-                                        <div class="req-dot"></div>At least 6 characters
-                                    </div>
-                                    <div class="req-item" id="req-upper">
-                                        <div class="req-dot"></div>At least one uppercase letter
-                                    </div>
-                                    <div class="req-item" id="req-num">
-                                        <div class="req-dot"></div>At least one number
-                                    </div>
-                                </div>
                             </div>
 
-                            <!-- Confirm new password -->
-                            <div class="profile-form-group">
-                                <label for="confirm-password">Confirm New Password</label>
-                                <div class="profile-input-wrap">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                    <input type="password" id="confirm-password" placeholder="Re-enter new password" autocomplete="new-password" oninput="checkMatch()">
-                                    <button class="eye-btn" type="button" onclick="toggleEye('confirm-password', this)" title="Show/hide password">
-                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" class="eye-icon">
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <span class="hint-text" id="match-hint"></span>
-                            </div>
-
-                            <div class="section-actions">
-                                <button class="btn-primary" id="change-pwd-btn" onclick="changePassword()">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                                    Update Password
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Danger zone (sign out all) -->
-                        <div class="danger-zone-card">
-                            <div class="section-header" style="margin-bottom:14px; padding-bottom:12px;">
-                                <div class="section-header-icon">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
-                                    </svg>
-                                </div>
-                                <div class="section-header-text">
-                                    <h3 style="color:#bc4f47;">Sign Out</h3>
-                                    <p>End your current session</p>
-                                </div>
-                            </div>
-                            <div class="danger-zone-row">
-                                <p>You will be redirected to the login page. Any unsaved changes will be lost.</p>
-                                <button class="btn-danger" onclick="openSignoutPopup()" style="white-space:nowrap; flex-shrink:0;">
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-                                    Sign Out
-                                </button>
-                            </div>
-                        </div>
-
-                    </div><!-- /settings-layout -->
+                        </div><!-- /settings-layout -->
+                    </div>
                 </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Sign out modal -->
+    <div class="modal-overlay" id="signout-overlay" onclick="handleBackdropClick(event)">
+        <div class="signout-box">
+            <div class="signout-icon-wrap">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8"
+                    stroke-linecap="round">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                </svg>
             </div>
-        </main>
-    </div>
-</div>
-
-<!-- Sign out modal -->
-<div class="modal-overlay" id="signout-overlay" onclick="handleBackdropClick(event)">
-    <div class="signout-box">
-        <div class="signout-icon-wrap">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8" stroke-linecap="round">
-                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
-            </svg>
-        </div>
-        <h3>Sign out?</h3>
-        <p>You'll be taken back to the login screen.</p>
-        <div class="signout-actions">
-            <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
-            <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+            <h3>Sign out?</h3>
+            <p>You'll be taken back to the Index screen.</p>
+            <div class="signout-actions">
+                <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
+                <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Toast -->
-<div class="toast" id="toast">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" id="toast-icon">
-        <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    <span id="toast-msg"></span>
-</div>
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" id="toast-icon">
+            <polyline points="20 6 9 17 4 12" />
+        </svg>
+        <span id="toast-msg"></span>
+    </div>
 
-<script>
-    var API   = 'http://localhost:3000/api/auth';
-    var token = localStorage.getItem('token') || '';
+    <script>
+        var API = 'http://localhost:3000/api/auth';
+        var token = localStorage.getItem('token') || '';
 
-    /* ── Boot ── */
-    var cachedUser = JSON.parse(localStorage.getItem('us_user') || '{}');
-    var fullName   = cachedUser.fullName || localStorage.getItem('fullName') || 'Teacher';
-    var initial    = fullName.charAt(0).toUpperCase();
+        /* ── Boot ── */
+        var cachedUser = JSON.parse(localStorage.getItem('us_user') || '{}');
+        var fullName = cachedUser.fullName || localStorage.getItem('fullName') || 'Teacher';
+        var initial = fullName.charAt(0).toUpperCase();
 
-    document.getElementById('sidebar-name').textContent    = fullName;
-    document.getElementById('welcome-msg').textContent     = 'Welcome back, ' + fullName;
-    document.getElementById('sidebar-avatar').textContent  = initial;
-    document.getElementById('topbar-avatar').textContent   = initial;
-    document.getElementById('dropdown-avatar').textContent = initial;
-    document.getElementById('dropdown-name').textContent   = fullName;
+        document.getElementById('sidebar-name').textContent = fullName;
+        document.getElementById('welcome-msg').textContent = 'Welcome back, ' + fullName;
+        document.getElementById('sidebar-avatar').textContent = initial;
+        document.getElementById('topbar-avatar').textContent = initial;
+        document.getElementById('dropdown-avatar').textContent = initial;
+        document.getElementById('dropdown-name').textContent = fullName;
 
-    document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
-
-    function populateStats(user) {
-        document.getElementById('stat-name').textContent  = user.fullName || '—';
-        document.getElementById('stat-email').textContent = user.email    || '—';
-        if (user.createdAt) {
-            var d = new Date(user.createdAt);
-            document.getElementById('stat-joined').textContent =
-                d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-        }
-        var si = (user.fullName || 'T').charAt(0).toUpperCase();
-        document.getElementById('sidebar-name').textContent    = user.fullName || fullName;
-        document.getElementById('sidebar-avatar').textContent  = si;
-        document.getElementById('topbar-avatar').textContent   = si;
-        document.getElementById('dropdown-avatar').textContent = si;
-        document.getElementById('dropdown-name').textContent   = user.fullName || fullName;
-        document.getElementById('welcome-msg').textContent     = 'Welcome back, ' + (user.fullName || fullName);
-    }
-
-    if (cachedUser.fullName) populateStats(cachedUser);
-
-    if (token) {
-        fetch(API + '/me', { headers: { Authorization: 'Bearer ' + token } })
-            .then(function(r){ return r.json(); })
-            .then(function(data){ if (data._id || data.id) populateStats(data); })
-            .catch(function(){});
-    }
-
-    /* ── Password strength ── */
-    function checkStrength(val) {
-        var segs   = [document.getElementById('seg1'), document.getElementById('seg2'),
-                      document.getElementById('seg3'), document.getElementById('seg4')];
-        var label  = document.getElementById('strength-label');
-        var score  = 0;
-        if (val.length >= 6)          score++;
-        if (val.length >= 10)         score++;
-        if (/[A-Z]/.test(val))        score++;
-        if (/[0-9]/.test(val))        score++;
-        if (/[^A-Za-z0-9]/.test(val)) score++;
-
-        var level = score <= 1 ? 0 : score <= 2 ? 1 : score <= 3 ? 2 : 3;
-        var cls   = ['', 'weak', 'medium', 'strong'];
-        var lbl   = ['', 'Weak', 'Fair', 'Strong'];
-
-        segs.forEach(function(s){ s.className = 'strength-seg'; });
-        for (var i = 0; i <= Math.min(level, 3); i++) {
-            if (level > 0) segs[i].classList.add(cls[level]);
-        }
-        label.textContent = val.length ? lbl[level] : '';
-        label.style.color = level === 3 ? '#3db87a' : level === 2 ? '#e09c3a' : '#d9534f';
-
-        /* requirements */
-        toggleReq('req-len',   val.length >= 6);
-        toggleReq('req-upper', /[A-Z]/.test(val));
-        toggleReq('req-num',   /[0-9]/.test(val));
-
-        checkMatch();
-    }
-
-    function toggleReq(id, met) {
-        var el = document.getElementById(id);
-        met ? el.classList.add('met') : el.classList.remove('met');
-    }
-
-    function checkMatch() {
-        var np = document.getElementById('new-password').value;
-        var cp = document.getElementById('confirm-password').value;
-        var hint = document.getElementById('match-hint');
-        if (!cp) { hint.textContent = ''; return; }
-        if (np === cp) {
-            hint.textContent = '✓ Passwords match';
-            hint.style.color = '#3db87a';
-        } else {
-            hint.textContent = 'Passwords do not match';
-            hint.style.color = '#d9534f';
-        }
-    }
-
-    /* ── Eye toggle ── */
-    function toggleEye(inputId, btn) {
-        var input = document.getElementById(inputId);
-        var showing = input.type === 'text';
-        input.type = showing ? 'password' : 'text';
-        btn.querySelector('.eye-icon').innerHTML = showing
-            ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
-            : '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
-    }
-
-    /* ── Change password ── */
-    function changePassword() {
-        var currentPwd = document.getElementById('current-password').value;
-        var newPwd     = document.getElementById('new-password').value;
-        var confirmPwd = document.getElementById('confirm-password').value;
-        var btn        = document.getElementById('change-pwd-btn');
-
-        if (!currentPwd || !newPwd || !confirmPwd) {
-            return showToast('Please fill in all password fields.', true);
-        }
-        if (newPwd.length < 6) {
-            return showToast('New password must be at least 6 characters.', true);
-        }
-        if (newPwd !== confirmPwd) {
-            return showToast('New passwords do not match.', true);
-        }
-        if (!token) {
-            return showToast('Session expired. Please log in again.', true);
-        }
-
-        btn.disabled = true;
-        btn.textContent = 'Updating…';
-
-        fetch(API + '/change-password', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
-            body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd })
-        })
-        .then(function(r){ return r.json(); })
-        .then(function(data){
-            btn.disabled = false;
-            btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Update Password';
-
-            if (data.msg === 'Password changed successfully') {
-                showToast('Password updated successfully! 🔒');
-                document.getElementById('current-password').value = '';
-                document.getElementById('new-password').value     = '';
-                document.getElementById('confirm-password').value = '';
-                checkStrength('');
-                document.getElementById('match-hint').textContent = '';
-                document.getElementById('strength-label').textContent = '';
-            } else {
-                showToast(data.msg || 'Failed to update password.', true);
-            }
-        })
-        .catch(function(){
-            btn.disabled = false;
-            btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Update Password';
-            showToast('Network error — please try again.', true);
+        document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
-    }
 
-    /* ── Toast ── */
-    var toastTimer;
-    function showToast(msg, isError) {
-        var el   = document.getElementById('toast');
-        var icon = document.getElementById('toast-icon');
-        document.getElementById('toast-msg').textContent = msg;
-        el.classList.remove('error');
-        if (isError) {
-            el.classList.add('error');
-            icon.innerHTML = '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>';
-        } else {
-            icon.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+        function populateStats(user) {
+            document.getElementById('stat-name').textContent = user.fullName || '—';
+            document.getElementById('stat-email').textContent = user.email || '—';
+            if (user.createdAt) {
+                var d = new Date(user.createdAt);
+                document.getElementById('stat-joined').textContent =
+                    d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+            }
+            var si = (user.fullName || 'T').charAt(0).toUpperCase();
+            document.getElementById('sidebar-name').textContent = user.fullName || fullName;
+            document.getElementById('sidebar-avatar').textContent = si;
+            document.getElementById('topbar-avatar').textContent = si;
+            document.getElementById('dropdown-avatar').textContent = si;
+            document.getElementById('dropdown-name').textContent = user.fullName || fullName;
+            document.getElementById('welcome-msg').textContent = 'Welcome back, ' + (user.fullName || fullName);
         }
-        el.classList.add('show');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 3500);
-    }
 
-    /* ── Dropdown ── */
-    var dropdownEl = document.getElementById('avatar-dropdown');
-    var avatarEl   = document.getElementById('topbar-avatar');
-    var isOpen     = false;
-    function toggleDropdown(e) { e.stopPropagation(); isOpen ? closeDropdown() : openDropdown(); }
-    function openDropdown()  { isOpen = true;  dropdownEl.classList.add('visible');    avatarEl.classList.add('open'); }
-    function closeDropdown() { isOpen = false; dropdownEl.classList.remove('visible'); avatarEl.classList.remove('open'); }
-    document.addEventListener('click', function(e) {
-        if (isOpen && !document.getElementById('avatar-wrap').contains(e.target)) closeDropdown();
-    });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && isOpen) closeDropdown(); });
+        if (cachedUser.fullName) populateStats(cachedUser);
 
-    /* ── Sign out ── */
-    function openSignoutPopup()  { var el = document.getElementById('signout-overlay'); el.style.display = 'flex'; setTimeout(function(){ el.classList.add('visible'); }, 10); }
-    function closeSignoutPopup() { var el = document.getElementById('signout-overlay'); el.classList.remove('visible'); setTimeout(function(){ el.style.display = 'none'; }, 230); }
-    function handleBackdropClick(e) { if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup(); }
-    function doSignout() { localStorage.removeItem('token'); localStorage.removeItem('us_user'); window.location.href = '../index.html'; }
-</script>
+        if (token) {
+            fetch(API + '/me', { headers: { Authorization: 'Bearer ' + token } })
+                .then(function (r) { return r.json(); })
+                .then(function (data) { if (data._id || data.id) populateStats(data); })
+                .catch(function () { });
+        }
+
+        /* ── Password strength ── */
+        function checkStrength(val) {
+            var segs = [document.getElementById('seg1'), document.getElementById('seg2'),
+            document.getElementById('seg3'), document.getElementById('seg4')];
+            var label = document.getElementById('strength-label');
+            var score = 0;
+            if (val.length >= 6) score++;
+            if (val.length >= 10) score++;
+            if (/[A-Z]/.test(val)) score++;
+            if (/[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+
+            var level = score <= 1 ? 0 : score <= 2 ? 1 : score <= 3 ? 2 : 3;
+            var cls = ['', 'weak', 'medium', 'strong'];
+            var lbl = ['', 'Weak', 'Fair', 'Strong'];
+
+            segs.forEach(function (s) { s.className = 'strength-seg'; });
+            for (var i = 0; i <= Math.min(level, 3); i++) {
+                if (level > 0) segs[i].classList.add(cls[level]);
+            }
+            label.textContent = val.length ? lbl[level] : '';
+            label.style.color = level === 3 ? '#3db87a' : level === 2 ? '#e09c3a' : '#d9534f';
+
+            /* requirements */
+            toggleReq('req-len', val.length >= 6);
+            toggleReq('req-upper', /[A-Z]/.test(val));
+            toggleReq('req-num', /[0-9]/.test(val));
+
+            checkMatch();
+        }
+
+        function toggleReq(id, met) {
+            var el = document.getElementById(id);
+            met ? el.classList.add('met') : el.classList.remove('met');
+        }
+
+        function checkMatch() {
+            var np = document.getElementById('new-password').value;
+            var cp = document.getElementById('confirm-password').value;
+            var hint = document.getElementById('match-hint');
+            if (!cp) { hint.textContent = ''; return; }
+            if (np === cp) {
+                hint.textContent = '✓ Passwords match';
+                hint.style.color = '#3db87a';
+            } else {
+                hint.textContent = 'Passwords do not match';
+                hint.style.color = '#d9534f';
+            }
+        }
+
+        /* ── Eye toggle ── */
+        function toggleEye(inputId, btn) {
+            var input = document.getElementById(inputId);
+            var showing = input.type === 'text';
+            input.type = showing ? 'password' : 'text';
+            btn.querySelector('.eye-icon').innerHTML = showing
+                ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+                : '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+        }
+
+        /* ── Change password ── */
+        function changePassword() {
+            var currentPwd = document.getElementById('current-password').value;
+            var newPwd = document.getElementById('new-password').value;
+            var confirmPwd = document.getElementById('confirm-password').value;
+            var btn = document.getElementById('change-pwd-btn');
+
+            if (!currentPwd || !newPwd || !confirmPwd) {
+                return showToast('Please fill in all password fields.', true);
+            }
+            if (newPwd.length < 6) {
+                return showToast('New password must be at least 6 characters.', true);
+            }
+            if (newPwd !== confirmPwd) {
+                return showToast('New passwords do not match.', true);
+            }
+            if (!token) {
+                return showToast('Session expired. Please log in again.', true);
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Updating…';
+
+            fetch(API + '/change-password', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+                body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd })
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Update Password';
+
+                    if (data.msg === 'Password changed successfully') {
+                        showToast('Password updated successfully! 🔒');
+                        document.getElementById('current-password').value = '';
+                        document.getElementById('new-password').value = '';
+                        document.getElementById('confirm-password').value = '';
+                        checkStrength('');
+                        document.getElementById('match-hint').textContent = '';
+                        document.getElementById('strength-label').textContent = '';
+                    } else {
+                        showToast(data.msg || 'Failed to update password.', true);
+                    }
+                })
+                .catch(function () {
+                    btn.disabled = false;
+                    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Update Password';
+                    showToast('Network error — please try again.', true);
+                });
+        }
+
+        /* ── Toast ── */
+        var toastTimer;
+        function showToast(msg, isError) {
+            var el = document.getElementById('toast');
+            var icon = document.getElementById('toast-icon');
+            document.getElementById('toast-msg').textContent = msg;
+            el.classList.remove('error');
+            if (isError) {
+                el.classList.add('error');
+                icon.innerHTML = '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>';
+            } else {
+                icon.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+            }
+            el.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
+        }
+
+        /* ── Dropdown ── */
+        var dropdownEl = document.getElementById('avatar-dropdown');
+        var avatarEl = document.getElementById('topbar-avatar');
+        var isOpen = false;
+        function toggleDropdown(e) { e.stopPropagation(); isOpen ? closeDropdown() : openDropdown(); }
+        function openDropdown() { isOpen = true; dropdownEl.classList.add('visible'); avatarEl.classList.add('open'); }
+        function closeDropdown() { isOpen = false; dropdownEl.classList.remove('visible'); avatarEl.classList.remove('open'); }
+        document.addEventListener('click', function (e) {
+            if (isOpen && !document.getElementById('avatar-wrap').contains(e.target)) closeDropdown();
+        });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) closeDropdown(); });
+
+        /* ── Sign out ── */
+        function openSignoutPopup() { var el = document.getElementById('signout-overlay'); el.style.display = 'flex'; setTimeout(function () { el.classList.add('visible'); }, 10); }
+        function closeSignoutPopup() { var el = document.getElementById('signout-overlay'); el.classList.remove('visible'); setTimeout(function () { el.style.display = 'none'; }, 230); }
+        function handleBackdropClick(e) { if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup(); }
+        function doSignout() { localStorage.removeItem('token'); localStorage.removeItem('us_user'); window.location.href = '../index.html'; }
+    </script>
 
 </body>
+
 </html>

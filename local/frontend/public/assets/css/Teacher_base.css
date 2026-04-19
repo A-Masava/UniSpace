@@ -944,6 +944,11 @@ button {
     color: #fff;
 }
 
+.empty-state a.btn-outline:hover {
+    background: #587c8d;
+    color: #fff;
+}
+
 /* used for delete/archive confirm actions */
 .btn-danger {
     display: inline-flex;
