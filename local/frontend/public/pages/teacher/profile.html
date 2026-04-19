@@ -1,577 +1,645 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile — Unispace</title>
-    <meta name="description" content="View and edit your teacher profile on Unispace — update personal details, bio, and contact information.">
+    <meta name="description"
+        content="View and edit your teacher profile on Unispace — update personal details, bio, and contact information.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/base.css">
     <link rel="stylesheet" href="../../assets/css/Teacher_dashboard.css">
     <link rel="stylesheet" href="../../assets/css/teacher_profile.css">
 </head>
+
 <body>
 
-<div class="page-wrapper">
-    <div class="app-box">
+    <div class="page-wrapper">
+        <div class="app-box">
 
-        <!-- sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-                <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
-            </div>
-            <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-                    </svg>
-                    <span>Dashboard</span>
-                </a>
-                <a href="classes.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-                    </svg>
-                    <span>My Classes</span>
-                </a>
-                <a href="create-class.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 8v8M8 12h8"/>
-                    </svg>
-                    <span>New Class</span>
-                </a>
-                <a href="schedule.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <rect x="3" y="4" width="18" height="18" rx="2"/>
-                        <path d="M16 2v4M8 2v4M3 10h18"/>
-                    </svg>
-                    <span>Schedule</span>
-                </a>
-                <a href="class-info.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 16v-4M12 8h.01"/>
-                    </svg>
-                    <span>Class Info</span>
-                </a>
-                <a href="archive.html" class="nav-link">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <polyline points="21 8 21 21 3 21 3 8"/>
-                        <rect x="1" y="3" width="22" height="5" rx="1"/>
-                        <path d="M10 12h4"/>
-                    </svg>
-                    <span>Archive</span>
-                </a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="teacher-avatar" id="sidebar-avatar"></div>
-                <div class="teacher-info">
-                    <span class="teacher-name" id="sidebar-name"></span>
-                    <span class="teacher-role">Teacher</span>
+            <!-- sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-brand">
+                    <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
                 </div>
-                <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
-                    </svg>
-                </button>
-            </div>
-        </aside>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="classes.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+                        </svg>
+                        <span>My Classes</span>
+                    </a>
+                    <a href="create-class.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v8M8 12h8" />
+                        </svg>
+                        <span>New Class</span>
+                    </a>
+                    <a href="schedule.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" />
+                            <path d="M16 2v4M8 2v4M3 10h18" />
+                        </svg>
+                        <span>Schedule</span>
+                    </a>
+                    <a href="class-info.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4M12 8h.01" />
+                        </svg>
+                        <span>Class Info</span>
+                    </a>
+                    <a href="archive.html" class="nav-link">
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <polyline points="21 8 21 21 3 21 3 8" />
+                            <rect x="1" y="3" width="22" height="5" rx="1" />
+                            <path d="M10 12h4" />
+                        </svg>
+                        <span>Archive</span>
+                    </a>
+                </nav>
 
-        <!-- main -->
-        <main class="main-content">
-            <header class="topbar">
-                <div class="topbar-left">
-                    <p id="welcome-msg"></p>
-                    <h1>My Profile</h1>
+                <div class="sidebar-footer">
+                    <div class="teacher-avatar" id="sidebar-avatar"></div>
+                    <div class="teacher-info">
+                        <span class="teacher-name" id="sidebar-name"></span>
+                        <span class="teacher-role">Teacher</span>
+                    </div>
+                    <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                        </svg>
+                    </button>
                 </div>
-                <div class="topbar-right">
-                    <span class="current-date" id="today-date"></span>
-                    <div class="topbar-avatar-wrap" id="avatar-wrap">
-                        <div class="topbar-avatar" id="topbar-avatar" onclick="toggleDropdown(event)" title="Account"></div>
-                        <div class="avatar-dropdown" id="avatar-dropdown">
-                            <div class="dropdown-header">
-                                <div class="dropdown-header-avatar" id="dropdown-avatar"></div>
-                                <div class="dropdown-header-info">
-                                    <span class="dropdown-header-name" id="dropdown-name"></span>
-                                    <span class="dropdown-header-role">Teacher</span>
+            </aside>
+
+            <!-- main -->
+            <main class="main-content">
+                <header class="topbar">
+                    <div class="topbar-left">
+                        <p id="welcome-msg"></p>
+                        <h1>My Profile</h1>
+                    </div>
+                    <div class="topbar-right">
+                        <span class="current-date" id="today-date"></span>
+                        <div class="topbar-avatar-wrap" id="avatar-wrap">
+                            <div class="topbar-avatar" id="topbar-avatar" onclick="toggleDropdown(event)"
+                                title="Account"></div>
+                            <div class="avatar-dropdown" id="avatar-dropdown">
+                                <div class="dropdown-header">
+                                    <div class="dropdown-header-avatar" id="dropdown-avatar"></div>
+                                    <div class="dropdown-header-info">
+                                        <span class="dropdown-header-name" id="dropdown-name"></span>
+                                        <span class="dropdown-header-role">Teacher</span>
+                                    </div>
                                 </div>
+                                <a href="profile.html" class="dropdown-item" style="background:#f3f0ec;">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round">
+                                        <circle cx="12" cy="8" r="4" />
+                                        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                                    </svg>
+                                    View Profile
+                                </a>
+                                <a href="settings.html" class="dropdown-item">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round">
+                                        <circle cx="12" cy="12" r="3" />
+                                        <path
+                                            d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                                    </svg>
+                                    Settings
+                                </a>
                             </div>
-                            <a href="profile.html" class="dropdown-item" style="background:#f3f0ec;">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                    <circle cx="12" cy="8" r="4"/>
-                                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-                                </svg>
-                                View Profile
-                            </a>
-                            <a href="settings.html" class="dropdown-item">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                    <circle cx="12" cy="12" r="3"/>
-                                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
-                                </svg>
-                                Settings
-                            </a>
                         </div>
                     </div>
+                </header>
+
+                <div class="page-body">
+                    <div class="page-content">
+                        <div class="profile-layout">
+
+                            <!-- Left: Avatar card -->
+                            <div class="profile-avatar-card">
+                                <div class="profile-big-avatar" id="big-avatar"></div>
+                                <div class="profile-avatar-name" id="card-name"></div>
+                                <div class="profile-avatar-email" id="card-email"></div>
+                                <div class="profile-avatar-id" id="card-id"></div>
+                                <div class="profile-avatar-divider"></div>
+                                <div class="profile-avatar-joined" id="card-joined">Member since —</div>
+                            </div>
+
+                            <!-- Right: Form sections -->
+                            <div class="profile-sections">
+
+                                <!-- Personal Information -->
+                                <div class="section-card">
+                                    <div class="section-header">
+                                        <div class="section-header-icon">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                <circle cx="12" cy="8" r="4" />
+                                                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                                            </svg>
+                                        </div>
+                                        <div class="section-header-text">
+                                            <h3>Personal Information</h3>
+                                            <p>Your basic details and academic info</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-form-row">
+                                        <div class="profile-form-group">
+                                            <label for="fullName">Full Name</label>
+                                            <div class="profile-input-wrap">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                    <circle cx="12" cy="8" r="4" />
+                                                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                                                </svg>
+                                                <input type="text" id="fullName" placeholder="Your full name">
+                                            </div>
+                                        </div>
+                                        <div class="profile-form-group">
+                                            <label for="idNumber">ID Number</label>
+                                            <div class="profile-input-wrap">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                                                    <path d="M16 10h2M16 14h2M6 10h6M6 14h4" />
+                                                </svg>
+                                                <input type="text" id="idNumber" placeholder="e.g. T-2024-001">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-form-row">
+                                        <div class="profile-form-group">
+                                            <label for="designation">Designation</label>
+                                            <div class="profile-input-wrap">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                    <path
+                                                        d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
+                                                    <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16" />
+                                                </svg>
+                                                <input type="text" id="designation"
+                                                    placeholder="e.g. Assistant Professor">
+                                            </div>
+                                        </div>
+                                        <div class="profile-form-group">
+                                            <label for="department">Department</label>
+                                            <div class="profile-input-wrap">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                                                    <polyline points="9 22 9 12 15 12 15 22" />
+                                                </svg>
+                                                <input type="text" id="department" placeholder="e.g. Computer Science">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-form-row single">
+                                        <div class="profile-form-group">
+                                            <label for="email-field">Email Address</label>
+                                            <div class="profile-input-wrap readonly-field">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                    <path
+                                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                                    <polyline points="22,6 12,13 2,6" />
+                                                </svg>
+                                                <input type="email" id="email-field" readonly
+                                                    placeholder="your@email.com">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="section-actions">
+                                        <button class="btn-primary" id="save-personal-btn" onclick="savePersonalInfo()">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                                <polyline points="20 6 9 17 4 12" />
+                                            </svg>
+                                            Save Changes
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Bio -->
+                                <div class="section-card">
+                                    <div class="section-header">
+                                        <div class="section-header-icon">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                                <polyline points="14 2 14 8 20 8" />
+                                                <line x1="16" y1="13" x2="8" y2="13" />
+                                                <line x1="16" y1="17" x2="8" y2="17" />
+                                                <polyline points="10 9 9 9 8 9" />
+                                            </svg>
+                                        </div>
+                                        <div class="section-header-text">
+                                            <h3>Bio</h3>
+                                            <p>A short introduction visible to your students</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-form-group">
+                                        <label for="bio">About You</label>
+                                        <div class="profile-input-wrap textarea-wrap">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                                                <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                            </svg>
+                                            <textarea id="bio" rows="4"
+                                                placeholder="Tell your students a bit about yourself — your research interests, teaching philosophy, or background…"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="section-actions">
+                                        <button class="btn-primary" onclick="saveBio()">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                                <polyline points="20 6 9 17 4 12" />
+                                            </svg>
+                                            Save Bio
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Contact Details -->
+                                <div class="section-card">
+                                    <div class="section-header">
+                                        <div class="section-header-icon">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                <path
+                                                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 .02h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z" />
+                                            </svg>
+                                        </div>
+                                        <div class="section-header-text">
+                                            <h3>Contact Details</h3>
+                                            <p>Phone number and web presence</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-form-row">
+                                        <div class="profile-form-group">
+                                            <label for="phone">Phone Number</label>
+                                            <div class="profile-input-wrap">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                    <path
+                                                        d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 .02h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z" />
+                                                </svg>
+                                                <input type="tel" id="phone" placeholder="+880 1xxx-xxxxxx">
+                                            </div>
+                                        </div>
+                                        <div class="profile-form-group">
+                                            <label for="website">Website / LinkedIn</label>
+                                            <div class="profile-input-wrap">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                                    <circle cx="12" cy="12" r="10" />
+                                                    <line x1="2" y1="12" x2="22" y2="12" />
+                                                    <path
+                                                        d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z" />
+                                                </svg>
+                                                <input type="url" id="website" placeholder="https://your-website.com">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="section-actions">
+                                        <button class="btn-primary" onclick="saveContact()">
+                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                                <polyline points="20 6 9 17 4 12" />
+                                            </svg>
+                                            Save Contact
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div><!-- /profile-sections -->
+                        </div><!-- /profile-layout -->
+                    </div>
                 </div>
-            </header>
+            </main>
+        </div>
+    </div>
 
-            <div class="page-body">
-                <div class="page-content">
-                    <div class="profile-layout">
-
-                        <!-- Left: Avatar card -->
-                        <div class="profile-avatar-card">
-                            <div class="profile-big-avatar" id="big-avatar"></div>
-                            <div class="profile-avatar-name" id="card-name"></div>
-                            <div class="profile-avatar-email" id="card-email"></div>
-                            <div class="profile-avatar-id" id="card-id"></div>
-                            <div class="profile-avatar-divider"></div>
-                            <div class="profile-avatar-joined" id="card-joined">Member since —</div>
-                        </div>
-
-                        <!-- Right: Form sections -->
-                        <div class="profile-sections">
-
-                            <!-- Personal Information -->
-                            <div class="section-card">
-                                <div class="section-header">
-                                    <div class="section-header-icon">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                            <circle cx="12" cy="8" r="4"/>
-                                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-                                        </svg>
-                                    </div>
-                                    <div class="section-header-text">
-                                        <h3>Personal Information</h3>
-                                        <p>Your basic details and academic info</p>
-                                    </div>
-                                </div>
-
-                                <div class="profile-form-row">
-                                    <div class="profile-form-group">
-                                        <label for="fullName">Full Name</label>
-                                        <div class="profile-input-wrap">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                                            <input type="text" id="fullName" placeholder="Your full name">
-                                        </div>
-                                    </div>
-                                    <div class="profile-form-group">
-                                        <label for="idNumber">ID Number</label>
-                                        <div class="profile-input-wrap">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 10h2M16 14h2M6 10h6M6 14h4"/></svg>
-                                            <input type="text" id="idNumber" placeholder="e.g. T-2024-001">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="profile-form-row">
-                                    <div class="profile-form-group">
-                                        <label for="designation">Designation</label>
-                                        <div class="profile-input-wrap">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
-                                            <input type="text" id="designation" placeholder="e.g. Assistant Professor">
-                                        </div>
-                                    </div>
-                                    <div class="profile-form-group">
-                                        <label for="department">Department</label>
-                                        <div class="profile-input-wrap">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                                            <input type="text" id="department" placeholder="e.g. Computer Science">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="profile-form-row single">
-                                    <div class="profile-form-group">
-                                        <label for="email-field">Email Address</label>
-                                        <div class="profile-input-wrap readonly-field">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                                            <input type="email" id="email-field" readonly placeholder="your@email.com">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="section-actions">
-                                    <button class="btn-primary" id="save-personal-btn" onclick="savePersonalInfo()">
-                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                        Save Changes
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Bio -->
-                            <div class="section-card">
-                                <div class="section-header">
-                                    <div class="section-header-icon">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                                            <polyline points="14 2 14 8 20 8"/>
-                                            <line x1="16" y1="13" x2="8" y2="13"/>
-                                            <line x1="16" y1="17" x2="8" y2="17"/>
-                                            <polyline points="10 9 9 9 8 9"/>
-                                        </svg>
-                                    </div>
-                                    <div class="section-header-text">
-                                        <h3>Bio</h3>
-                                        <p>A short introduction visible to your students</p>
-                                    </div>
-                                </div>
-
-                                <div class="profile-form-group">
-                                    <label for="bio">About You</label>
-                                    <div class="profile-input-wrap textarea-wrap">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                                        <textarea id="bio" rows="4" placeholder="Tell your students a bit about yourself — your research interests, teaching philosophy, or background…"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="section-actions">
-                                    <button class="btn-primary" onclick="saveBio()">
-                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                        Save Bio
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Contact Details -->
-                            <div class="section-card">
-                                <div class="section-header">
-                                    <div class="section-header-icon">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 .02h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="section-header-text">
-                                        <h3>Contact Details</h3>
-                                        <p>Phone number and web presence</p>
-                                    </div>
-                                </div>
-
-                                <div class="profile-form-row">
-                                    <div class="profile-form-group">
-                                        <label for="phone">Phone Number</label>
-                                        <div class="profile-input-wrap">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 .02h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
-                                            <input type="tel" id="phone" placeholder="+880 1xxx-xxxxxx">
-                                        </div>
-                                    </div>
-                                    <div class="profile-form-group">
-                                        <label for="website">Website / LinkedIn</label>
-                                        <div class="profile-input-wrap">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/></svg>
-                                            <input type="url" id="website" placeholder="https://your-website.com">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="section-actions">
-                                    <button class="btn-primary" onclick="saveContact()">
-                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                        Save Contact
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div><!-- /profile-sections -->
-                    </div><!-- /profile-layout -->
-                </div>
+    <!-- Sign out modal -->
+    <div class="modal-overlay" id="signout-overlay" onclick="handleBackdropClick(event)">
+        <div class="signout-box">
+            <div class="signout-icon-wrap">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8"
+                    stroke-linecap="round">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                </svg>
             </div>
-        </main>
-    </div>
-</div>
-
-<!-- Sign out modal -->
-<div class="modal-overlay" id="signout-overlay" onclick="handleBackdropClick(event)">
-    <div class="signout-box">
-        <div class="signout-icon-wrap">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8" stroke-linecap="round">
-                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
-            </svg>
-        </div>
-        <h3>Sign out?</h3>
-        <p>You'll be taken back to the login screen.</p>
-        <div class="signout-actions">
-            <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
-            <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+            <h3>Sign out?</h3>
+            <p>You'll be taken back to the login screen.</p>
+            <div class="signout-actions">
+                <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
+                <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Toast -->
-<div class="toast" id="toast">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" id="toast-icon">
-        <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    <span id="toast-msg"></span>
-</div>
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" id="toast-icon">
+            <polyline points="20 6 9 17 4 12" />
+        </svg>
+        <span id="toast-msg"></span>
+    </div>
 
-<script>
-    var API = 'http://localhost:3000/api/auth';
-    var token = localStorage.getItem('token') || '';
+    <script>
+        var API = 'http://localhost:3000/api/auth';
+        var token = localStorage.getItem('token') || '';
 
-    /* ── Boot: populate UI from localStorage first, then refresh from server ── */
-    var cachedUser = JSON.parse(localStorage.getItem('us_user') || '{}');
-    var fullName   = cachedUser.fullName || localStorage.getItem('teacher_fullName') || 'Teacher';
-    var initial    = fullName.charAt(0).toUpperCase();
-    var ini2       = fullName.split(' ').map(function(w){ return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
+        /* ── Boot: populate UI from localStorage first, then refresh from server ── */
+        var cachedUser = JSON.parse(localStorage.getItem('us_user') || '{}');
+        var fullName = cachedUser.fullName || localStorage.getItem('teacher_fullName') || 'Teacher';
+        var initial = fullName.charAt(0).toUpperCase();
+        var ini2 = fullName.split(' ').map(function (w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
 
-    /* Batch all initial DOM updates at once to avoid layout thrashing */
-    function initializeDOM() {
-        var textUpdates = {
-            'sidebar-name': fullName,
-            'welcome-msg': 'Welcome back, ' + fullName,
-            'sidebar-avatar': initial,
-            'topbar-avatar': initial,
-            'dropdown-avatar': initial,
-            'dropdown-name': fullName,
-            'big-avatar': ini2 || initial,
-            'card-name': fullName,
-            'card-email': cachedUser.email || '—',
-            'card-id': cachedUser.idNumber ? 'ID: ' + cachedUser.idNumber : '',
-            'today-date': new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-        };
-        
-        Object.entries(textUpdates).forEach(function(entry) {
-            var el = document.getElementById(entry[0]);
-            if (el) el.textContent = entry[1];
-        });
-        
-        var fieldsUpdates = {
-            'fullName': cachedUser.fullName || fullName,
-            'idNumber': cachedUser.idNumber || '',
-            'email-field': cachedUser.email || '',
-            'designation': cachedUser.designation || '',
-            'department': cachedUser.department || '',
-            'bio': cachedUser.bio || '',
-            'phone': cachedUser.phone || '',
-            'website': cachedUser.website || ''
-        };
-        
-        Object.entries(fieldsUpdates).forEach(function(entry) {
-            var el = document.getElementById(entry[0]);
-            if (el) el.value = entry[1];
-        });
-        
-        if (cachedUser.createdAt) {
-            var dj = new Date(cachedUser.createdAt);
-            var joinedEl = document.getElementById('card-joined');
-            if (joinedEl) joinedEl.textContent = 'Member since ' + dj.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-        }
-    }
-    
-    /* Execute initialization as soon as DOM is interactive */
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeDOM);
-    } else {
-        initializeDOM();
-    }
+        /* Batch all initial DOM updates at once to avoid layout thrashing */
+        function initializeDOM() {
+            var textUpdates = {
+                'sidebar-name': fullName,
+                'welcome-msg': 'Welcome back, ' + fullName,
+                'sidebar-avatar': initial,
+                'topbar-avatar': initial,
+                'dropdown-avatar': initial,
+                'dropdown-name': fullName,
+                'big-avatar': ini2 || initial,
+                'card-name': fullName,
+                'card-email': cachedUser.email || '—',
+                'card-id': cachedUser.idNumber ? 'ID: ' + cachedUser.idNumber : '',
+                'today-date': new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+            };
 
-    function populateForm(user) {
-        /* Batch all DOM updates at once */
-        var fn  = user.fullName || fullName;
-        var ini = fn.split(' ').map(function(w){ return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
-        var si  = fn.charAt(0).toUpperCase();
-        
-        var formUpdates = {
-            'fullName': user.fullName || '',
-            'idNumber': user.idNumber || '',
-            'email-field': user.email || '',
-            'designation': user.designation || '',
-            'department': user.department || '',
-            'bio': user.bio || '',
-            'phone': user.phone || '',
-            'website': user.website || ''
-        };
-        
-        Object.entries(formUpdates).forEach(function(entry) {
-            var el = document.getElementById(entry[0]);
-            if (el) el.value = entry[1];
-        });
-        
-        var textUpdates = {
-            'big-avatar': ini || si,
-            'card-name': user.fullName || '—',
-            'card-email': user.email || '—',
-            'sidebar-name': user.fullName || fullName,
-            'sidebar-avatar': si,
-            'topbar-avatar': si,
-            'dropdown-avatar': si,
-            'dropdown-name': user.fullName || fullName,
-            'welcome-msg': 'Welcome back, ' + (user.fullName || fullName)
-        };
-        
-        Object.entries(textUpdates).forEach(function(entry) {
-            var el = document.getElementById(entry[0]);
-            if (el) el.textContent = entry[1];
-        });
-        
-        document.getElementById('card-id').textContent = user.idNumber ? 'ID: ' + user.idNumber : '';
+            Object.entries(textUpdates).forEach(function (entry) {
+                var el = document.getElementById(entry[0]);
+                if (el) el.textContent = entry[1];
+            });
 
-        if (user.createdAt) {
-            var d = new Date(user.createdAt);
-            document.getElementById('card-joined').textContent =
-                'Member since ' + d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-        }
-        
-        /* Batch localStorage writes */
-        localStorage.setItem('us_user', JSON.stringify(user));
-        localStorage.setItem('fullName', user.fullName || fullName);
-    }
+            var fieldsUpdates = {
+                'fullName': cachedUser.fullName || fullName,
+                'idNumber': cachedUser.idNumber || '',
+                'email-field': cachedUser.email || '',
+                'designation': cachedUser.designation || '',
+                'department': cachedUser.department || '',
+                'bio': cachedUser.bio || '',
+                'phone': cachedUser.phone || '',
+                'website': cachedUser.website || ''
+            };
 
-    /* Defer server fetch to avoid blocking render */
-    function fetchServerData() {
-        if (token) {
-            fetch(API + '/me', { headers: { Authorization: 'Bearer ' + token } })
-                .then(function(r){ return r.json(); })
-                .then(function(data){
-                    if (data._id || data.id) populateForm(data);
-                })
-                .catch(function(){});
-        }
-    }
-    
-    /* Use requestAnimationFrame to defer non-critical network call */
-    if (window.requestAnimationFrame) {
-        requestAnimationFrame(function() {
-            setTimeout(fetchServerData, 0);
-        });
-    } else {
-        setTimeout(fetchServerData, 100);
-    }
+            Object.entries(fieldsUpdates).forEach(function (entry) {
+                var el = document.getElementById(entry[0]);
+                if (el) el.value = entry[1];
+            });
 
-    /* ── Generic profile update helper ── */
-    function updateProfile(fields, successMsg) {
-        if (!token) return showToast('Please log in again to save changes.', true);
-
-        return fetch(API + '/profile', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
-            body: JSON.stringify(fields)
-        })
-        .then(function(r){ return r.json(); })
-        .then(function(data){
-            if (data.user) {
-                populateForm(data.user);
-                showToast(successMsg || 'Saved successfully!');
-            } else {
-                showToast(data.msg || 'Something went wrong.', true);
+            if (cachedUser.createdAt) {
+                var dj = new Date(cachedUser.createdAt);
+                var joinedEl = document.getElementById('card-joined');
+                if (joinedEl) joinedEl.textContent = 'Member since ' + dj.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
             }
-        })
-        .catch(function(){ showToast('Network error — changes not saved.', true); });
-    }
-
-    /* ── Section save functions ── */
-    function savePersonalInfo() {
-        updateProfile({
-            fullName:    document.getElementById('fullName').value.trim(),
-            idNumber:    document.getElementById('idNumber').value.trim(),
-            designation: document.getElementById('designation').value.trim(),
-            department:  document.getElementById('department').value.trim()
-        }, 'Personal info saved!');
-    }
-
-    function saveBio() {
-        updateProfile({ bio: document.getElementById('bio').value.trim() }, 'Bio saved!');
-    }
-
-    function saveContact() {
-        updateProfile({
-            phone:   document.getElementById('phone').value.trim(),
-            website: document.getElementById('website').value.trim()
-        }, 'Contact details saved!');
-    }
-
-    /* ── Toast ── */
-    var toastTimer;
-    function showToast(msg, isError) {
-        var el   = document.getElementById('toast');
-        var icon = document.getElementById('toast-icon');
-        document.getElementById('toast-msg').textContent = msg;
-        el.classList.remove('error');
-        if (isError) {
-            el.classList.add('error');
-            icon.innerHTML = '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>';
-        } else {
-            icon.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
         }
-        el.classList.add('show');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 3200);
-    }
 
-    /* ── Dropdown ── */
-    var dropdownEl = null;
-    var avatarEl   = null;
-    var isOpen     = false;
+        /* Execute initialization as soon as DOM is interactive */
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeDOM);
+        } else {
+            initializeDOM();
+        }
 
-    function initDropdown() {
-        dropdownEl = document.getElementById('avatar-dropdown');
-        avatarEl   = document.getElementById('topbar-avatar');
-        
-        document.addEventListener('click', function(e) {
-            if (isOpen && !document.getElementById('avatar-wrap').contains(e.target)) closeDropdown();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && isOpen) closeDropdown();
-        });
-    }
+        function populateForm(user) {
+            /* Batch all DOM updates at once */
+            var fn = user.fullName || fullName;
+            var ini = fn.split(' ').map(function (w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
+            var si = fn.charAt(0).toUpperCase();
 
-    function toggleDropdown(e) {
-        e.stopPropagation();
-        isOpen ? closeDropdown() : openDropdown();
-    }
-    function openDropdown() {
-        if (!dropdownEl) initDropdown();
-        isOpen = true;
-        dropdownEl.classList.add('visible');
-        avatarEl.classList.add('open');
-    }
-    function closeDropdown() {
-        if (!dropdownEl) return;
-        isOpen = false;
-        dropdownEl.classList.remove('visible');
-        avatarEl.classList.remove('open');
-    }
-    
-    /* Defer dropdown initialization */
-    if (window.requestAnimationFrame) {
-        requestAnimationFrame(function() {
-            setTimeout(initDropdown, 0);
-        });
-    } else {
-        setTimeout(initDropdown, 100);
-    }
+            var formUpdates = {
+                'fullName': user.fullName || '',
+                'idNumber': user.idNumber || '',
+                'email-field': user.email || '',
+                'designation': user.designation || '',
+                'department': user.department || '',
+                'bio': user.bio || '',
+                'phone': user.phone || '',
+                'website': user.website || ''
+            };
 
-    /* ── Sign out ── */
-    function openSignoutPopup() {
-        var el = document.getElementById('signout-overlay');
-        el.style.display = 'flex';
-        setTimeout(function(){ el.classList.add('visible'); }, 10);
-    }
-    function closeSignoutPopup() {
-        var el = document.getElementById('signout-overlay');
-        el.classList.remove('visible');
-        setTimeout(function(){ el.style.display = 'none'; }, 230);
-    }
-    function handleBackdropClick(e) {
-        if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup();
-    }
-    function doSignout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('us_user');
-        window.location.href = '../index.html';
-    }
-</script>
+            Object.entries(formUpdates).forEach(function (entry) {
+                var el = document.getElementById(entry[0]);
+                if (el) el.value = entry[1];
+            });
+
+            var textUpdates = {
+                'big-avatar': ini || si,
+                'card-name': user.fullName || '—',
+                'card-email': user.email || '—',
+                'sidebar-name': user.fullName || fullName,
+                'sidebar-avatar': si,
+                'topbar-avatar': si,
+                'dropdown-avatar': si,
+                'dropdown-name': user.fullName || fullName,
+                'welcome-msg': 'Welcome back, ' + (user.fullName || fullName)
+            };
+
+            Object.entries(textUpdates).forEach(function (entry) {
+                var el = document.getElementById(entry[0]);
+                if (el) el.textContent = entry[1];
+            });
+
+            document.getElementById('card-id').textContent = user.idNumber ? 'ID: ' + user.idNumber : '';
+
+            if (user.createdAt) {
+                var d = new Date(user.createdAt);
+                document.getElementById('card-joined').textContent =
+                    'Member since ' + d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            }
+
+            /* Batch localStorage writes */
+            localStorage.setItem('us_user', JSON.stringify(user));
+            localStorage.setItem('fullName', user.fullName || fullName);
+        }
+
+        /* Defer server fetch to avoid blocking render */
+        function fetchServerData() {
+            if (token) {
+                fetch(API + '/me', { headers: { Authorization: 'Bearer ' + token } })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data._id || data.id) populateForm(data);
+                    })
+                    .catch(function () { });
+            }
+        }
+
+        /* Use requestAnimationFrame to defer non-critical network call */
+        if (window.requestAnimationFrame) {
+            requestAnimationFrame(function () {
+                setTimeout(fetchServerData, 0);
+            });
+        } else {
+            setTimeout(fetchServerData, 100);
+        }
+
+        /* ── Generic profile update helper ── */
+        function updateProfile(fields, successMsg) {
+            if (!token) return showToast('Please log in again to save changes.', true);
+
+            return fetch(API + '/profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+                body: JSON.stringify(fields)
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (data.user) {
+                        populateForm(data.user);
+                        showToast(successMsg || 'Saved successfully!');
+                    } else {
+                        showToast(data.msg || 'Something went wrong.', true);
+                    }
+                })
+                .catch(function () { showToast('Network error — changes not saved.', true); });
+        }
+
+        /* ── Section save functions ── */
+        function savePersonalInfo() {
+            updateProfile({
+                fullName: document.getElementById('fullName').value.trim(),
+                idNumber: document.getElementById('idNumber').value.trim(),
+                designation: document.getElementById('designation').value.trim(),
+                department: document.getElementById('department').value.trim()
+            }, 'Personal info saved!');
+        }
+
+        function saveBio() {
+            updateProfile({ bio: document.getElementById('bio').value.trim() }, 'Bio saved!');
+        }
+
+        function saveContact() {
+            updateProfile({
+                phone: document.getElementById('phone').value.trim(),
+                website: document.getElementById('website').value.trim()
+            }, 'Contact details saved!');
+        }
+
+        /* ── Toast ── */
+        var toastTimer;
+        function showToast(msg, isError) {
+            var el = document.getElementById('toast');
+            var icon = document.getElementById('toast-icon');
+            document.getElementById('toast-msg').textContent = msg;
+            el.classList.remove('error');
+            if (isError) {
+                el.classList.add('error');
+                icon.innerHTML = '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>';
+            } else {
+                icon.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+            }
+            el.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3200);
+        }
+
+        /* ── Dropdown ── */
+        var dropdownEl = null;
+        var avatarEl = null;
+        var isOpen = false;
+
+        function initDropdown() {
+            dropdownEl = document.getElementById('avatar-dropdown');
+            avatarEl = document.getElementById('topbar-avatar');
+
+            document.addEventListener('click', function (e) {
+                if (isOpen && !document.getElementById('avatar-wrap').contains(e.target)) closeDropdown();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && isOpen) closeDropdown();
+            });
+        }
+
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            isOpen ? closeDropdown() : openDropdown();
+        }
+        function openDropdown() {
+            if (!dropdownEl) initDropdown();
+            isOpen = true;
+            dropdownEl.classList.add('visible');
+            avatarEl.classList.add('open');
+        }
+        function closeDropdown() {
+            if (!dropdownEl) return;
+            isOpen = false;
+            dropdownEl.classList.remove('visible');
+            avatarEl.classList.remove('open');
+        }
+
+        /* Defer dropdown initialization */
+        if (window.requestAnimationFrame) {
+            requestAnimationFrame(function () {
+                setTimeout(initDropdown, 0);
+            });
+        } else {
+            setTimeout(initDropdown, 100);
+        }
+
+        /* ── Sign out ── */
+        function openSignoutPopup() {
+            var el = document.getElementById('signout-overlay');
+            el.style.display = 'flex';
+            setTimeout(function () { el.classList.add('visible'); }, 10);
+        }
+        function closeSignoutPopup() {
+            var el = document.getElementById('signout-overlay');
+            el.classList.remove('visible');
+            setTimeout(function () { el.style.display = 'none'; }, 230);
+        }
+        function handleBackdropClick(e) {
+            if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup();
+        }
+        function doSignout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('us_user');
+            window.location.href = '../index.html';
+        }
+    </script>
 
 </body>
+
 </html>
-
-
-
