@@ -179,6 +179,7 @@
                     <option>Thursday</option>
                     <option>Friday</option>
                     <option>Saturday</option>
+                    <option>Sunday</option>
                 </select>
             </div>
             <div class="form-group">
@@ -242,8 +243,11 @@
     document.addEventListener('click', function(e) { if (isOpen && !document.getElementById('avatar-wrap').contains(e.target)) closeDropdown(); });
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && isOpen) closeDropdown(); });
 
+    var API   = 'http://localhost:3000/api/classrooms';
+    var token = localStorage.getItem('token') || '';
+
     var currentUserId = localStorage.getItem('userId');
-    var classes   = JSON.parse(localStorage.getItem('us_cls_' + currentUserId) || '[]');
+    var classes   = [];
     var schedules = JSON.parse(localStorage.getItem('us_sch_' + currentUserId) || '[]');
 
     var palette = [
@@ -254,12 +258,29 @@
     function color(i) { return palette[i % palette.length]; }
 
     function save() {
-        localStorage.setItem('us_cls_' + currentUserId, JSON.stringify(classes));
         localStorage.setItem('us_sch_' + currentUserId, JSON.stringify(schedules));
     }
 
     function activeClasses() {
         return classes.filter(function(c) { return !c.archived; });
+    }
+
+    function loadClasses() {
+        if (!token) {
+            renderSlots();
+            return;
+        }
+        fetch(API + '/my-classes', {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            classes = Array.isArray(data) ? data : [];
+            renderSlots();
+        })
+        .catch(function() {
+            renderSlots();
+        });
     }
 
     document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
@@ -283,7 +304,7 @@
         empty.style.display = 'none';
 
         schedules.forEach(function(slot, i) {
-            var match = classes.find(function(c) { return c.id === slot.classId; });
+            var match = classes.find(function(c) { return String(c._id) === String(slot.classId); });
             var name  = match ? match.course : 'Unknown';
 
             var row = document.createElement('div');
@@ -319,7 +340,7 @@
             msg.style.display = 'none';
             active.forEach(function(cls) {
                 var opt = document.createElement('option');
-                opt.value       = cls.id;
+                opt.value       = cls._id;
                 opt.textContent = cls.course;
                 dropdown.appendChild(opt);
             });
@@ -441,7 +462,7 @@
         window.location.href = '../index.html';
     }
 
-    renderSlots();
+    loadClasses();
 
 </script>
 
