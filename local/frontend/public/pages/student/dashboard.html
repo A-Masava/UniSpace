@@ -229,13 +229,7 @@
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
 
-    var userId = localStorage.getItem('userId') || '';
-    var joined  = JSON.parse(localStorage.getItem('st_cls_' + userId) || '[]');
-    var routine = JSON.parse(localStorage.getItem('st_rtn_' + userId) || '[]');
-    var active  = joined.filter(function(c) { return !c.archived; });
-
-    document.getElementById('stat-classes').textContent = active.length;
-    document.getElementById('stat-slots').textContent   = routine.length;
+    var token = localStorage.getItem('token') || '';
 
     var palette = ['#1565C0','#0e2b4e','#1976D2','#1a4a7a','#163d6a','#2a5f94','#1E88E5','#0d3568'];
     function color(i) { return palette[i % palette.length]; }
@@ -244,36 +238,63 @@
         return name.split(' ').map(function(w) { return w[0] || ''; }).join('').toUpperCase().slice(0, 2);
     }
 
-    /* classes preview */
+    /* ── Fetch classes from API ── */
     var listEl = document.getElementById('classes-list');
-    if (active.length === 0) {
+
+    if (!token) {
+        document.getElementById('stat-classes').textContent = 0;
         listEl.innerHTML = '<p class="no-classes-msg">No classes yet. <a href="join-class.html" class="no-classes-link">Join one →</a></p>';
     } else {
-        active.slice(0, 4).forEach(function(cls, i) {
-            var row = document.createElement('div');
-            row.className = 'preview-row';
-            row.style.borderLeftColor = color(i);
-            row.innerHTML =
-                '<div class="preview-badge" style="background:' + color(i) + '">' + initials(cls.course) + '</div>' +
-                '<div class="preview-info">' +
-                    '<strong>' + cls.course + '</strong>' +
-                    '<span>' + cls.teacher + ' · Code: ' + cls.code + '</span>' +
-                '</div>' +
-                '<span class="active-pill">Active</span>';
-            listEl.appendChild(row);
+        fetch('http://localhost:3000/api/classrooms/my-classes', {
+            headers: { Authorization: 'Bearer ' + token }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(classes) {
+            if (!Array.isArray(classes)) classes = [];
+            var active = classes.filter(function(c) { return !c.archived; });
+
+            document.getElementById('stat-classes').textContent = active.length;
+
+            if (active.length === 0) {
+                listEl.innerHTML = '<p class="no-classes-msg">No classes yet. <a href="join-class.html" class="no-classes-link">Join one →</a></p>';
+            } else {
+                active.slice(0, 4).forEach(function(cls, i) {
+                    var teacherName = (cls.teacher && cls.teacher.fullName) ? cls.teacher.fullName : (cls.teacherName || 'Teacher');
+                    var row = document.createElement('div');
+                    row.className = 'preview-row';
+                    row.style.borderLeftColor = color(i);
+                    row.innerHTML =
+                        '<div class="preview-badge" style="background:' + color(i) + '">' + initials(cls.course) + '</div>' +
+                        '<div class="preview-info">' +
+                            '<strong>' + cls.course + '</strong>' +
+                            '<span>' + teacherName + ' · Code: ' + cls.classCode + '</span>' +
+                        '</div>' +
+                        '<span class="active-pill">Active</span>';
+                    listEl.appendChild(row);
+                });
+                if (active.length > 4) {
+                    var note = document.createElement('p');
+                    note.className = 'more-note';
+                    note.textContent = '+' + (active.length - 4) + ' more classes';
+                    listEl.appendChild(note);
+                }
+            }
+        })
+        .catch(function() {
+            document.getElementById('stat-classes').textContent = 0;
+            listEl.innerHTML = '<p class="no-classes-msg">No classes yet. <a href="join-class.html" class="no-classes-link">Join one →</a></p>';
         });
-        if (active.length > 4) {
-            var note = document.createElement('p');
-            note.className = 'more-note';
-            note.textContent = '+' + (active.length - 4) + ' more classes';
-            listEl.appendChild(note);
-        }
     }
 
-    /* routine preview */
+
+    /* routine preview — stored locally */
+    var userId  = localStorage.getItem('userId') || '';
+    var routine = JSON.parse(localStorage.getItem('st_rtn_' + userId) || '[]');
     var tableEl = document.getElementById('schedule-table');
     var rowsEl  = document.getElementById('schedule-rows');
     var noSchEl = document.getElementById('no-schedule-msg');
+
+    document.getElementById('stat-slots').textContent = routine.length;
 
     if (routine.length === 0) {
         tableEl.style.display = 'none';
@@ -291,6 +312,7 @@
             rowsEl.appendChild(tr);
         });
     }
+
 
     /* avatar dropdown */
     var dropdownEl = document.getElementById('avatar-dropdown');
