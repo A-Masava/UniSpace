@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Chat — Unispace</title>
+    <meta name="description" content="Chat with your class on Unispace.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/Student_base.css">
+    <style>
+        /* ── Chat layout ── */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 0 26px 26px 0;
+        }
+
+        .chat-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background image */
+        .chat-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('../../assets/images/chat_pattern_gray.png');
+            background-size: 300px; /* Tiles the seamless pattern beautifully */
+            background-position: top left;
+            background-repeat: repeat;
+            opacity: 0.6;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Messages scroll area */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chat-messages::-webkit-scrollbar { width: 5px; }
+        .chat-messages::-webkit-scrollbar-track { background: transparent; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #d0cac3; border-radius: 4px; }
+
+        /* Date separator */
+        .date-sep {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 6px 0;
+        }
+        .date-sep::before, .date-sep::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(180,170,160,0.35);
+        }
+        .date-sep span {
+            font-size: 10.5px;
+            color: #8a7868;
+            background: rgba(255,255,255,0.75);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Message bubble */
+        .msg-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        .msg-row.me { flex-direction: row-reverse; }
+
+        .msg-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #1e3a52;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .msg-bubble-wrap { max-width: 62%; display: flex; flex-direction: column; gap: 3px; }
+        .msg-row.me .msg-bubble-wrap { align-items: flex-end; }
+
+        .msg-sender {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: #587c8d;
+            padding: 0 4px;
+        }
+        .msg-row.me .msg-sender { display: none; }
+
+        .msg-bubble {
+            padding: 9px 14px;
+            border-radius: 16px;
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: #1e3a52;
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(30,58,82,0.08);
+            border: 1px solid rgba(230,225,219,0.6);
+            word-break: break-word;
+        }
+        .msg-row.me .msg-bubble {
+            background: #1e3a52;
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 2px 12px rgba(30,58,82,0.22);
+        }
+
+        .msg-time {
+            font-size: 9.5px;
+            color: #b0a898;
+            padding: 0 4px;
+        }
+
+        /* Empty state */
+        .chat-empty {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            pointer-events: none;
+            user-select: none;
+        }
+        .chat-empty svg { opacity: 0.28; }
+        .chat-empty p {
+            font-size: 13px;
+            color: #8a7868;
+            background: rgba(255,255,255,0.72);
+            padding: 6px 16px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Input bar */
+        .chat-input-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            background: rgba(255,255,255,0.92);
+            border-top: 1px solid #eaeaea;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid #e0dbd4;
+            border-radius: 22px;
+            padding: 10px 18px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13.5px;
+            color: #1e3a52;
+            background: #f7f5f2;
+            outline: none;
+            transition: border-color 0.18s, background 0.18s;
+            resize: none;
+            max-height: 110px;
+            line-height: 1.45;
+        }
+        .chat-input:focus {
+            border-color: #587c8d;
+            background: #fff;
+        }
+        .chat-input::placeholder { color: #b0a898; }
+
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1e3a52;
+            color: #fff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.18s, transform 0.15s;
+        }
+        .send-btn:hover { background: #2a5272; transform: scale(1.06); }
+        .send-btn:active { transform: scale(0.96); }
+        .send-btn:disabled { background: #c4b8aa; cursor: default; transform: none; }
+
+        /* Class selector in topbar */
+        .class-select {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1e3a52;
+            border: 1px solid #e0dbd4;
+            border-radius: 9px;
+            padding: 6px 12px;
+            background: #f7f5f2;
+            outline: none;
+            cursor: pointer;
+        }
+        .class-select:focus { border-color: #587c8d; }
+
+        /* Online badge */
+        .online-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: #4a9e72;
+            font-weight: 500;
+        }
+        .online-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4a9e72;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.45; }
+        }
+
+        /* No class selected overlay */
+        .no-class-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            z-index: 5;
+            background: rgba(247,245,242,0.72);
+            backdrop-filter: blur(3px);
+        }
+        .no-class-overlay p {
+            font-size: 14px;
+            color: #587c8d;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="app-box">
+
+        <!-- sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="join-class.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>
+                    </svg>
+                    <span>Join Class</span>
+                </a>
+                <a href="classes.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                    </svg>
+                    <span>My Classes</span>
+                </a>
+                <a href="routine.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2"/>
+                        <path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    <span>Routine</span>
+                </a>
+                <a href="archive.html" class="nav-link">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5" rx="1"/>
+                        <path d="M10 12h4"/>
+                    </svg>
+                    <span>Archive</span>
+                </a>
+                <div class="nav-divider"></div>
+                <a href="chat.html" class="nav-link active">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                    </svg>
+                    <span>Class Chat</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="student-avatar" id="sidebar-avatar"></div>
+                <div class="student-info">
+                    <span class="student-name" id="student-name"></span>
+                    <span class="student-role">Student</span>
+                </div>
+                <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- main chat area -->
+        <main class="chat-main">
+
+            <header class="topbar">
+                <div class="topbar-left">
+                    <p id="welcome-msg"></p>
+                    <h1>Class Chat</h1>
+                </div>
+                <div class="topbar-right" style="gap:14px;">
+                    <select class="class-select" id="class-select" onchange="switchClass(this.value)">
+                        <option value="">Select a class…</option>
+                    </select>
+                    <div class="online-badge" id="online-badge" style="display:none;">
+                        <div class="online-dot"></div>
+                        <span id="online-count">0 online</span>
+                    </div>
+                    <span class="current-date" id="today-date"></span>
+                    <div class="topbar-avatar-wrap" id="avatar-wrap">
+                        <div class="topbar-avatar" id="topbar-avatar" onclick="toggleDropdown(event)" title="Account"></div>
+                        <div class="avatar-dropdown" id="avatar-dropdown">
+                            <div class="dropdown-header">
+                                <div class="dropdown-header-avatar" id="dropdown-avatar"></div>
+                                <div class="dropdown-header-info">
+                                    <span class="dropdown-header-name" id="dropdown-name"></span>
+                                    <span class="dropdown-header-role">Student</span>
+                                </div>
+                            </div>
+                            <a href="profile.html" class="dropdown-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                                View Profile
+                            </a>
+                            <a href="settings.html" class="dropdown-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                                Settings
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="chat-body">
+                <!-- background doodle layer -->
+                <div class="chat-bg"></div>
+
+                <!-- no class selected -->
+                <div class="no-class-overlay" id="no-class-overlay">
+                    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#587c8d" stroke-width="1.3" stroke-linecap="round">
+                        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                    </svg>
+                    <p>Select a class above to open its chat</p>
+                </div>
+
+                <!-- messages list -->
+                <div class="chat-messages" id="chat-messages"></div>
+            </div>
+
+            <!-- input bar -->
+            <div class="chat-input-bar">
+                <textarea id="chat-input" class="chat-input" rows="1" placeholder="Type a message…" onkeydown="handleKey(event)" oninput="autoResize(this)" disabled></textarea>
+                <button class="send-btn" id="send-btn" onclick="sendMessage()" disabled title="Send">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    </svg>
+                </button>
+            </div>
+
+        </main>
+    </div>
+</div>
+
+<!-- sign-out popup -->
+<div class="modal-overlay" id="signout-overlay" style="display:none;" onclick="handleSignoutBackdrop(event)">
+    <div class="signout-box">
+        <div class="signout-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0e2b4e" stroke-width="1.8" stroke-linecap="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+        </div>
+        <h3>Sign out?</h3>
+        <p>Are you sure you want to sign out?</p>
+        <div class="signout-actions">
+            <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
+            <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    var API      = 'http://localhost:3000/api';
+    var token    = localStorage.getItem('token') || '';
+    var fullName = localStorage.getItem('student_fullName') || 'Student';
+    var userId   = localStorage.getItem('student_id') || '';
+    var initial  = fullName.charAt(0).toUpperCase();
+    var currentClassId = null;
+    var pollTimer = null;
+    var lastMsgId = null;
+    var palette  = ['#1565C0','#0e2b4e','#1976D2','#1a4a7a','#163d6a','#2a5f94','#1E88E5','#0d3568'];
+
+    // populate user UI
+    document.getElementById('student-name').textContent    = fullName;
+    document.getElementById('sidebar-avatar').textContent  = initial;
+    document.getElementById('topbar-avatar').textContent   = initial;
+    document.getElementById('dropdown-avatar').textContent = initial;
+    document.getElementById('dropdown-name').textContent   = fullName;
+    document.getElementById('welcome-msg').textContent     = 'Welcome back, ' + fullName;
+    document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    // avatar dropdown
+    var dropdownEl = document.getElementById('avatar-dropdown');
+    var avatarEl   = document.getElementById('topbar-avatar');
+    var ddOpen     = false;
+    function toggleDropdown(e) { e.stopPropagation(); ddOpen ? closeDropdown() : openDropdown(); }
+    function openDropdown()  { ddOpen = true;  dropdownEl.classList.add('visible'); }
+    function closeDropdown() { ddOpen = false; dropdownEl.classList.remove('visible'); }
+    document.addEventListener('click', function(e) { if (ddOpen && !document.getElementById('avatar-wrap').contains(e.target)) closeDropdown(); });
+
+    // load joined classes into selector
+    function loadClasses() {
+        if (!token) return;
+        fetch(API + '/classrooms/my-classes', { headers: { Authorization: 'Bearer ' + token } })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var sel = document.getElementById('class-select');
+            sel.innerHTML = '<option value="">Select a class\u2026</option>';
+            (Array.isArray(data) ? data : []).forEach(function(cls) {
+                var opt = document.createElement('option');
+                opt.value = cls._id;
+                opt.textContent = cls.course + ' (Batch ' + cls.batch + ')';
+                sel.appendChild(opt);
+            });
+        })
+        .catch(function() {});
+    }
+
+    function switchClass(id) {
+        currentClassId = id || null;
+        lastMsgId = null;
+        clearTimeout(pollTimer);
+        document.getElementById('chat-messages').innerHTML = '';
+        var overlay = document.getElementById('no-class-overlay');
+        var input   = document.getElementById('chat-input');
+        var sendBtn = document.getElementById('send-btn');
+        var badge   = document.getElementById('online-badge');
+
+        if (!id) {
+            overlay.style.display = 'flex';
+            input.disabled = true;
+            sendBtn.disabled = true;
+            badge.style.display = 'none';
+            return;
+        }
+        overlay.style.display = 'none';
+        input.disabled = false;
+        sendBtn.disabled = false;
+        badge.style.display = 'flex';
+        input.focus();
+        fetchMessages();
+    }
+
+    function fetchMessages() {
+        if (!currentClassId) return;
+        var url = API + '/chat/' + currentClassId + '/messages';
+        if (lastMsgId) url += '?after=' + lastMsgId;
+
+        fetch(url, { headers: { Authorization: 'Bearer ' + token } })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var msgs = Array.isArray(data) ? data : (data.messages || []);
+            if (msgs.length) {
+                renderMessages(msgs);
+                lastMsgId = msgs[msgs.length - 1]._id;
+            }
+        })
+        .catch(function() {})
+        .finally(function() {
+            pollTimer = setTimeout(fetchMessages, 3000);
+        });
+    }
+
+    function renderMessages(msgs) {
+        var container = document.getElementById('chat-messages');
+        var wasAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 60;
+
+        msgs.forEach(function(msg) {
+            var isMe = (msg.sender && (msg.sender._id === userId || msg.sender === userId));
+            var senderName = msg.sender && msg.sender.fullName ? msg.sender.fullName : 'Unknown';
+            var senderInit = senderName.charAt(0).toUpperCase();
+            var time = new Date(msg.createdAt || Date.now()).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            var avatarColor = palette[senderName.charCodeAt(0) % palette.length];
+
+            var row = document.createElement('div');
+            row.className = 'msg-row' + (isMe ? ' me' : '');
+            row.innerHTML =
+                (!isMe ? '<div class="msg-avatar" style="background:' + avatarColor + '">' + senderInit + '</div>' : '') +
+                '<div class="msg-bubble-wrap">' +
+                    (!isMe ? '<span class="msg-sender">' + senderName + '</span>' : '') +
+                    '<div class="msg-bubble">' + escHtml(msg.content || msg.text || '') + '</div>' +
+                    '<span class="msg-time">' + time + '</span>' +
+                '</div>' +
+                (isMe ? '<div class="msg-avatar" style="background:' + avatarColor + '">' + senderInit + '</div>' : '');
+            container.appendChild(row);
+        });
+
+        if (wasAtBottom) container.scrollTop = container.scrollHeight;
+    }
+
+    function escHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function sendMessage() {
+        var input = document.getElementById('chat-input');
+        var text  = input.value.trim();
+        if (!text || !currentClassId) return;
+
+        var sendBtn = document.getElementById('send-btn');
+        sendBtn.disabled = true;
+        input.disabled   = true;
+
+        fetch(API + '/chat/' + currentClassId + '/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+            body: JSON.stringify({ content: text })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            input.value = '';
+            input.style.height = '';
+            if (data._id || data.message) {
+                renderMessages([data.message || data]);
+                lastMsgId = (data.message || data)._id;
+            }
+        })
+        .catch(function() {})
+        .finally(function() {
+            sendBtn.disabled = false;
+            input.disabled   = false;
+            input.focus();
+        });
+    }
+
+    function handleKey(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    }
+
+    function autoResize(el) {
+        el.style.height = 'auto';
+        el.style.height = Math.min(el.scrollHeight, 110) + 'px';
+    }
+
+    // sign-out
+    function openSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.style.display = 'flex';
+        setTimeout(function() { el.classList.add('visible'); }, 10);
+    }
+    function closeSignoutPopup() {
+        var el = document.getElementById('signout-overlay');
+        el.classList.remove('visible');
+        setTimeout(function() { el.style.display = 'none'; }, 230);
+    }
+    function handleSignoutBackdrop(e) {
+        if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup();
+    }
+    function doSignout() {
+        localStorage.clear();
+        window.location.href = '../index.html';
+    }
+
+    loadClasses();
+</script>
+
+</body>
+</html>

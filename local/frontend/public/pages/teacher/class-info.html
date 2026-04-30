@@ -1,460 +1,791 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unispace - Class Info</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/Teacher_base.css">
     <link rel="stylesheet" href="../../assets/css/class-info.css">
     <style>
-        .tabs { border-bottom: 2px solid #e1e8f0; display: flex; gap: 30px; margin-bottom: 24px; margin-top: 10px; }
-        .tab-btn { background: none; border: none; font-size: 15px; font-weight: 600; color: #64748b; padding-bottom: 12px; cursor: pointer; position: relative; }
-        .tab-btn.active { color: #0e2b4e; }
-        .tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 3px; background: #1565C0; border-radius: 3px 3px 0 0; }
-        .tab-pane { display: none; }
-        .tab-pane.active { display: block; }
-        .announcement-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
-        .announcement-date { font-size: 12px; color: #64748b; margin-bottom: 8px; }
-        .announcement-text { font-size: 15px; color: #334155; line-height: 1.5; white-space: pre-wrap; }
-        .chat-container { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; display: flex; flex-direction: column; height: 500px; }
-        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: #f8fafc; }
-        .chat-message { display: flex; flex-direction: column; max-width: 80%; }
-        .chat-message.self { align-self: flex-end; }
-        .chat-message.other { align-self: flex-start; }
-        .chat-bubble { padding: 12px 16px; border-radius: 16px; font-size: 14.5px; line-height: 1.4; }
-        .chat-message.self .chat-bubble { background: #1565C0; color: #fff; border-bottom-right-radius: 4px; }
-        .chat-message.other .chat-bubble { background: #e2e8f0; color: #0f172a; border-bottom-left-radius: 4px; }
-        .chat-sender { font-size: 11px; color: #64748b; margin-bottom: 4px; font-weight: 600; }
-        .chat-input-area { padding: 16px; border-top: 1px solid #e2e8f0; display: flex; gap: 12px; background: #fff; border-radius: 0 0 12px 12px; }
-        .chat-input-area input { flex: 1; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 20px; font-size: 14px; outline: none; }
-        .chat-input-area button { background: #1565C0; color: #fff; border: none; padding: 0 20px; border-radius: 20px; font-weight: 600; cursor: pointer; }
+        .tabs {
+            border-bottom: 2px solid #e1e8f0;
+            display: flex;
+            gap: 30px;
+            margin-bottom: 24px;
+            margin-top: 10px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: #64748b;
+            padding-bottom: 12px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: #0e2b4e;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #1565C0;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .announcement-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .announcement-date {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .announcement-text {
+            font-size: 15px;
+            color: #334155;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .chat-container { 
+            border: 1px solid #e2e8f0; border-radius: 12px; display: flex; flex-direction: column; height: 500px; overflow: hidden; position: relative; 
+            background-color: #eef3f8;
+        }
+        .chat-container::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: url('../../assets/images/chat_pattern.png');
+            background-size: 300px; /* Tiles the seamless pattern beautifully */
+            background-position: top left;
+            background-repeat: repeat;
+            opacity: 0.6;
+            pointer-events: none; z-index: 0;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .chat-message {
+            position: relative;
+            z-index: 1;
+        }
+
+        .chat-message {
+            display: flex;
+            flex-direction: column;
+            max-width: 80%;
+        }
+
+        .chat-message.self {
+            align-self: flex-end;
+        }
+
+        .chat-message.other {
+            align-self: flex-start;
+        }
+
+        .chat-bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14.5px;
+            line-height: 1.4;
+        }
+
+        .chat-message.self .chat-bubble {
+            background: #1565C0;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.other .chat-bubble {
+            background: #e2e8f0;
+            color: #0f172a;
+            border-bottom-left-radius: 4px;
+        }
+        
+        /* ANNOUNCEMENTS REDESIGN CSS */
+        .announcement-banner {
+            background: #fff5f2;
+            border: 1px solid #f9e5e0;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .announcement-banner::after {
+            content: '';
+            position: absolute;
+            right: 15%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 80px;
+            background-image: url('data:image/svg+xml;utf8,<svg width="150" height="80" viewBox="0 0 150 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 70 Q 50 10 100 50 T 140 20" stroke="%23e7ccc6" stroke-width="2" stroke-dasharray="4 4" fill="none"/><path d="M135 25 L145 15 L145 28 Z" fill="%23e7ccc6"/></svg>');
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .banner-icon-circle {
+            width: 56px;
+            height: 56px;
+            background: #fae9e5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .banner-text h3 {
+            margin: 0 0 4px 0;
+            font-size: 16px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        .banner-text p {
+            margin: 0;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .btn-new-announcement {
+            position: relative;
+            z-index: 1;
+            background: #c8867a;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-new-announcement:hover {
+            background: #b57468;
+        }
+        
+        .recent-announcements-title {
+            font-size: 15px;
+            color: #475569;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .announcement-list-container {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            min-height: 300px;
+        }
+        
+        .empty-announcements {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 0;
+        }
+        .empty-announcements img {
+            width: 240px;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+        .empty-announcements h4 {
+            margin: 0 0 8px 0;
+            color: #1e293b;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .empty-announcements p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .chat-sender {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .chat-input-area {
+            position: relative;
+            z-index: 1;
+            padding: 16px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 12px;
+            background: #fff;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-input-area button {
+            background: #1565C0;
+            color: #fff;
+            border: none;
+            padding: 0 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
 
-<div class="page-wrapper">
-    <div class="app-box">
+    <div class="page-wrapper">
+        <div class="app-box">
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
-            <div class="sidebar-brand">
-    <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
-</div>
-
-            
-
-            <nav class="sidebar-nav">
-
-                <a href="dashboard.html" class="nav-link">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-                        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-                    </svg>
-                    <span>Dashboard</span>
-                </a>
-
-                <a href="classes.html" class="nav-link">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-                    </svg>
-                    <span>My Classes</span>
-                </a>
-
-                <a href="create-class.html" class="nav-link">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 8v8M8 12h8"/>
-                    </svg>
-                    <span>Create Class</span>
-                </a>
-
-                <a href="schedule.html" class="nav-link">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <rect x="3" y="4" width="18" height="18" rx="2"/>
-                        <path d="M16 2v4M8 2v4M3 10h18"/>
-                    </svg>
-                    <span>Schedule</span>
-                </a>
-
-                <a href="class-info.html" class="nav-link active">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 16v-4M12 8h.01"/>
-                    </svg>
-                    <span>Class Info</span>
-                </a>
-
-                <a href="archive.html" class="nav-link">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                        <polyline points="21 8 21 21 3 21 3 8"/>
-                        <rect x="1" y="3" width="22" height="5" rx="1"/>
-                        <path d="M10 12h4"/>
-                    </svg>
-                    <span>Archive</span>
-                </a>
-
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="teacher-avatar" id="sidebar-avatar"></div>
-                <div class="teacher-info">
-                    <span class="teacher-name" id="teacher-name"></span>
-                    <span class="teacher-role">Teacher</span>
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="sidebar-brand">
+                    <img src="../../assets/images/logo.png" alt="Unispace" class="sidebar-logo">
                 </div>
-                <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
-                    </svg>
-                </button>
-            </div>
 
-        </aside>
 
-        <!-- MAIN CONTENT -->
-        <main class="main-content">
 
-            <header class="topbar">
-                <div class="topbar-left">
-                    <p id="welcome-msg"></p>
-                    <h1>Class Info</h1>
-                </div>
-                <div class="topbar-right">
-                    <span class="current-date" id="today-date"></span>
-                    <div class="topbar-avatar-wrap" id="avatar-wrap">
-                        <div class="topbar-avatar" id="topbar-avatar" onclick="toggleDropdown(event)" title="Account"></div>
-                        <div class="avatar-dropdown" id="avatar-dropdown">
-                            <div class="dropdown-header">
-                                <div class="dropdown-header-avatar" id="dropdown-avatar"></div>
-                                <div class="dropdown-header-info">
-                                    <span class="dropdown-header-name" id="dropdown-name"></span>
-                                    <span class="dropdown-header-role">Teacher</span>
-                                </div>
-                            </div>
-                            <a href="profile.html" class="dropdown-item">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                                View Profile
-                            </a>
-                            <a href="settings.html" class="dropdown-item">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-                                Settings
-                            </a>
-                        </div>
+                <nav class="sidebar-nav">
+
+                    <a href="dashboard.html" class="nav-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="classes.html" class="nav-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+                        </svg>
+                        <span>My Classes</span>
+                    </a>
+
+                    <a href="create-class.html" class="nav-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v8M8 12h8" />
+                        </svg>
+                        <span>Create Class</span>
+                    </a>
+
+                    <a href="schedule.html" class="nav-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" />
+                            <path d="M16 2v4M8 2v4M3 10h18" />
+                        </svg>
+                        <span>Schedule</span>
+                    </a>
+
+                    <a href="class-info.html" class="nav-link active">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4M12 8h.01" />
+                        </svg>
+                        <span>Class Info</span>
+                    </a>
+
+                    <a href="archive.html" class="nav-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <polyline points="21 8 21 21 3 21 3 8" />
+                            <rect x="1" y="3" width="22" height="5" rx="1" />
+                            <path d="M10 12h4" />
+                        </svg>
+                        <span>Archive</span>
+                    </a>
+
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="teacher-avatar" id="sidebar-avatar"></div>
+                    <div class="teacher-info">
+                        <span class="teacher-name" id="teacher-name"></span>
+                        <span class="teacher-role">Teacher</span>
                     </div>
+                    <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                        </svg>
+                    </button>
                 </div>
-            </header>
 
-            <div class="page-body">
-                <div class="page-content">
+            </aside>
 
-                    <p class="hint-text">Select a class to view its details</p>
-                    <div class="pill-row" id="class-pills"></div>
+            <!-- MAIN CONTENT -->
+            <main class="main-content">
 
-                    <div id="info-container" style="display: none; margin-top: 20px;">
-                        <div class="tabs">
-                            <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
-                            <button class="tab-btn" onclick="switchTab('announcements')">Announcements</button>
-                            <button class="tab-btn" onclick="switchTab('chat')">Chat</button>
-                        </div>
-
-                        <!-- OVERVIEW -->
-                        <div id="tab-overview" class="tab-pane active">
-                            <div class="info-detail-card" id="info-card">
-                                <div class="info-detail-top">
-                                    <div class="info-detail-badge" id="info-badge"></div>
-                                    <div>
-                                        <h2 id="info-course-name"></h2>
-                                        <p  id="info-subtitle"></p>
+                <header class="topbar">
+                    <div class="topbar-left">
+                        <p id="welcome-msg"></p>
+                        <h1>Class Info</h1>
+                    </div>
+                    <div class="topbar-right">
+                        <span class="current-date" id="today-date"></span>
+                        <div class="topbar-avatar-wrap" id="avatar-wrap">
+                            <div class="topbar-avatar" id="topbar-avatar" onclick="toggleDropdown(event)"
+                                title="Account"></div>
+                            <div class="avatar-dropdown" id="avatar-dropdown">
+                                <div class="dropdown-header">
+                                    <div class="dropdown-header-avatar" id="dropdown-avatar"></div>
+                                    <div class="dropdown-header-info">
+                                        <span class="dropdown-header-name" id="dropdown-name"></span>
+                                        <span class="dropdown-header-role">Teacher</span>
                                     </div>
                                 </div>
-                                <div class="info-grid">
-                                    <div class="info-grid-item">
-                                        <span class="info-label">Department</span>
-                                        <span class="info-value" id="info-dept"></span>
-                                    </div>
-                                    <div class="info-grid-item">
-                                        <span class="info-label">Batch</span>
-                                        <span class="info-value" id="info-batch"></span>
-                                    </div>
-                                    <div class="info-grid-item">
-                                        <span class="info-label">Section</span>
-                                        <span class="info-value" id="info-section"></span>
-                                    </div>
-                                    <div class="info-grid-item">
-                                        <span class="info-label">Student ID Range</span>
-                                        <span class="info-value" id="info-id-range"></span>
-                                    </div>
-                                    <div class="info-grid-item">
-                                        <span class="info-label">Created</span>
-                                        <span class="info-value" id="info-created"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ANNOUNCEMENTS -->
-                        <div id="tab-announcements" class="tab-pane">
-                            <div style="margin-bottom: 20px; display: flex; flex-direction: column; gap: 10px;">
-                                <textarea id="announcement-input" rows="3" placeholder="Write an announcement to your class..." style="padding:12px; border-radius:8px; border:1px solid #cbd5e1; font-family:inherit; resize:vertical;"></textarea>
-                                <button onclick="postAnnouncement()" style="align-self:flex-start; padding:8px 24px; background:#1565C0; color:#fff; border:none; border-radius:6px; font-weight:600; cursor:pointer;">Post Announcement</button>
-                            </div>
-                            <div id="announcement-list"></div>
-                        </div>
-
-                        <!-- CHAT -->
-                        <div id="tab-chat" class="tab-pane">
-                            <div class="chat-container">
-                                <div class="chat-messages" id="chat-messages">
-                                    <!-- messages load here -->
-                                </div>
-                                <div class="chat-input-area">
-                                    <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="if(event.key === 'Enter') sendChatMessage()">
-                                    <button onclick="sendChatMessage()">Send</button>
-                                </div>
+                                <a href="profile.html" class="dropdown-item">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round">
+                                        <circle cx="12" cy="8" r="4" />
+                                        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                                    </svg>
+                                    View Profile
+                                </a>
+                                <a href="settings.html" class="dropdown-item">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round">
+                                        <circle cx="12" cy="12" r="3" />
+                                        <path
+                                            d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                                    </svg>
+                                    Settings
+                                </a>
                             </div>
                         </div>
                     </div>
+                </header>
 
-                    <div class="empty-state" id="empty-state">
-                        <div class="empty-icon">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <div class="page-body">
+                    <div class="page-content">
+
+                        <p class="hint-text">Select a class to view its details</p>
+                        <div class="pill-row" id="class-pills"></div>
+
+                        <div id="info-container" style="display: none; margin-top: 20px;">
+                            <div class="tabs">
+                                <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+                                <button class="tab-btn" onclick="switchTab('announcements')">Announcements</button>
+                                <button class="tab-btn" onclick="switchTab('chat')">Chat</button>
+                            </div>
+
+                            <!-- OVERVIEW -->
+                            <div id="tab-overview" class="tab-pane active">
+                                <div class="info-detail-card" id="info-card">
+                                    <div class="info-detail-top">
+                                        <div class="info-detail-badge" id="info-badge"></div>
+                                        <div>
+                                            <h2 id="info-course-name"></h2>
+                                            <p id="info-subtitle"></p>
+                                        </div>
+                                    </div>
+                                    <div class="info-grid">
+                                        <div class="info-grid-item">
+                                            <span class="info-label">Department</span>
+                                            <span class="info-value" id="info-dept"></span>
+                                        </div>
+                                        <div class="info-grid-item">
+                                            <span class="info-label">Batch</span>
+                                            <span class="info-value" id="info-batch"></span>
+                                        </div>
+                                        <div class="info-grid-item">
+                                            <span class="info-label">Section</span>
+                                            <span class="info-value" id="info-section"></span>
+                                        </div>
+                                        <div class="info-grid-item">
+                                            <span class="info-label">Student ID Range</span>
+                                            <span class="info-value" id="info-id-range"></span>
+                                        </div>
+                                        <div class="info-grid-item">
+                                            <span class="info-label">Created</span>
+                                            <span class="info-value" id="info-created"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ANNOUNCEMENTS -->
+                            <div id="tab-announcements" class="tab-pane">
+                                <div class="announcement-banner">
+                                    <div class="banner-left">
+                                        <div class="banner-icon-circle">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c8867a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                        </div>
+                                        <div class="banner-text">
+                                            <h3>Share an announcement</h3>
+                                            <p>Send important updates and information to your class</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn-new-announcement" onclick="openAnnouncementModal()">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        New Announcement
+                                    </button>
+                                </div>
+
+                                <h3 class="recent-announcements-title">Recent Announcements</h3>
+                                <div id="announcement-list" class="announcement-list-container"></div>
+                            </div>
+
+                            <!-- CHAT -->
+                            <div id="tab-chat" class="tab-pane">
+                                <div class="chat-container">
+                                    <div class="chat-messages" id="chat-messages">
+                                        <!-- messages load here -->
+                                    </div>
+                                    <div class="chat-input-area">
+                                        <input type="text" id="chat-input" placeholder="Type a message..."
+                                            onkeydown="if(event.key === 'Enter') sendChatMessage()">
+                                        <button onclick="sendChatMessage()">Send</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p>No active classes found. <a href="create-class.html" style="color: #1565C0;">Create one first.</a></p>
+
+                        <div class="empty-state" id="empty-state">
+                            <div class="empty-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                </svg>
+                            </div>
+                            <p>No active classes found. <a href="create-class.html" style="color: #1565C0;">Create one
+                                    first.</a></p>
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
 
-        </main>
-    </div>
-</div>
-
-<!-- Sign out modal -->
-<div class="modal-overlay" id="signout-overlay" onclick="handleBackdropClick(event)">
-    <div class="signout-box">
-        <div class="signout-icon-wrap">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8" stroke-linecap="round">
-                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
-            </svg>
+            </main>
         </div>
-        <h3>Sign out?</h3>
-        <p>Are you sure you want to sign out?</p>
-        <div class="signout-actions">
-            <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
-            <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+    </div>
+
+    <!-- Sign out modal -->
+    <div class="modal-overlay" id="signout-overlay" onclick="handleBackdropClick(event)">
+        <div class="signout-box">
+            <div class="signout-icon-wrap">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1e3a52" stroke-width="1.8"
+                    stroke-linecap="round">
+                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                </svg>
+            </div>
+            <h3>Sign out?</h3>
+            <p>Are you sure you want to sign out?</p>
+            <div class="signout-actions">
+                <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
+                <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-<script>
-    var API = 'http://localhost:3000/api';
-    var token = localStorage.getItem('token') || '';
-    var currentUserId = localStorage.getItem('userId');
-    
-    var fullName = localStorage.getItem('teacher_fullName') || 'Teacher';
-    var initial  = fullName.charAt(0).toUpperCase();
-    document.getElementById('teacher-name').textContent   = fullName;
-    document.getElementById('sidebar-avatar').textContent = initial;
-    document.getElementById('topbar-avatar').textContent  = initial;
-    document.getElementById('dropdown-avatar').textContent = initial;
-    document.getElementById('dropdown-name').textContent   = fullName;
-    document.getElementById('welcome-msg').textContent    = 'Welcome back, ' + fullName;
+    <!-- Announcement modal -->
+    <div class="modal-overlay" id="announcement-overlay" onclick="if(event.target === this) closeAnnouncementModal()">
+        <div class="signout-box" style="max-width: 500px; text-align: left;">
+            <h3 style="margin-bottom: 16px; margin-top: 0; text-align: left;">New Announcement</h3>
+            <textarea id="announcement-input" rows="5" placeholder="Write an announcement to your class..."
+                style="width: 100%; padding:12px; border-radius:8px; border:1px solid #cbd5e1; font-family:inherit; resize:vertical; margin-bottom: 16px; box-sizing: border-box; outline: none;"></textarea>
+            <div class="signout-actions" style="justify-content: flex-end;">
+                <button class="btn-secondary" onclick="closeAnnouncementModal()">Cancel</button>
+                <button class="btn-danger" style="background: #1565C0;" onclick="postAnnouncement()">Post Announcement</button>
+            </div>
+        </div>
+    </div>
 
-    /* avatar dropdown */
-    var dropdownEl = document.getElementById('avatar-dropdown');
-    var avatarEl   = document.getElementById('topbar-avatar');
-    var isOpen     = false;
-    function toggleDropdown(e) { e.stopPropagation(); isOpen ? closeDropdown() : openDropdown(); }
-    function openDropdown()  { isOpen = true;  dropdownEl.classList.add('visible');    avatarEl.classList.add('open'); }
-    function closeDropdown() { isOpen = false; dropdownEl.classList.remove('visible'); avatarEl.classList.remove('open'); }
-    document.addEventListener('click', function(e) { if (isOpen && !document.getElementById('avatar-wrap').contains(e.target)) closeDropdown(); });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && isOpen) closeDropdown(); });
-    document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        var API = 'http://localhost:3000/api';
+        var token = localStorage.getItem('token') || '';
+        var currentUserId = localStorage.getItem('userId');
 
-    var currentClassId = new URLSearchParams(window.location.search).get('id');
-    var socket = io('http://localhost:3000');
-    
-    var palette = ['#a9c1cc', '#93b1be', '#7da0af', '#678fa1', '#587c8d', '#4b6a78', '#3d5863', '#2f454e'];
-    function color(i) { return palette[i % palette.length]; }
-    function getInitials(name) { return name.split(' ').map(w => w[0] || '').join('').toUpperCase().slice(0,2); }
+        var fullName = localStorage.getItem('teacher_fullName') || 'Teacher';
+        var initial = fullName.charAt(0).toUpperCase();
+        document.getElementById('teacher-name').textContent = fullName;
+        document.getElementById('sidebar-avatar').textContent = initial;
+        document.getElementById('topbar-avatar').textContent = initial;
+        document.getElementById('dropdown-avatar').textContent = initial;
+        document.getElementById('dropdown-name').textContent = fullName;
+        document.getElementById('welcome-msg').textContent = 'Welcome back, ' + fullName;
 
-    // Setup socket listeners
-    socket.on('receive_message', function(data) {
-        if (data.classroom === currentClassId) {
-            appendChatMessage(data);
-            scrollToBottom();
-        }
-    });
+        /* avatar dropdown */
+        var dropdownEl = document.getElementById('avatar-dropdown');
+        var avatarEl = document.getElementById('topbar-avatar');
+        var isOpen = false;
+        function toggleDropdown(e) { e.stopPropagation(); isOpen ? closeDropdown() : openDropdown(); }
+        function openDropdown() { isOpen = true; dropdownEl.classList.add('visible'); avatarEl.classList.add('open'); }
+        function closeDropdown() { isOpen = false; dropdownEl.classList.remove('visible'); avatarEl.classList.remove('open'); }
+        document.addEventListener('click', function (e) { if (isOpen && !document.getElementById('avatar-wrap').contains(e.target)) closeDropdown(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) closeDropdown(); });
+        document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-    // Fetch classes
-    fetch(API + '/classrooms/my-classes', { headers: { Authorization: 'Bearer ' + token } })
-        .then(r => r.json())
-        .then(classes => {
-            var pillRow = document.getElementById('class-pills');
-            var emptyState = document.getElementById('empty-state');
-            
-            if (classes.length === 0) {
-                emptyState.style.display = 'flex';
-                return;
-            }
-            
-            emptyState.style.display = 'none';
-            classes.forEach((cls, i) => {
-                var pill = document.createElement('button');
-                pill.className = 'class-pill';
-                pill.textContent = cls.course;
-                if (cls._id === currentClassId) pill.classList.add('selected');
-                
-                pill.onclick = function() {
-                    window.location.href = 'class-info.html?id=' + cls._id;
-                };
-                pillRow.appendChild(pill);
-            });
+        var currentClassId = new URLSearchParams(window.location.search).get('id');
+        var socket = io('http://localhost:3000');
 
-            if (currentClassId) {
-                var cls = classes.find(c => c._id === currentClassId);
-                if (cls) initializeClassView(cls, classes.findIndex(c => c._id === currentClassId));
-            } else {
-                // select first
-                window.location.href = 'class-info.html?id=' + classes[0]._id;
+        var palette = ['#a9c1cc', '#93b1be', '#7da0af', '#678fa1', '#587c8d', '#4b6a78', '#3d5863', '#2f454e'];
+        function color(i) { return palette[i % palette.length]; }
+        function getInitials(name) { return name.split(' ').map(w => w[0] || '').join('').toUpperCase().slice(0, 2); }
+
+        // Setup socket listeners
+        socket.on('receive_message', function (data) {
+            if (data.classroom === currentClassId) {
+                appendChatMessage(data);
+                scrollToBottom();
             }
         });
 
-    function initializeClassView(cls, i) {
-        document.getElementById('info-container').style.display = 'block';
-        document.getElementById('info-badge').textContent = getInitials(cls.course);
-        document.getElementById('info-badge').style.background = color(i);
-        document.getElementById('info-course-name').textContent = cls.course;
-        document.getElementById('info-subtitle').textContent = cls.dept + ' · Batch ' + cls.batch;
-        document.getElementById('info-dept').textContent = cls.dept;
-        document.getElementById('info-batch').textContent = cls.batch;
-        document.getElementById('info-section').textContent = cls.section;
-        document.getElementById('info-id-range').textContent = (cls.idFrom || '-') + ' – ' + (cls.idTo || '-');
-        document.getElementById('info-created').textContent = new Date(cls.createdAt).toLocaleDateString();
-
-        socket.emit('join_room', { room: cls._id });
-        
-        fetchAnnouncements();
-        fetchChatHistory();
-    }
-
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-        event.target.classList.add('active');
-        document.getElementById('tab-' + tabId).classList.add('active');
-        if (tabId === 'chat') scrollToBottom();
-    }
-
-    function postAnnouncement() {
-        const input = document.getElementById('announcement-input');
-        const text = input.value.trim();
-        if (!text) return;
-        
-        input.value = '';
-        fetch(API + '/classrooms/' + currentClassId + '/announcements', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
-            body: JSON.stringify({ text })
-        }).then(r => r.json()).then(ann => {
-            fetchAnnouncements(); // Refresh list
-        });
-    }
-
-    function fetchAnnouncements() {
-        fetch(API + '/classrooms/' + currentClassId + '/announcements', { headers: { Authorization: 'Bearer ' + token } })
+        // Fetch classes
+        fetch(API + '/classrooms/my-classes', { headers: { Authorization: 'Bearer ' + token } })
             .then(r => r.json())
-            .then(data => {
-                const list = document.getElementById('announcement-list');
-                list.innerHTML = '';
-                if (data.length === 0) {
-                    list.innerHTML = '<p style="color: #64748b;">No announcements yet.</p>';
+            .then(classes => {
+                var pillRow = document.getElementById('class-pills');
+                var emptyState = document.getElementById('empty-state');
+
+                if (classes.length === 0) {
+                    emptyState.style.display = 'flex';
                     return;
                 }
-                data.forEach(ann => {
-                    const d = new Date(ann.createdAt).toLocaleString();
-                    const el = document.createElement('div');
-                    el.className = 'announcement-card';
-                    el.innerHTML = `<div class="announcement-date">${d}</div><div class="announcement-text">${ann.text}</div>`;
-                    list.appendChild(el);
+
+                emptyState.style.display = 'none';
+                classes.forEach((cls, i) => {
+                    var pill = document.createElement('button');
+                    pill.className = 'class-pill';
+                    pill.textContent = cls.course;
+                    if (cls._id === currentClassId) pill.classList.add('selected');
+
+                    pill.onclick = function () {
+                        window.location.href = 'class-info.html?id=' + cls._id;
+                    };
+                    pillRow.appendChild(pill);
                 });
+
+                if (currentClassId) {
+                    var cls = classes.find(c => c._id === currentClassId);
+                    if (cls) initializeClassView(cls, classes.findIndex(c => c._id === currentClassId));
+                } else {
+                    // select first
+                    window.location.href = 'class-info.html?id=' + classes[0]._id;
+                }
             });
-    }
 
-    function fetchChatHistory() {
-        fetch(API + '/chat/messages/' + currentClassId, { headers: { Authorization: 'Bearer ' + token } })
-            .then(r => r.json())
-            .then(data => {
-                const container = document.getElementById('chat-messages');
-                container.innerHTML = '';
-                data.forEach(msg => appendChatMessage(msg));
-                scrollToBottom();
-            });
-    }
+        function initializeClassView(cls, i) {
+            document.getElementById('info-container').style.display = 'block';
+            document.getElementById('info-badge').textContent = getInitials(cls.course);
+            document.getElementById('info-badge').style.background = color(i);
+            document.getElementById('info-course-name').textContent = cls.course;
+            document.getElementById('info-subtitle').textContent = cls.dept + ' · Batch ' + cls.batch;
+            document.getElementById('info-dept').textContent = cls.dept;
+            document.getElementById('info-batch').textContent = cls.batch;
+            document.getElementById('info-section').textContent = cls.section;
+            document.getElementById('info-id-range').textContent = (cls.idFrom || '-') + ' – ' + (cls.idTo || '-');
+            document.getElementById('info-created').textContent = new Date(cls.createdAt).toLocaleDateString();
 
-    function sendChatMessage() {
-        const input = document.getElementById('chat-input');
-        const text = input.value.trim();
-        if (!text) return;
+            socket.emit('join_room', { room: cls._id });
 
-        input.value = '';
-        fetch(API + '/chat/messages', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
-            body: JSON.stringify({ classroomId: currentClassId, message: text })
-        }).then(r => r.json()).then(msg => {
-            socket.emit('send_message', { ...msg, room: currentClassId });
-        });
-    }
-
-    function appendChatMessage(data) {
-        if (!document.getElementById('chat-msg-' + data._id) && data.sender) {
-            const isSelf = data.sender._id === currentUserId || data.sender.fullName === fullName;
-            const container = document.getElementById('chat-messages');
-            const el = document.createElement('div');
-            el.id = 'chat-msg-' + data._id;
-            el.className = 'chat-message ' + (isSelf ? 'self' : 'other');
-            
-            const senderName = isSelf ? 'You' : data.sender.fullName;
-            el.innerHTML = `<div class="chat-sender">${senderName}</div><div class="chat-bubble">${data.message}</div>`;
-            container.appendChild(el);
+            fetchAnnouncements();
+            fetchChatHistory();
         }
-    }
 
-    function scrollToBottom() {
-        const c = document.getElementById('chat-messages');
-        c.scrollTop = c.scrollHeight;
-    }
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+            if (tabId === 'chat') scrollToBottom();
+        }
 
-    /* Sign out modal */
-    function openSignoutPopup() {
-        var el = document.getElementById('signout-overlay');
-        el.style.display = 'flex';
-        setTimeout(function() { el.classList.add('visible'); }, 10);
-    }
+        function postAnnouncement() {
+            const input = document.getElementById('announcement-input');
+            const text = input.value.trim();
+            if (!text) return;
 
-    function closeSignoutPopup() {
-        var el = document.getElementById('signout-overlay');
-        el.classList.remove('visible');
-        setTimeout(function() { el.style.display = 'none'; }, 230);
-    }
+            input.value = '';
+            fetch(API + '/classrooms/' + currentClassId + '/announcements', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+                body: JSON.stringify({ text })
+            }).then(r => r.json()).then(ann => {
+                fetchAnnouncements(); // Refresh list
+            });
+        }
 
-    function handleBackdropClick(e) {
-        if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup();
-    }
+        function fetchAnnouncements() {
+            fetch(API + '/classrooms/' + currentClassId + '/announcements', { headers: { Authorization: 'Bearer ' + token } })
+                .then(r => r.json())
+                .then(data => {
+                    const list = document.getElementById('announcement-list');
+                    list.innerHTML = '';
+                    if (data.length === 0) {
+                        list.innerHTML = `
+                            <div class="empty-announcements">
+                                <img src="../../assets/images/empty_announcements.png" alt="No announcements">
+                                <h4>No announcements yet</h4>
+                                <p>When you post announcements, they will appear here.</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                    data.forEach(ann => {
+                        const d = new Date(ann.createdAt).toLocaleString();
+                        const el = document.createElement('div');
+                        el.className = 'announcement-card';
+                        el.innerHTML = `<div class="announcement-date">${d}</div><div class="announcement-text">${ann.text}</div>`;
+                        list.appendChild(el);
+                    });
+                });
+        }
 
-    function doSignout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('us_user');
-        window.location.href = '../index.html';
-    }
-</script>
+        function fetchChatHistory() {
+            fetch(API + '/chat/messages/' + currentClassId, { headers: { Authorization: 'Bearer ' + token } })
+                .then(r => r.json())
+                .then(data => {
+                    const container = document.getElementById('chat-messages');
+                    container.innerHTML = '';
+                    data.forEach(msg => appendChatMessage(msg));
+                    scrollToBottom();
+                });
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            fetch(API + '/chat/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+                body: JSON.stringify({ classroomId: currentClassId, message: text })
+            }).then(r => r.json()).then(msg => {
+                socket.emit('send_message', { ...msg, room: currentClassId });
+            });
+        }
+
+        function appendChatMessage(data) {
+            if (!document.getElementById('chat-msg-' + data._id) && data.sender) {
+                const isSelf = data.sender._id === currentUserId || data.sender.fullName === fullName;
+                const container = document.getElementById('chat-messages');
+                const el = document.createElement('div');
+                el.id = 'chat-msg-' + data._id;
+                el.className = 'chat-message ' + (isSelf ? 'self' : 'other');
+
+                const senderName = isSelf ? 'You' : data.sender.fullName;
+                el.innerHTML = `<div class="chat-sender">${senderName}</div><div class="chat-bubble">${data.message}</div>`;
+                container.appendChild(el);
+            }
+        }
+
+        function scrollToBottom() {
+            const c = document.getElementById('chat-messages');
+            c.scrollTop = c.scrollHeight;
+        }
+
+        /* Sign out modal */
+        function openSignoutPopup() {
+            var el = document.getElementById('signout-overlay');
+            el.style.display = 'flex';
+            setTimeout(function () { el.classList.add('visible'); }, 10);
+        }
+
+        function closeSignoutPopup() {
+            var el = document.getElementById('signout-overlay');
+            el.classList.remove('visible');
+            setTimeout(function () { el.style.display = 'none'; }, 230);
+        }
+
+        function handleBackdropClick(e) {
+            if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup();
+        }
+
+        function doSignout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('us_user');
+            window.location.href = '../index.html';
+        }
+
+        /* Announcement modal */
+        function openAnnouncementModal() {
+            var el = document.getElementById('announcement-overlay');
+            el.style.display = 'flex';
+            setTimeout(function () { el.classList.add('visible'); }, 10);
+        }
+
+        function closeAnnouncementModal() {
+            var el = document.getElementById('announcement-overlay');
+            el.classList.remove('visible');
+            setTimeout(function () { el.style.display = 'none'; }, 230);
+        }
+
+    </script>
 
 </body>
+
 </html>
