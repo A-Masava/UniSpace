@@ -608,6 +608,31 @@ button {
     gap: 20px;
 }
 
+/* decorative illustration — sidebar bottom-left */
+.deco-illustration {
+    position: fixed;
+    bottom: 30px;
+    left: 18px;
+    width: 150px;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.92;
+    animation: fadeUp 0.4s ease 0.1s both;
+}
+
+.deco-illustration img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 700px) {
+    .deco-illustration {
+        display: none;
+    }
+}
+
+
 @media (max-width: 640px) {
     .info-grid {
         grid-template-columns: 1fr;
