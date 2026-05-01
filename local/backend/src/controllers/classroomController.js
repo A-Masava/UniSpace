@@ -93,6 +93,20 @@ exports.joinClass = async (req, res) => {
       return res.status(404).json({ message: 'No active class found with that code. Check with your teacher.' });
     }
 
+    // Check student ID range if the class has one configured
+    if (classroom.idFrom && classroom.idTo) {
+      const student = await Student.findById(req.user.id).select('idNumber');
+      if (!student || !student.idNumber) {
+        return res.status(403).json({ message: 'Your student ID is not set. Please contact your teacher.' });
+      }
+      const studentId = parseInt(student.idNumber, 10);
+      const idFrom    = parseInt(classroom.idFrom, 10);
+      const idTo      = parseInt(classroom.idTo, 10);
+      if (isNaN(studentId) || isNaN(idFrom) || isNaN(idTo) || studentId < idFrom || studentId > idTo) {
+        return res.status(403).json({ message: 'Your ID is not within the allowed range. Please contact your teacher.' });
+      }
+    }
+
     // Prevent duplicate enrollment
     if (classroom.students.includes(req.user.id)) {
       return res.status(400).json({ message: 'You have already joined this class.' });
