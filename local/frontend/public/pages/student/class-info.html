@@ -294,7 +294,7 @@
                         <span class="student-name" id="student-name"></span>
                         <span class="student-role">Student</span>
                     </div>
-                    <button class="logout-link" title="Sign out" onclick="doSignout()">
+                    <button class="logout-link" title="Sign out" onclick="openSignoutPopup()">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round">
                             <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
@@ -373,6 +373,23 @@
 <!-- decorative illustration -->
 <div class="deco-illustration">
     <img src="../../assets/images/book.png" alt="">
+</div>
+
+<!-- sign-out confirmation modal -->
+<div class="modal-overlay" id="signout-overlay" style="display:none;" onclick="handleBackdropClick(event)">
+    <div class="signout-box">
+        <div class="signout-icon-wrap">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0e2b4e" stroke-width="1.8" stroke-linecap="round">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+        </div>
+        <h3>Sign out?</h3>
+        <p>Are you sure you want to sign out?</p>
+        <div class="signout-actions">
+            <button class="btn-secondary" onclick="closeSignoutPopup()">Cancel</button>
+            <button class="btn-danger" onclick="doSignout()">Yes, sign out</button>
+        </div>
+    </div>
 </div>
 
 
@@ -509,6 +526,22 @@
         function scrollToBottom() {
             const c = document.getElementById('chat-messages');
             c.scrollTop = c.scrollHeight;
+        }
+
+        function openSignoutPopup() {
+            var el = document.getElementById('signout-overlay');
+            el.style.display = 'flex';
+            setTimeout(function() { el.classList.add('visible'); }, 10);
+        }
+
+        function closeSignoutPopup() {
+            var el = document.getElementById('signout-overlay');
+            el.classList.remove('visible');
+            setTimeout(function() { el.style.display = 'none'; }, 230);
+        }
+
+        function handleBackdropClick(e) {
+            if (e.target === document.getElementById('signout-overlay')) closeSignoutPopup();
         }
 
         function doSignout() {
