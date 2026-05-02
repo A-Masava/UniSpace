@@ -10,8 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/Student_base.css">
     <link rel="stylesheet" href="../../assets/css/Student_dashboard.css">
-
-   
+    <script src="../../assets/js/config.js"></script>
 </head>
 <body>
 
@@ -254,7 +253,7 @@
         document.getElementById('stat-classes').textContent = 0;
         listEl.innerHTML = '<p class="no-classes-msg">No classes yet. <a href="join-class.html" class="no-classes-link">Join one →</a></p>';
     } else {
-        fetch('http://localhost:3000/api/classrooms/my-classes', {
+        fetch(window.API_BASE + '/api/classrooms/my-classes', {
             headers: { Authorization: 'Bearer ' + token }
         })
         .then(function(r) { return r.json(); })

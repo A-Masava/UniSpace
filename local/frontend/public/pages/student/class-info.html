@@ -393,9 +393,10 @@
 </div>
 
 
+    <script src="../../assets/js/config.js"></script>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
-        var API = 'http://localhost:3000/api';
+        var API = window.API_BASE + '/api';
         var token = localStorage.getItem('token') || '';
         var studentId = localStorage.getItem('userId'); // assuming we have this, or extract from token
 
@@ -410,7 +411,7 @@
         document.getElementById('topbar-avatar').textContent = initial;
         document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-        var socket = io('http://localhost:3000');
+        var socket = io(window.SOCKET_URL);
 
         if (classId) {
             socket.emit('join_room', { room: classId });

@@ -14,7 +14,10 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 // ── Middleware ──
-app.use(cors({ origin: '*' }));
+const allowedOrigins = process.env.FRONTEND_URL 
+  ? [process.env.FRONTEND_URL, 'http://localhost:3000', 'http://127.0.0.1:3000'] 
+  : '*';
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // ── Database ──
@@ -36,7 +39,7 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: '*', methods: ['GET', 'POST'] }
+  cors: { origin: allowedOrigins, methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'] }
 });
 
 require('./socket/chatSocket')(io);

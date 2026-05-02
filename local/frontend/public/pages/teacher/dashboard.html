@@ -12,6 +12,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/Teacher_base.css">
     <link rel="stylesheet" href="../../assets/css/Teacher_dashboard.css">
+    <script src="../../assets/js/config.js"></script>
 </head>
 
 <body>
@@ -251,7 +252,7 @@
 
         var token = localStorage.getItem('token') || '';
         if (token) {
-            fetch('http://localhost:3000/api/auth/me', {
+            fetch(window.API_BASE + '/api/auth/me', {
                 headers: { Authorization: 'Bearer ' + token }
             })
                 .then(function (r) { return r.json(); })
@@ -274,7 +275,7 @@
 
         var token = localStorage.getItem('token') || '';
         var userId = localStorage.getItem('userId') || '';
-        var API = 'http://localhost:3000/api/classrooms';
+        var API = window.API_BASE + '/api/classrooms';
         var schedules = JSON.parse(localStorage.getItem('us_sch_' + userId) || '[]');
         var statSlotsEl = document.getElementById('stat-slots');
         if (statSlotsEl) statSlotsEl.textContent = schedules.length;

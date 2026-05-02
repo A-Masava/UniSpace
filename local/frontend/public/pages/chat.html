@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/Student_base.css">
+    <script src="../../assets/js/config.js"></script>
     <style>
         /* ── Chat layout ── */
         .chat-main {
@@ -424,7 +425,7 @@
 </div>
 
 <script>
-    var API      = 'http://localhost:3000/api';
+    var API      = window.API_BASE + '/api';
     var token    = localStorage.getItem('token') || '';
     var fullName = localStorage.getItem('student_fullName') || 'Student';
     var userId   = localStorage.getItem('student_id') || '';

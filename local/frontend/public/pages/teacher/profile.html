@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../../assets/css/base.css">
     <link rel="stylesheet" href="../../assets/css/Teacher_dashboard.css">
     <link rel="stylesheet" href="../../assets/css/teacher_profile.css">
+    <script src="../../assets/js/config.js"></script>
 </head>
 
 <body>
@@ -388,7 +389,7 @@
     </div>
 
     <script>
-        var API = 'http://localhost:3000/api/auth';
+        var API = window.API_BASE + '/api/auth';
         var token = localStorage.getItem('token') || '';
 
         /* ── Boot: populate UI from localStorage first, then refresh from server ── */

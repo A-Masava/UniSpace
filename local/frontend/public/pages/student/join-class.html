@@ -80,6 +80,7 @@
 
         
     </style>
+    <script src="../../assets/js/config.js"></script>
 </head>
 <body>
 
@@ -254,7 +255,7 @@
 
 <script>
 
-    var API   = 'http://localhost:3000/api/classrooms';
+    var API   = window.API_BASE + '/api/classrooms';
     var token = localStorage.getItem('token') || '';
 
     var fullName = localStorage.getItem('student_fullName') || 'Student';

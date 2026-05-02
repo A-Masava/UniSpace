@@ -565,9 +565,10 @@
         </div>
     </div>
 
+    <script src="../../assets/js/config.js"></script>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script>
-        var API = 'http://localhost:3000/api';
+        var API = window.API_BASE + '/api';
         var token = localStorage.getItem('token') || '';
         var currentUserId = localStorage.getItem('userId');
 
@@ -592,7 +593,7 @@
         document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
         var currentClassId = new URLSearchParams(window.location.search).get('id');
-        var socket = io('http://localhost:3000');
+        var socket = io(window.SOCKET_URL);
 
         var palette = ['#a9c1cc', '#93b1be', '#7da0af', '#678fa1', '#587c8d', '#4b6a78', '#3d5863', '#2f454e'];
         function color(i) { return palette[i % palette.length]; }

@@ -115,6 +115,7 @@
             background: #3db87a;
         }
     </style>
+    <script src="../../assets/js/config.js"></script>
 </head>
 
 <body>
@@ -475,7 +476,7 @@
     </div>
 
     <script>
-        var API = 'http://localhost:3000/api/auth';
+        var API = window.API_BASE + '/api/auth';
         var token = localStorage.getItem('token') || '';
 
         /* ── Boot ── */
