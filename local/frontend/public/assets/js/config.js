@@ -11,5 +11,5 @@
  *   window.SOCKET_URL = 'https://unispace-backend-production.up.railway.app';
  */
 
-window.API_BASE   = 'http://localhost:3000';
-window.SOCKET_URL = 'http://localhost:3000';
+window.API_BASE = 'https://unispace-production.up.railway.app';
+window.SOCKET_URL = 'https://unispace-production.up.railway.app';
